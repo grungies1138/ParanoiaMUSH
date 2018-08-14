@@ -44,11 +44,12 @@ class SheetCommand(default_cmds.MuxCommand):
 
     def func(self):
         message = []
-        message.append("*|=z--|n |540Alpha Complex Identity Form|n |=z---------------------------------------------|n*")
+        message.append("*|w--|n |yAlpha Complex Identity Form|n |w---------------------------------------------|n*")
         message.append("|-|-|500This form is MANDATORY|n")
-        message.append(header())
+        message.append("-" * 78)
         message.append("|[002/// PART ONE  |n |[005 CORE INFORMATION >>>                                          |n")
-        # message.append()
+        message.append("|wName: |n{}".format(self.caller.key))
+        message.append("|wSecurity Clearance: |n{}".format(self.caller.db.clearance or ""))
         self.caller.msg("\n".join(message))
 
 
