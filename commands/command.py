@@ -7,6 +7,7 @@ Commands describe the input the account can do to the game.
 
 from evennia import Command as BaseCommand
 from evennia import default_cmds
+from evennia.utils import evtable
 from commands.library import header
 
 
@@ -44,12 +45,15 @@ class SheetCommand(default_cmds.MuxCommand):
 
     def func(self):
         message = []
-        message.append("*|w--|n |yAlpha Complex Identity Form|n |w---------------------------------------------|n*")
+        message.append("|w.---|n|yAlpha Complex Identity Form|n|w----------------------------------------------.|n")
         message.append("|-|-|500This form is MANDATORY|n")
         message.append("-" * 78)
-        message.append("|[002/// PART ONE  |n |[005 CORE INFORMATION >>>                                          |n")
-        message.append("|wName: |n{}".format(self.caller.key))
-        message.append("|wSecurity Clearance: |n{}".format(self.caller.db.clearance or ""))
+        message.append("|[002/// PART ONE   |n|[005 CORE INFORMATION >>>                                          |n")
+        name = "|wName: |n{}".format(self.caller.key)
+        clearance = "|wSecurity Clearance: |n{}".format(self.caller.db.clearance or "")
+        table = evtable.EvTable(None, None, border=None, table=[name, clearance])
+        message.append(table)
+        # message.append()
         self.caller.msg("\n".join(message))
 
 
