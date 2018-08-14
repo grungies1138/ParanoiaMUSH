@@ -42,7 +42,7 @@ class Room(DefaultRoom):
 
         table = evtable.EvTable("|wCharacters and Objects:|n", "|wExits:|n", table=[chars + colored_objects, exits],
                                 border=None)
-        table.reformat_column(0, width=39, align="l")
+        table.reformat_column(0, width=25, align="l")
         message.append(table)
         message.append("\n")
 
