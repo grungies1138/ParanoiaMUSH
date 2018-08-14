@@ -53,3 +53,6 @@ class Room(DefaultRoom):
 
     def list_characters(self):
         return sorted([char for char in self.contents if char.is_typeclass(Clone, exact=False)])
+
+    def list_non_characters(self):
+        return list(Object.objects.filter_family(db_location=self))
