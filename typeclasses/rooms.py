@@ -23,6 +23,6 @@ class Room(DefaultRoom):
     def return_appearance(self, looker):
         message = []
         message.append(header(self.key))
-        message.append(self.desc)
+        message.append(self.db.desc)
         message.append(header())
         return "\n".join(message)
