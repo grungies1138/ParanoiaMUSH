@@ -1,7 +1,7 @@
 import random
 import string
 
-HEAD_CHAR = "|015%s|n".format(random.choice(string.printable))
+HEAD_CHAR = "|015-|n"
 SUB_HEAD_CHAR = "-"
 MAX_WIDTH = 78
 
