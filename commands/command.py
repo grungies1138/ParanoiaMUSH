@@ -51,7 +51,7 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append("|[002/// PART ONE   |n|[005 CORE INFORMATION >>>                                          |n")
         name = "|wName: |n{}".format(self.caller.key)
         clearance = "|wSecurity Clearance: |n{}".format(self.caller.db.clearance or "")
-        table = evtable.EvTable(None, None, border=None, table=[name, clearance])
+        table = evtable.EvTable(name, clearance, border=None)
         message.append(table)
         # message.append()
         self.caller.msg("\n".join(message))
