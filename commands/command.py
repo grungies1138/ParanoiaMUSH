@@ -47,7 +47,7 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append("|-|-|500This form is MANDATORY|n")
         message.append("|[002/// PART ONE  |n |[005 CORE INFORMATION >>>|n")
         # message.append()
-        return "\n".join(message)
+        self.caller.msg("\n".join(message))
 
 
 
