@@ -9,6 +9,7 @@ from evennia import DefaultRoom
 from commands.library import header
 from evennia.utils import evtable
 from clones import Clone
+from typeclasses.objects import Object
 
 
 class Room(DefaultRoom):
