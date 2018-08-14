@@ -6,6 +6,8 @@ Rooms are simple containers that has no location of their own.
 """
 
 from evennia import DefaultRoom
+from commands.library import header
+from evennia.utils import evtable
 
 
 class Room(DefaultRoom):
@@ -18,4 +20,9 @@ class Room(DefaultRoom):
     See examples/object.py for a list of
     properties and methods available on all Objects.
     """
-    pass
+    def return_appearance(self, looker):
+        message = []
+        message.append(header(self.key))
+        message.append(self.desc)
+        message.append(header())
+        return "\n".join(message)

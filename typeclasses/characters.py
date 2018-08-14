@@ -8,6 +8,7 @@ creation commands.
 
 """
 from evennia import DefaultCharacter
+from commands.library import header
 
 
 class Character(DefaultCharacter):
@@ -30,4 +31,8 @@ class Character(DefaultCharacter):
     at_post_puppet - Echoes "AccountName has entered the game" to the room.
 
     """
-    pass
+    def at_object_creation(self):
+        self.db.clearance = "Infrared"
+        self.db.treason = 0
+        self.db.wounds = 0
+        self.db.equipment = []
