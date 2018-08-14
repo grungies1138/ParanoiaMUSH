@@ -52,7 +52,7 @@ class SheetCommand(default_cmds.MuxCommand):
         name = "|wName: |n{}".format(self.caller.key)
         clearance = "|wSecurity Clearance: |n{}".format(self.caller.db.clearance or "")
         table = evtable.EvTable(name, clearance, border=None)
-        message.append(table)
+        message.append(unicode(table))
         # message.append()
         self.caller.msg("\n".join(message))
 
