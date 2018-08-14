@@ -25,4 +25,27 @@ class Room(DefaultRoom):
         message.append(header(self.key))
         message.append(self.db.desc)
         message.append(header())
-        return "\n".join(message)
+
+        chars = self.list_characters()
+        objects = self.list_non_characters()
+        colored_objects = []
+        for obj in objects:
+            colored_objects.append("|135%s|n" % obj.key)
+
+        exits = []
+        if self.exits:
+            for exit in self.exits:
+                if exit.access(looker, "view"):
+                    exits.append("|w<|n|b%s|n|w>|n - %s" % (exit.key, exit.destination))
+
+        table = evtable.EvTable("|wCharacters and Objects:|n", "|wExits:|n", table=[chars + colored_objects, exits],
+                                border=None)
+        table.reformat_column(0, width=39, align="l")
+        message.append(table)
+        message.append("\n")
+
+        message2 = []
+        for line in message:
+            message2.append(unicode(line))
+
+        return "\n".join(message2)
