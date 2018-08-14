@@ -46,7 +46,8 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append("*|=z--|n |540Alpha Complex Identity Form|n |=z---------------------------------------------|n*")
         message.append("|-|-|500This form is MANDATORY|n")
         message.append("|[002/// PART ONE  |n |[005 CORE INFORMATION >>>|n")
-        message.append()
+        # message.append()
+        return "\n".join(message)
 
 
 
