@@ -8,6 +8,7 @@ Rooms are simple containers that has no location of their own.
 from evennia import DefaultRoom
 from commands.library import header
 from evennia.utils import evtable
+from clones import Clone
 
 
 class Room(DefaultRoom):
@@ -49,3 +50,6 @@ class Room(DefaultRoom):
             message2.append(unicode(line))
 
         return "\n".join(message2)
+
+    def list_characters(self):
+        return sorted([char for char in self.contents if char.is_typeclass(Clone, exact=False)])
