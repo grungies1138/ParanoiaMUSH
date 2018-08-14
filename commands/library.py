@@ -1,5 +1,4 @@
-import random
-import string
+import re
 
 HEAD_CHAR = "|015-|n"
 SUB_HEAD_CHAR = "-"
@@ -16,3 +15,9 @@ def header(header_text=None, width=MAX_WIDTH, fill_char=HEAD_CHAR):
     else:
         header_string = fill_char * width
     return header_string
+
+def titlecase(s):
+    return re.sub(r"[A-Za-z]+('[A-Za-z]+)?",
+                  lambda mo: mo.group(0)[0].upper() +
+                             mo.group(0)[1:].lower(), s)
+
