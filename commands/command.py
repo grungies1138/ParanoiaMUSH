@@ -68,8 +68,7 @@ class SheetCommand(default_cmds.MuxCommand):
         table2.reformat_column(1, width=18)
         table2.reformat_column(2, width=30)
         message.append(unicode(table2))
-        message.append(" " + personality)
-        message.append("\n")
+        message.append(" " + personality + "\n")
 
         message.append("|[002|w/// PART TWO    |n|[005 |wDEVELOPMENT >>>                                              |n")
 
@@ -78,8 +77,7 @@ class SheetCommand(default_cmds.MuxCommand):
         table3 = evtable.EvTable(treason, xp, border=None)
         table3.reformat_column(0, width=30)
         table3.reformat_column(1, width=48)
-        message.append(unicode(table3))
-        message.append("\n")
+        message.append(unicode(table3) + "\n")
 
         message.append("|[055|115 STATS >>>                                                                    ")
 
@@ -93,8 +91,7 @@ class SheetCommand(default_cmds.MuxCommand):
         table4.reformat_column(1, width=19)
         table4.reformat_column(2, width=19)
         table4.reformat_column(3, width=19)
-        message.append(unicode(table4))
-        message.append("\n")
+        message.append(unicode(table4) + "\n")
 
         message.append(
             "|[002|w/// PART THREE  |n|[005 |wSKILLS >>>                                                   |n")
@@ -145,8 +142,7 @@ class SheetCommand(default_cmds.MuxCommand):
         table8.reformat_column(1, width=19)
         table8.reformat_column(2, width=19)
         table8.reformat_column(3, width=19)
-        message.append(unicode(table8))
-        message.append("\n")
+        message.append(unicode(table8) + "\n")
 
         message.append(
             "|[002|w/// PART FOUR   |n|[005 |wWELLBEING >>>                                                |n")
@@ -157,8 +153,7 @@ class SheetCommand(default_cmds.MuxCommand):
         table9 = evtable.EvTable(moxie, health, border=None)
         table9.reformat_column(0, width=28)
         table9.reformat_column(1, width=50)
-        message.append(unicode(table9))
-        message.append("\n")
+        message.append(unicode(table9) + "\n")
 
         message.append(
             "|[002|w/// PART FIVE   |n|[005 |wEQUIPMENT >>>                                                |n")
@@ -167,7 +162,7 @@ class SheetCommand(default_cmds.MuxCommand):
         for eq in equipment:
             message.append(eq.key)
 
-        message.append("\n\n")
+        message.append("\n")
         self.caller.msg("\n".join(message))
 
 
