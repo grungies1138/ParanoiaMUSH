@@ -79,7 +79,7 @@ class SheetCommand(default_cmds.MuxCommand):
         table3.reformat_column(1, width=48)
         message.append(unicode(table3) + "\n")
 
-        message.append("|[055|002 STATS >>>                                                                    ")
+        message.append("|[035|002 STATS >>>                                                                    ")
 
         violence = "|wViolence: |n{}".format(self.caller.db.stats.get("violence"))
         brains = "|wBrains: |n{}".format(self.caller.db.stats.get("brains"))
@@ -145,7 +145,7 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append(unicode(table8) + "\n")
 
         message.append(
-            "|[002|w/// PART FOUR   |n|[005 WELLBEING >>>                                                |n")
+            "|[002|w/// PART FOUR   |n|[005 |wWELLBEING >>>                                                |n")
 
         moxie = "|wMoxie: |n{}".format(self.caller.db.moxie or 0)
         health = "|wHealth: |n{}".format(HEALTH.get(self.caller.db.wounds))
