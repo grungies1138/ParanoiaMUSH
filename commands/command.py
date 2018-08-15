@@ -158,7 +158,7 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append(
             "|[002|w/// PART FIVE   |n|[005 |wEQUIPMENT >>>                                                |n")
 
-        equipment = [eq for eq in self.contents]
+        equipment = [eq for eq in self.caller.contents]
         for eq in equipment:
             message.append(eq.key)
 
