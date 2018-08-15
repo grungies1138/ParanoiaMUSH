@@ -31,6 +31,8 @@ from evennia.settings_default import *
 # Evennia base server config
 ######################################################################
 
+INLINEFUNC_ENABLED=True
+
 # This is the name of your game. Make it catchy!
 SERVERNAME = "ParanoiaMUSH"
 
