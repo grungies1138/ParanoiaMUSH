@@ -58,17 +58,25 @@ class SheetCommand(default_cmds.MuxCommand):
         personality = "|wPersonality: |n{}".format(", ".join(self.caller.db.personality or []))
 
         table1 = evtable.EvTable(name, clearance, border=None)
-        table1.reformat_column(0, width=38)
-        table1.reformat_column(1, width=40)
+        table1.reformat_column(0, width=30)
+        table1.reformat_column(1, width=48)
         message.append(unicode(table1))
 
         table2 = evtable.EvTable(sector, clone, gender, border=None)
         table2.reformat_column(0, width=30)
         table2.reformat_column(1, width=18)
+        table2.reformat_column(2, width=30)
         message.append(unicode(table2))
-        message.append(personality)
+        message.append(" " + personality)
 
-        message.append("|[002/// PART TWO   |n|[005 DEVELOPMENT >>>                                               |n")
+        message.append("|[002|w/// PART TWO   |n|[005 |wDEVELOPMENT >>>                                               |n")
+
+        treason = "|wTreason: |n{}".format("*" * self.caller.db.treason)
+        xp = "|wXP Points: |n{}".format(self.caller.db.xp or 0)
+        table3 = evtable.EvTable(treason, xp, border=None)
+        table3.reformat_column(0, width=30)
+        table3.reformat_column(1, width=48)
+        message.append(unicode(table3))
 
 
         self.caller.msg("\n".join(message))
