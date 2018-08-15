@@ -3,7 +3,7 @@ from commands.library import header
 
 class Clone(Character):
     def at_object_creation(self):
-        super(Clone, self).at_object_creation(self)
+        super(Clone, self).at_object_creation()
         self.db.stats = {"violence": 0, "brains": 0, "chutzpah": 0, "mechanics": 0}
         self.db.skills = {"athletics": 0, "guns": 0, "melee": 0, "throw": 0,
                           "science": 0, "psychology": 0, "bureaucracy": 0, "alpha complex": 0,
