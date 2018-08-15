@@ -78,7 +78,7 @@ class SheetCommand(default_cmds.MuxCommand):
         table3.reformat_column(1, width=48)
         message.append(unicode(table3))
 
-        message.append(" |[045|135STATS >>>                                                                    ")
+        message.append("|[045|115 STATS >>>                                                                    ")
 
         self.caller.msg("\n".join(message))
 
