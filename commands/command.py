@@ -49,7 +49,7 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append("|w.---|n|yAlpha Complex Identity Form|n|w----------------------------------------------.|n")
         message.append("|-|-|500This form is MANDATORY|n")
         message.append("-" * 78)
-        message.append("|[002|w/// PART ONE    |n|[005 |wCORE INFORMATION >>>                                         |n")
+        message.append("|[002|w/// PART ONE    |n|[005 CORE INFORMATION >>>                                         |n")
 
         name = "|wName: |n{}".format(self.caller.key)
         clearance = "|wSecurity Clearance: |n{}".format(self.caller.db.clearance or "")
@@ -70,7 +70,7 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append(unicode(table2))
         message.append(" " + personality + "\n")
 
-        message.append("|[002|w/// PART TWO    |n|[005 |wDEVELOPMENT >>>                                              |n")
+        message.append("|[002|w/// PART TWO    |n|[005 DEVELOPMENT >>>                                              |n")
 
         treason = "|wTreason: |n{}".format("*" * (self.caller.db.treason or 0))
         xp = "|wXP Points: |n{}".format(self.caller.db.xp or 0)
@@ -94,7 +94,7 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append(unicode(table4) + "\n")
 
         message.append(
-            "|[002|w/// PART THREE  |n|[005 |wSKILLS >>>                                                   |n")
+            "|[002|w/// PART THREE  |n|[005 SKILLS >>>                                                   |n")
 
         athletics = "|wAthletics: |n{}".format(self.caller.db.skills.get("athletics"))
         science = "|wScience: |n{}".format(self.caller.db.skills.get("science"))
@@ -145,7 +145,7 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append(unicode(table8) + "\n")
 
         message.append(
-            "|[002|w/// PART FOUR   |n|[005 |wWELLBEING >>>                                                |n")
+            "|[002|w/// PART FOUR   |n|[005 WELLBEING >>>                                                |n")
 
         moxie = "|wMoxie: |n{}".format(self.caller.db.moxie or 0)
         health = "|wHealth: |n{}".format(HEALTH.get(self.caller.db.wounds))
@@ -156,7 +156,7 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append(unicode(table9) + "\n")
 
         message.append(
-            "|[002|w/// PART FIVE   |n|[005 |wEQUIPMENT >>>                                                |n")
+            "|[002|w/// PART FIVE   |n|[005 EQUIPMENT >>>                                                |n")
 
         equipment = [eq for eq in self.caller.contents]
         for eq in equipment:
