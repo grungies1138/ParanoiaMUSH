@@ -1,0 +1,1 @@
+HEALTH = {0: "Unharmed", 1: "Hurt", 2: "Injured", 3: "Maimed", 4: "Dead"}

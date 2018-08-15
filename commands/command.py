@@ -8,6 +8,7 @@ Commands describe the input the account can do to the game.
 from evennia import Command as BaseCommand
 from evennia import default_cmds
 from evennia.utils import evtable
+from world.static_data import HEALTH
 from commands.library import header
 
 
@@ -48,7 +49,7 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append("|w.---|n|yAlpha Complex Identity Form|n|w----------------------------------------------.|n")
         message.append("|-|-|500This form is MANDATORY|n")
         message.append("-" * 78)
-        message.append("|[002|w/// PART ONE   |n|[005 |wCORE INFORMATION >>>                                          |n")
+        message.append("|[002|w/// PART ONE    |n|[005 |wCORE INFORMATION >>>                                         |n")
 
         name = "|wName: |n{}".format(self.caller.key)
         clearance = "|wSecurity Clearance: |n{}".format(self.caller.db.clearance or "")
@@ -69,7 +70,7 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append(unicode(table2))
         message.append(" " + personality)
 
-        message.append("|[002|w/// PART TWO   |n|[005 |wDEVELOPMENT >>>                                               |n")
+        message.append("|[002|w/// PART TWO    |n|[005 |wDEVELOPMENT >>>                                              |n")
 
         treason = "|wTreason: |n{}".format("*" * (self.caller.db.treason or 0))
         xp = "|wXP Points: |n{}".format(self.caller.db.xp or 0)
@@ -80,10 +81,10 @@ class SheetCommand(default_cmds.MuxCommand):
 
         message.append(" |[055|115 STATS >>>                                                                  ")
 
-        violence = "|wViolence: |n{}".format(self.caller.db.stats.get("violence") or 0)
-        brains = "|wBrains: |n{}".format(self.caller.db.stats.get("brains") or 0)
-        chutzpah = "|wChutzpah: |n{}".format(self.caller.db.stats.get("chutzpah") or 0)
-        mechanics = "|wMechanics: |n{}".format(self.caller.db.stats.get("mechanics") or 0)
+        violence = "|wViolence: |n{}".format(self.caller.db.stats.get("violence"))
+        brains = "|wBrains: |n{}".format(self.caller.db.stats.get("brains"))
+        chutzpah = "|wChutzpah: |n{}".format(self.caller.db.stats.get("chutzpah"))
+        mechanics = "|wMechanics: |n{}".format(self.caller.db.stats.get("mechanics"))
 
         table4 = evtable.EvTable(violence, brains, chutzpah, mechanics, border=None)
         table4.reformat_column(0, width=19)
@@ -93,7 +94,66 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append(unicode(table4))
 
         message.append(
-            "|[002|w/// PART THREE |n|[005 |wSKILLS >>>                                                    |n")
+            "|[002|w/// PART THREE  |n|[005 |wSKILLS >>>                                                   |n")
+
+        athletics = "|wAthletics: |n{}".format(self.caller.db.skills.get("athletics"))
+        science = "|wScience: |n{}".format(self.caller.db.skills.get("science"))
+        bluff = "|wBluff: |n{}".format(self.caller.db.skills.get("bluff"))
+        operate = "|wOperate: |n{}".format(self.caller.db.skills.get("operate"))
+
+        guns = "|wGuns: |n{}".format(self.caller.db.skills.get("guns"))
+        psychology = "|wPsychology: |n{}".format(self.caller.db.skills.get("psychology"))
+        charm = "|wCharm: |n{}".format(self.caller.db.skills.get("charm"))
+        engineer = "|wEngineer: |n{}".format(self.caller.db.skills.get("engineer"))
+
+        melee = "|wMelee: |n{}".format(self.caller.db.skills.get("melee"))
+        bureaucracy = "|wBureaucracy: |n{}".format(self.caller.db.skills.get("bureaucracy"))
+        intimidate = "|wIntimidate: |n{}".format(self.caller.db.skills.get("intimidate"))
+        program = "|wProgram: |n{}".format(self.caller.db.skills.get("program"))
+
+        throw = "|wThrow: |n{}".format(self.caller.db.skills.get("throw"))
+        alpha = "|wAlpha Complex: |n{}".format(self.caller.db.skills.get("alpha complex"))
+        stealth = "|wStealth: |n{}".format(self.caller.db.skills.get("stealth"))
+        demolitions = "|wDemolitions: |n{}".format(self.caller.db.skills.get("demolitions"))
+
+        table5 = evtable.EvTable(athletics, science, bluff, operate, border=None)
+        table5.reformat_column(0, width=19)
+        table5.reformat_column(1, width=19)
+        table5.reformat_column(2, width=19)
+        table5.reformat_column(3, width=19)
+        message.append(unicode(table5))
+
+        table6 = evtable.EvTable(guns, psychology, charm, engineer, border=None)
+        table6.reformat_column(0, width=19)
+        table6.reformat_column(1, width=19)
+        table6.reformat_column(2, width=19)
+        table6.reformat_column(3, width=19)
+        message.append(unicode(table6))
+
+        table7 = evtable.EvTable(melee, bureaucracy, intimidate, program, border=None)
+        table7.reformat_column(0, width=19)
+        table7.reformat_column(1, width=19)
+        table7.reformat_column(2, width=19)
+        table7.reformat_column(3, width=19)
+        message.append(unicode(table7))
+
+        table8 = evtable.EvTable(throw, alpha, stealth, demolitions, border=None)
+        table8.reformat_column(0, width=19)
+        table8.reformat_column(1, width=19)
+        table8.reformat_column(2, width=19)
+        table8.reformat_column(3, width=19)
+        message.append(unicode(table8))
+
+        message.append(
+            "|[002|w/// PART FOUR   |n|[005 |wWELLBEING >>>                                               |n")
+
+        moxie = "|wMoxie: |n{}".format(self.caller.db.moxie or 0)
+        health = "|wHealth: |n{}".format(HEALTH.get(self.caller.db.wounds))
+
+        table9 = evtable.EvTable(moxie, health, border=None)
+        table9.reformat_column(0, width=28)
+        table9.reformat_column(1, width=50)
+        message.append(unicode(table9))
 
         self.caller.msg("\n".join(message))
 
