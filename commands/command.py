@@ -117,14 +117,14 @@ class SheetCommand(default_cmds.MuxCommand):
         # demolitions = "|wDemolitions: |n{}".format(self.caller.db.skills.get("demolitions"))
 
         table5 = evtable.EvTable("", "", "", "", "", "", "", "",  border=None)
-        table5.reformat_column(0, width=13)
-        table5.reformat_column(1, width=6)
-        table5.reformat_column(2, width=13)
-        table5.reformat_column(3, width=6)
-        table5.reformat_column(4, width=13)
-        table5.reformat_column(5, width=6)
-        table5.reformat_column(6, width=13)
-        table5.reformat_column(7, width=6)
+        table5.reformat_column(0, width=14)
+        table5.reformat_column(1, width=5, align="r")
+        table5.reformat_column(2, width=14)
+        table5.reformat_column(3, width=5, align="r")
+        table5.reformat_column(4, width=14)
+        table5.reformat_column(5, width=5, align="r")
+        table5.reformat_column(6, width=14)
+        table5.reformat_column(7, width=5, align="r")
 
         table5.add_row("|wAthletics: |n", self.caller.db.skills.get("athletics"),
                        "|wScience: |n", self.caller.db.skills.get("science"),
