@@ -48,7 +48,7 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append("|w.---|n|yAlpha Complex Identity Form|n|w----------------------------------------------.|n")
         message.append("|-|-|500This form is MANDATORY|n")
         message.append("-" * 78)
-        message.append("|[002/// PART ONE   |n|[005 CORE INFORMATION >>>                                          |n")
+        message.append("|[002|w/// PART ONE   |n|[005 |wCORE INFORMATION >>>                                          |n")
 
         name = "|wName: |n{}".format(self.caller.key)
         clearance = "|wSecurity Clearance: |n{}".format(self.caller.db.clearance or "")
@@ -63,9 +63,13 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append(unicode(table1))
 
         table2 = evtable.EvTable(sector, clone, gender, border=None)
-        table2.reformat_column(0, width=24)
+        table2.reformat_column(0, width=30)
         table2.reformat_column(1, width=18)
         message.append(unicode(table2))
+        message.append(personality)
+
+        message.append("|[002/// PART TWO   |n|[005 DEVELOPMENT >>>                                               |n")
+
 
         self.caller.msg("\n".join(message))
 
