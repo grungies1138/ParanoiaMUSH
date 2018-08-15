@@ -78,7 +78,19 @@ class SheetCommand(default_cmds.MuxCommand):
         table3.reformat_column(1, width=48)
         message.append(unicode(table3))
 
-        message.append("   |[055|115 STATS >>>                                                                 ")
+        message.append(" |[055|115 STATS >>>                                                                 ")
+
+        violence = "|wViolence: |n{}".format(self.caller.db.stats.get("violence") or 0)
+        brains = "|wBrains: |n{}".format(self.caller.db.stats.get("brains") or 0)
+        chutzpah = "|wChutzpah: |n{}".format(self.caller.db.stats.get("chutzpah") or 0)
+        mechanics = "|wMechanics: |n{}".format(self.caller.db.stats.get("mechanics") or 0)
+
+        table4 = evtable.EvTable(violence, brains, chutzpah, mechanics, border=None)
+        table4.reformat_column(0, width=19)
+        table4.reformat_column(1, width=19)
+        table4.reformat_column(2, width=19)
+        table4.reformat_column(3, width=19)
+        message.append(unicode(table4))
 
         self.caller.msg("\n".join(message))
 
