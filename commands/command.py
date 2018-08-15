@@ -106,7 +106,7 @@ class SheetCommand(default_cmds.MuxCommand):
 
 
 
-        table5 = evtable.EvTable("", "", "", "", "", "", "", "",  border=None)
+        table5 = evtable.EvTable("", "", "", "", "", "", "", "",  border=None, header=False)
         table5.reformat_column(0, width=16)
         table5.reformat_column(1, width=3, align="r")
         table5.reformat_column(2, width=16)
