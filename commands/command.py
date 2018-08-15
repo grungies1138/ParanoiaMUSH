@@ -49,11 +49,24 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append("|-|-|500This form is MANDATORY|n")
         message.append("-" * 78)
         message.append("|[002/// PART ONE   |n|[005 CORE INFORMATION >>>                                          |n")
+
         name = "|wName: |n{}".format(self.caller.key)
         clearance = "|wSecurity Clearance: |n{}".format(self.caller.db.clearance or "")
-        table = evtable.EvTable(name, clearance, border=None)
-        message.append(unicode(table))
-        # message.append()
+        sector = "|wHome Sector: |n{}".format(self.caller.db.sector or "")
+        clone = "|wClone #: |n{}".format(self.caller.db.clone)
+        gender = "|wGender: |n{}".format(self.caller.db.gender)
+        personality = "|wPersonality: |n{}".format(", ".join(self.caller.db.personality or []))
+
+        table1 = evtable.EvTable(name, clearance, border=None)
+        table1.reformat_column(0, width=38)
+        table1.reformat_column(1, width=40)
+        message.append(unicode(table1))
+
+        table2 = evtable.EvTable(sector, clone, gender, border=None)
+        table2.reformat_column(0, width=24)
+        table2.reformat_column(1, width=14)
+        message.append(unicode(table2))
+
         self.caller.msg("\n".join(message))
 
 

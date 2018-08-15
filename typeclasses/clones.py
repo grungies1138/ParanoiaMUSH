@@ -23,6 +23,7 @@ class Clone(Character):
         self.db.sector = ""
         self.db.gender = ""
         self.db.personality = []
+        self.db.clone = 0
 
     def return_appearance(self, looker):
         if not looker:
