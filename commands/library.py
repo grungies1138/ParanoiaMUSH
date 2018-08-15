@@ -22,4 +22,4 @@ def titlecase(s):
                              mo.group(0)[1:].lower(), s)
 
 def pad_right(main, right, width):
-    return "{}$pad({}, {}, r)".format(main, right, width - len(right))
+    return "{}$pad({}, {}, r)".format(main, right, width - len(str(right)))
