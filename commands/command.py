@@ -79,7 +79,7 @@ class SheetCommand(default_cmds.MuxCommand):
         table3.reformat_column(1, width=48)
         message.append(unicode(table3) + "\n")
 
-        message.append("|[035|002 STATS >>>                                                                    ")
+
 
         # violence = "|wViolence: |n{}".format(self.caller.db.stats.get("violence"))
         # brains = "|wBrains: |n{}".format(self.caller.db.stats.get("brains"))
@@ -100,11 +100,11 @@ class SheetCommand(default_cmds.MuxCommand):
                        "|wBrains: |n", self.caller.db.stats.get("brains"),
                        "|wChutzpah: |n", self.caller.db.stats.get("chutzpah"),
                        "|wMechanics: |n", self.caller.db.stats.get("mechanics"))
+        message.append("|[035|002 STATS >>>                                                                    " +
+                       unicode(table4) + "\n")
+        # message.append(unicode(table4) + "\n")
 
-        message.append(unicode(table4) + "\n")
 
-        message.append(
-            "|[002|w/// PART THREE  |n|[005 |wSKILLS >>>                                                   |n")
 
         table5 = evtable.EvTable("", "", "", "", "", "", "", "",  border=None)
         table5.reformat_column(0, width=16)
@@ -135,8 +135,10 @@ class SheetCommand(default_cmds.MuxCommand):
                        "|wAlpha Complex: |n", self.caller.db.skills.get("alpha complex"),
                        "|wStealth: |n", self.caller.db.skills.get("stealth"),
                        "|wDemolitions: |n", self.caller.db.skills.get("demolitions"))
-
-        message.append(unicode(table5) + "\n")
+        message.append(
+            "|[002|w/// PART THREE  |n|[005 |wSKILLS >>>                                                   |n" +
+            unicode(table5) + "\n")
+        # message.append(unicode(table5) + "\n")
 
         message.append(
             "|[002|w/// PART FOUR   |n|[005 |wWELLBEING >>>                                                |n")
