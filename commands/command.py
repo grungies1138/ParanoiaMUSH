@@ -64,7 +64,7 @@ class SheetCommand(default_cmds.MuxCommand):
 
         table2 = evtable.EvTable(sector, clone, gender, border=None)
         table2.reformat_column(0, width=24)
-        table2.reformat_column(1, width=14)
+        table2.reformat_column(1, width=18)
         message.append(unicode(table2))
 
         self.caller.msg("\n".join(message))
