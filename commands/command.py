@@ -9,7 +9,7 @@ from evennia import Command as BaseCommand
 from evennia import default_cmds
 from evennia.utils import evtable
 from world.static_data import HEALTH
-from commands.library import header
+from commands.library import pad_right
 
 
 class Command(BaseCommand):
@@ -111,10 +111,14 @@ class SheetCommand(default_cmds.MuxCommand):
         intimidate = "|wIntimidate: |n{}".format(self.caller.db.skills.get("intimidate"))
         program = "|wProgram: |n{}".format(self.caller.db.skills.get("program"))
 
-        throw = "|wThrow: |n{}".format(self.caller.db.skills.get("throw"))
-        alpha = "|wAlpha Complex: |n{}".format(self.caller.db.skills.get("alpha complex"))
-        stealth = "|wStealth: |n{}".format(self.caller.db.skills.get("stealth"))
-        demolitions = "|wDemolitions: |n{}".format(self.caller.db.skills.get("demolitions"))
+        # throw = "|wThrow: |n{}".format(self.caller.db.skills.get("throw"))
+        throw = pad_right("|wThrow: |n", self.caller.db.skills.get("throw"), 19)
+        # alpha = "|wAlpha Complex: |n{}".format(self.caller.db.skills.get("alpha complex"))
+        alpha = pad_right("|wAlpha Complex: |n", self.caller.db.skills.get("alpha complex"), 19)
+        # stealth = "|wStealth: |n{}".format(self.caller.db.skills.get("stealth"))
+        stealth = pad_right("|wStealth: |n", self.caller.db.skills.get("stealth"), 19)
+        # demolitions = "|wDemolitions: |n{}".format(self.caller.db.skills.get("demolitions"))
+        demolitions = pad_right("|wDemolitions: |n", self.caller.db.skills.get("demolitions"), 19)
 
         table5 = evtable.EvTable(athletics, science, bluff, operate, border=None)
         table5.reformat_column(0, width=19)
