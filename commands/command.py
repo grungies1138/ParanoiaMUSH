@@ -92,6 +92,9 @@ class SheetCommand(default_cmds.MuxCommand):
         table4.reformat_column(3, width=19)
         message.append(unicode(table4))
 
+        message.append(
+            "|[002|w/// PART THREE |n|[005 |wSKILLS >>>                                                    |n")
+
         self.caller.msg("\n".join(message))
 
 
