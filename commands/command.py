@@ -96,57 +96,57 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append(
             "|[002|w/// PART THREE  |n|[005 |wSKILLS >>>                                                   |n")
 
-        athletics = "|wAthletics: |n{}".format(self.caller.db.skills.get("athletics"))
-        science = "|wScience: |n{}".format(self.caller.db.skills.get("science"))
-        bluff = "|wBluff: |n{}".format(self.caller.db.skills.get("bluff"))
-        operate = "|wOperate: |n{}".format(self.caller.db.skills.get("operate"))
+        # athletics = "|wAthletics: |n{}".format(self.caller.db.skills.get("athletics"))
+        # science = "|wScience: |n{}".format(self.caller.db.skills.get("science"))
+        # bluff = "|wBluff: |n{}".format(self.caller.db.skills.get("bluff"))
+        # operate = "|wOperate: |n{}".format(self.caller.db.skills.get("operate"))
 
-        guns = "|wGuns: |n{}".format(self.caller.db.skills.get("guns"))
-        psychology = "|wPsychology: |n{}".format(self.caller.db.skills.get("psychology"))
-        charm = "|wCharm: |n{}".format(self.caller.db.skills.get("charm"))
-        engineer = "|wEngineer: |n{}".format(self.caller.db.skills.get("engineer"))
+        # guns = "|wGuns: |n{}".format(self.caller.db.skills.get("guns"))
+        # psychology = "|wPsychology: |n{}".format(self.caller.db.skills.get("psychology"))
+        # charm = "|wCharm: |n{}".format(self.caller.db.skills.get("charm"))
+        # engineer = "|wEngineer: |n{}".format(self.caller.db.skills.get("engineer"))
 
-        melee = "|wMelee: |n{}".format(self.caller.db.skills.get("melee"))
-        bureaucracy = "|wBureaucracy: |n{}".format(self.caller.db.skills.get("bureaucracy"))
-        intimidate = "|wIntimidate: |n{}".format(self.caller.db.skills.get("intimidate"))
-        program = "|wProgram: |n{}".format(self.caller.db.skills.get("program"))
+        # melee = "|wMelee: |n{}".format(self.caller.db.skills.get("melee"))
+        # bureaucracy = "|wBureaucracy: |n{}".format(self.caller.db.skills.get("bureaucracy"))
+        # intimidate = "|wIntimidate: |n{}".format(self.caller.db.skills.get("intimidate"))
+        # program = "|wProgram: |n{}".format(self.caller.db.skills.get("program"))
 
         # throw = "|wThrow: |n{}".format(self.caller.db.skills.get("throw"))
-        throw = pad_right("|wThrow: |n", self.caller.db.skills.get("throw"), 19)
         # alpha = "|wAlpha Complex: |n{}".format(self.caller.db.skills.get("alpha complex"))
-        alpha = pad_right("|wAlpha Complex: |n", self.caller.db.skills.get("alpha complex"), 19)
         # stealth = "|wStealth: |n{}".format(self.caller.db.skills.get("stealth"))
-        stealth = pad_right("|wStealth: |n", self.caller.db.skills.get("stealth"), 19)
         # demolitions = "|wDemolitions: |n{}".format(self.caller.db.skills.get("demolitions"))
-        demolitions = pad_right("|wDemolitions: |n", self.caller.db.skills.get("demolitions"), 19)
 
-        table5 = evtable.EvTable(athletics, science, bluff, operate, border=None)
-        table5.reformat_column(0, width=19)
-        table5.reformat_column(1, width=19)
-        table5.reformat_column(2, width=19)
-        table5.reformat_column(3, width=19)
-        message.append(unicode(table5))
+        table5 = evtable.EvTable("", "", "", "", "", "", "", "",  border=None)
+        table5.reformat_column(0, width=13)
+        table5.reformat_column(1, width=6)
+        table5.reformat_column(2, width=13)
+        table5.reformat_column(3, width=6)
+        table5.reformat_column(4, width=13)
+        table5.reformat_column(5, width=6)
+        table5.reformat_column(6, width=13)
+        table5.reformat_column(7, width=6)
 
-        table6 = evtable.EvTable(guns, psychology, charm, engineer, border=None)
-        table6.reformat_column(0, width=19)
-        table6.reformat_column(1, width=19)
-        table6.reformat_column(2, width=19)
-        table6.reformat_column(3, width=19)
-        message.append(unicode(table6))
+        table5.add_row("|wAthletics: |n", self.caller.db.skills.get("athletics"),
+                       "|wScience: |n", self.caller.db.skills.get("science"),
+                       "|wBluff: |n", self.caller.db.skills.get("bluff"),
+                       "|wOperate: |n", self.caller.db.skills.get("operate"))
 
-        table7 = evtable.EvTable(melee, bureaucracy, intimidate, program, border=None)
-        table7.reformat_column(0, width=19)
-        table7.reformat_column(1, width=19)
-        table7.reformat_column(2, width=19)
-        table7.reformat_column(3, width=19)
-        message.append(unicode(table7))
+        table5.add_row("|wGuns: |n", self.caller.db.skills.get("guns"),
+                       "|wPsychology: |n", self.caller.db.skills.get("psychology"),
+                       "|wCharm: |n", self.caller.db.skills.get("charm"),
+                       "|wEngineer: |n", self.caller.db.skills.get("engineer"))
 
-        table8 = evtable.EvTable(throw, alpha, stealth, demolitions, border=None)
-        table8.reformat_column(0, width=19)
-        table8.reformat_column(1, width=19)
-        table8.reformat_column(2, width=19)
-        table8.reformat_column(3, width=19)
-        message.append(unicode(table8) + "\n")
+        table5.add_row("|wMelee: |n", self.caller.db.skills.get("melee"),
+                       "|wBureaucracy: |n", self.caller.db.skills.get("bureaucracy"),
+                       "|wIntimidate: |n", self.caller.db.skills.get("intimidate"),
+                       "|wProgram: |n", self.caller.db.skills.get("program"))
+
+        table5.add_row("|wThrow: |n", self.caller.db.skills.get("throw"),
+                       "|wAlpha Complex: |n", self.caller.db.skills.get("alpha complex"),
+                       "|wStealth: |n", self.caller.db.skills.get("stealth"),
+                       "|wDemolitions: |n", self.caller.db.skills.get("demolitions"))
+
+        message.append(unicode(table5) + "\n")
 
         message.append(
             "|[002|w/// PART FOUR   |n|[005 |wWELLBEING >>>                                                |n")
