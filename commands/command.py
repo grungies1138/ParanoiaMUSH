@@ -145,7 +145,7 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append(unicode(table8))
 
         message.append(
-            "|[002|w/// PART FOUR   |n|[005 |wWELLBEING >>>                                               |n")
+            "|[002|w/// PART FOUR   |n|[005 |wWELLBEING >>>                                                |n")
 
         moxie = "|wMoxie: |n{}".format(self.caller.db.moxie or 0)
         health = "|wHealth: |n{}".format(HEALTH.get(self.caller.db.wounds))
@@ -155,6 +155,14 @@ class SheetCommand(default_cmds.MuxCommand):
         table9.reformat_column(1, width=50)
         message.append(unicode(table9))
 
+        message.append(
+            "|[002|w/// PART FIVE   |n|[005 |wEQUIPMENT >>>                                                |n")
+
+        equipment = [eq for eq in self.contents]
+        for eq in equipment:
+            message.append(eq.key)
+
+        message.append("\n\n")
         self.caller.msg("\n".join(message))
 
 
