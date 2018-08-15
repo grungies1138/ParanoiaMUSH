@@ -71,7 +71,7 @@ class SheetCommand(default_cmds.MuxCommand):
 
         message.append("|[002|w/// PART TWO   |n|[005 |wDEVELOPMENT >>>                                               |n")
 
-        treason = "|wTreason: |n{}".format("*" * self.caller.db.treason or 0)
+        treason = "|wTreason: |n{}".format("*" * (self.caller.db.treason or 0))
         xp = "|wXP Points: |n{}".format(self.caller.db.xp or 0)
         table3 = evtable.EvTable(treason, xp, border=None)
         table3.reformat_column(0, width=30)
