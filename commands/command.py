@@ -78,7 +78,7 @@ class SheetCommand(default_cmds.MuxCommand):
         table3.reformat_column(1, width=48)
         message.append(unicode(table3))
 
-        message.append(" |[055|115 STATS >>>                                                                 ")
+        message.append(" |[055|115 STATS >>>                                                                  ")
 
         violence = "|wViolence: |n{}".format(self.caller.db.stats.get("violence") or 0)
         brains = "|wBrains: |n{}".format(self.caller.db.stats.get("brains") or 0)
