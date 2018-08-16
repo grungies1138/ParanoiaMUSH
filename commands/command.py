@@ -159,7 +159,7 @@ class SheetCommand(default_cmds.MuxCommand):
 
         message.append("\n")
         message.append("*|w---------------------------------------------------"
-                       + message.append("|500This form is MANDATORY|w---|n*"))
+                       + "|500This form is MANDATORY|w---|n*")
         self.caller.msg("\n".join(message))
 
 
