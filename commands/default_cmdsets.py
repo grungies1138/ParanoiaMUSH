@@ -17,6 +17,13 @@ own cmdsets by inheriting from them or directly from `evennia.CmdSet`.
 from evennia import default_cmds
 from commands.command import SheetCommand
 
+class ChargenCmdSet(default_cmds.CharacterCmdSet):
+    key = "ChargenCommands"
+    priority = 2
+
+    def at_cmdset_creation(self):
+        pass
+
 
 class CharacterCmdSet(default_cmds.CharacterCmdSet):
     """

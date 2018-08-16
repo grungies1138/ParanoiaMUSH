@@ -9,7 +9,6 @@ from evennia import Command as BaseCommand
 from evennia import default_cmds
 from evennia.utils import evtable
 from world.static_data import HEALTH
-from commands.library import pad_right
 
 
 class Command(BaseCommand):
@@ -47,7 +46,7 @@ class SheetCommand(default_cmds.MuxCommand):
     def func(self):
         message = []
         message.append("|w.---|n|yAlpha Complex Identity Form|n|w----------------------------------------------.|n")
-        message.append("|-|-|500This form is MANDATORY|n")
+
         message.append("-" * 78)
         message.append("|[002|w/// PART ONE    |n|[005 |wCORE INFORMATION >>>                                         |n")
 
@@ -159,6 +158,8 @@ class SheetCommand(default_cmds.MuxCommand):
             message.append(eq.key)
 
         message.append("\n")
+        message.append("*|w---------------------------------------------------"
+                       + message.append("|500This form is MANDATORY|w---|n*"))
         self.caller.msg("\n".join(message))
 
 
