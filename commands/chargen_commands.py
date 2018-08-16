@@ -1,6 +1,7 @@
 from evennia import default_cmds
 from evennia.utils.evmenu import EvMenu
 from evennia.utils import evtable
+from world.static_data import EYES, HAIR
 
 HELP = "Chargen"
 
@@ -48,14 +49,32 @@ def chargen_custom(caller):
     if caller.db.eyes == "":
         options += ({"desc": "Eyes", "goto": "select_eyes"},)
     else:
-        options += ({"desc": "|=kEyes|n", "goto": "select_eyes"},)
+        options += ({"desc": "|xEyes|n", "goto": "select_eyes"},)
 
     return text, options
 
 
+def select_eyes(caller):
+    text = "Please select from one of the following choices for eye color.\n\n"
+
+    options = ()
+
+    for k,v in EYES:
+        options += ({"key": k, "desc": v, "exec": "set_eyes", "goto": "chargen_custom"},)
+
+    return text, options
+
+def set_eyes(caller, raw_string):
+    eyes = raw_string.strip().lower()
+    if eyes in EYES:
+        caller.db.eyes = eyes
+    else:
+        caller.msg("Invalid input.  Try again.")
+
+
 def node_formatter(nodetext, optionstext, caller=None):
     separator1 = "|002_|n" * 78 + "\n\n"
-    separator2 = "\n" + "|002_|n" * 78 + "\n\nYou may type '|yq|n' or '|yquit|n' " \
+    separator2 = "\n" + "|002_|n" * 78 + "\n\nYou may type '|gq|n' or '|gquit|n' " \
                                          "at any time to quit this application.\n" + "|002_|n" * 78 + "\n\n"
     return separator1 + nodetext + separator2 + optionstext
 
