@@ -46,8 +46,6 @@ class SheetCommand(default_cmds.MuxCommand):
     def func(self):
         message = []
         message.append("|w.---|n|yAlpha Complex Identity Form|n|w----------------------------------------------.|n")
-
-        message.append("-" * 78)
         message.append("|[002|w/// PART ONE    |n|[005 |wCORE INFORMATION >>>                                         |n")
 
         name = "|wName: |n{}".format(self.caller.key)
@@ -158,8 +156,7 @@ class SheetCommand(default_cmds.MuxCommand):
             message.append(eq.key)
 
         message.append("\n")
-        message.append("*|w---------------------------------------------------"
-                       + "|500This form is MANDATORY|w---|n*")
+        message.append("*|w---------------------------------------------------" + "|500This form is MANDATORY|w---|n*")
         self.caller.msg("\n".join(message))
 
 
