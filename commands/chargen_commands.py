@@ -65,7 +65,7 @@ def select_eyes(caller):
     return text, options
 
 def set_eyes(caller, raw_string):
-    eyes = raw_string.strip().lower()
+    eyes = raw_string.strip()
     if eyes in EYES:
         caller.db.eyes = eyes
     else:
