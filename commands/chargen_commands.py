@@ -59,7 +59,7 @@ def select_eyes(caller):
 
     options = ()
 
-    for k,v in EYES:
+    for k,v in EYES.iteritems():
         options += ({"key": k, "desc": v, "exec": "set_eyes", "goto": "chargen_custom"},)
 
     return text, options
