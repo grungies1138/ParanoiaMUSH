@@ -42,7 +42,7 @@ def chargen_random(caller):
 
 def chargen_custom(caller):
     text = "You've selected: |yRANDOMIZE|n.\n\nInitiating randomization...\n\n|rError:|n Randomization algorithm " \
-           "fault detected.  Defaulting to customization mode.  Please select an option to customize."
+           "fault detected.  Defaulting to customization mode.\n\nPlease select an option to customize."
 
     options = ()
 
@@ -59,8 +59,8 @@ def select_eyes(caller):
 
     options = ()
 
-    for k,v in EYES.iteritems():
-        options += ({"key": k, "desc": v, "exec": "set_eyes", "goto": "chargen_custom"},)
+    #for k,v in EYES.iteritems():
+     #   options += ({"key": k, "desc": v, "exec": "set_eyes", "goto": "chargen_custom"},)
 
     return text, options
 
