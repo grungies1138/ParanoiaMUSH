@@ -54,9 +54,9 @@ def chargen_custom(caller):
 
 
 def node_formatter(nodetext, optionstext, caller=None):
-    separator1 = "|010_|n" * 78 + "\n\n"
-    separator2 = "\n" + "|010_|n" * 78 + "\n\n|330You may type '|540q|n' |330or|n '|540quit|n' " \
-                                         "|330at any time to quit this application.|n\n" + "|010_|n" * 78 + "\n\n"
+    separator1 = "|002_|n" * 78 + "\n\n"
+    separator2 = "\n" + "|002_|n" * 78 + "\n\nYou may type '|yq|n' or '|yquit|n' " \
+                                         "at any time to quit this application.\n" + "|002_|n" * 78 + "\n\n"
     return separator1 + nodetext + separator2 + optionstext
 
 def options_formatter(optionlist, caller=None):

@@ -77,12 +77,6 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append(unicode(table3) + "\n")
 
 
-
-        # violence = "|wViolence: |n{}".format(self.caller.db.stats.get("violence"))
-        # brains = "|wBrains: |n{}".format(self.caller.db.stats.get("brains"))
-        # chutzpah = "|wChutzpah: |n{}".format(self.caller.db.stats.get("chutzpah"))
-        # mechanics = "|wMechanics: |n{}".format(self.caller.db.stats.get("mechanics"))
-
         table4 = evtable.EvTable("", "", "", "", "", "", "", "",  border=None)
         table4.reformat_column(0, width=16)
         table4.reformat_column(1, width=3, align="r")
