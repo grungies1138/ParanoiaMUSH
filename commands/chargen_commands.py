@@ -24,7 +24,7 @@ class ChargenCommand(default_cmds.MuxCommand):
 
 
 def menu_start_node(caller):
-    text = "Initiating Clone Replication, Configuration Subroutine...\n"
+    text = "Initiating Clone Replication and Configuration Subroutine...\n"
     text += "Subroutine initiated.\n\n"
     text += "Welcome, new Citizen!  I am the Computer.  I am your friend.  You are about to enter Alpha Complex. " \
             "Humanity's home since the year |y<REDACTED>|n.  Long ago, I helped save the human race from the " \
@@ -41,8 +41,8 @@ def chargen_random(caller):
 
 
 def chargen_custom(caller):
-    text = "Selection detected.\n\nInitiating randomization...\n\n|rError:|n Randomization algorithm fault detected. " \
-           " Defaulting to customization mode.  Please select an option to customize."
+    text = "You've selected: |yRANDOMIZE|n.\n\nInitiating randomization...\n\n|rError:|n Randomization algorithm " \
+           "fault detected.  Defaulting to customization mode.  Please select an option to customize."
 
     options = ()
 
