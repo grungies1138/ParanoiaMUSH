@@ -46,7 +46,7 @@ def chargen_custom(caller):
 
     options = ()
 
-    if caller.db.eyes:
+    if caller.db.eyes == "":
         options += ({"desc": "Eyes", "goto": "select_eyes"},)
     else:
         options += ({"desc": "|xEyes|n", "goto": "select_eyes"},)
@@ -66,13 +66,12 @@ def select_eyes(caller):
     return text, options
 
 def set_eyes(caller, caller_input):
-    eyes_input = int(caller_input.strip())
-    print(EYES.get(eyes_input))
+    eyes_input = int(caller_input.strip()) - 1
 
-    # if eyes_input in EYES:
-    #     caller.db.eyes = eyes_input
-    # else:
-    #     caller.msg("Invalid input.  Try again.")
+    if eyes_input in EYES:
+        caller.db.eyes = eyes_input
+    else:
+        caller.msg("Invalid input.  Try again.")
 
 
 def node_formatter(nodetext, optionstext, caller=None):
