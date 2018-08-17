@@ -15,7 +15,7 @@ class Clone(Character):
         self.db.duty = ""
         self.db.secret_societies = []
         self.db.hair = ""
-        self.db.eyes = ""
+        self.db.eyes = 0
         self.db.skin = ""
         self.db.height = ""
         self.db.weight = ""

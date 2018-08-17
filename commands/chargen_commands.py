@@ -46,7 +46,7 @@ def chargen_custom(caller):
 
     options = ()
 
-    if caller.db.eyes == "":
+    if caller.db.eyes == 0:
         options += ({"desc": "Eyes", "goto": "select_eyes"},)
     else:
         options += ({"desc": "|xEyes|n", "goto": "select_eyes"},)
@@ -66,7 +66,7 @@ def select_eyes(caller):
     return text, options
 
 def set_eyes(caller, caller_input):
-    eyes_input = int(caller_input.strip()) - 1
+    eyes_input = int(caller_input.strip())
 
     if eyes_input in EYES:
         caller.db.eyes = eyes_input
