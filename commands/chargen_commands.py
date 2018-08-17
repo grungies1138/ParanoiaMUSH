@@ -154,7 +154,8 @@ def select_height(caller):
 def set_height(caller, caller_input):
     height = caller_input.strip().lower()
     regex = re.compile(r'^(?P<number>\d{2,3})(?P<string>cm|in)$')
-    if regex.match(height):
+    match = regex.match(height)
+    if match:
         number, measure = match.number, match.string
 
     if measure == "cm":
