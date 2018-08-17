@@ -67,12 +67,12 @@ def select_eyes(caller):
 
 def set_eyes(caller, caller_input):
     eyes_input = caller_input.strip()
-    print(eyes_input)
+    print(EYES.get(eyes_input))
 
-    if eyes_input in EYES:
-        caller.db.eyes = eyes_input
-    else:
-        caller.msg("Invalid input.  Try again.")
+    # if eyes_input in EYES:
+    #     caller.db.eyes = eyes_input
+    # else:
+    #     caller.msg("Invalid input.  Try again.")
 
 
 def node_formatter(nodetext, optionstext, caller=None):
