@@ -71,8 +71,8 @@ def set_eyes(caller, raw_string):
 
     # if eyes in EYES:
     #     caller.db.eyes = eyes
-    else:
-        caller.msg("Invalid input.  Try again.")
+    # else:
+    #     caller.msg("Invalid input.  Try again.")
 
 
 def node_formatter(nodetext, optionstext, caller=None):
