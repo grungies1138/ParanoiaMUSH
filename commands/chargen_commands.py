@@ -158,6 +158,10 @@ def set_height(caller, caller_input):
     if match:
         number, measure = match.group('number'), match.group('string')
 
+    print("Number: {}".format(number))
+    print("Measure: {}".format(measure))
+
+
     if measure == "cm":
         if number < 150 or number > 210:
             caller.msg("|rERROR:|n That height is not within the specified parameter limits.  Please try again.")
