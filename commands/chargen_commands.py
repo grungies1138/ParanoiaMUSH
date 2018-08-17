@@ -46,7 +46,7 @@ def chargen_custom(caller):
 
     options = ()
 
-    if caller.db.eyes == "":
+    if caller.db.eyes:
         options += ({"desc": "Eyes", "goto": "select_eyes"},)
     else:
         options += ({"desc": "|xEyes|n", "goto": "select_eyes"},)
@@ -57,10 +57,11 @@ def chargen_custom(caller):
 def select_eyes(caller):
     text = "Please select from one of the following choices for eye color.\n\n"
 
+
     options = ()
 
-    #for e in EYES.iteritems():
-    #    options += ({"desc": EYES[e], "exec": "set_eyes", "goto": "chargen_custom"},)
+    for e in EYES:
+        options += ({"desc": EYES[e], "exec": "set_eyes", "goto": "chargen_custom"},)
 
     return text, options
 
