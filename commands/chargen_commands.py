@@ -40,9 +40,22 @@ def chargen_random(caller):
     pass
 
 
-def chargen_custom(caller):
+def chargen_custom_landing(caller):
     text = "You've selected: |yRANDOMIZE|n.\n\nInitiating randomization...\n\n|rError:|n Randomization algorithm " \
-           "fault detected.  Defaulting to customization mode.\n\nPlease select an option to customize."
+           "fault detected.  Defaulting to customization mode."
+
+    options = ({"desc": "Continue", "goto": "chargen_custom"},)
+
+    return text, options
+
+
+def chargen_custom(caller):
+    text = "These are the customization options and your current configuration.  To choose a custom setting, or to " \
+           "change a setting once it is set, simply select the option below to be taken to the customization screen." \
+           "\n\n|wEyes:|n {}\n|wHair:|n {}\n|wHeight:|n {}\n|wWeight:|n {}\n|wSkin:|n {}\n|wPersonality:|n {}" \
+           "\n\nPlease select an option to customize.".format(EYES.get(caller.db.eyes), HAIR.get(caller.db.hair),
+                                                              caller.db.height, caller.db.weight, caller.db.skin,
+                                                              ", ".join(caller.db.personality))
 
     options = ()
 
