@@ -1,3 +1,4 @@
+import re
 from evennia import default_cmds
 from evennia.utils.evmenu import EvMenu
 from evennia.utils import evtable
@@ -36,6 +37,9 @@ def menu_start_node(caller):
 
     return text, options
 
+########################################################################################################################
+# RANDOMIZE
+########################################################################################################################
 def chargen_random(caller):
     pass
 
@@ -52,8 +56,8 @@ def chargen_custom_landing(caller):
 def chargen_custom(caller):
     text = "These are the customization options and your current configuration.  To choose a custom setting, or to " \
            "change a setting once it is set, simply select the option below to be taken to the customization screen." \
-           "\n\n|wEyes:|n {}\n|wHair:|n {}\n|wHeight:|n {}\n|wWeight:|n {}\n|wSkin:|n {}\n|wPersonality:|n {}" \
-           "\n\nPlease select an option to customize.".format(EYES.get(caller.db.eyes), HAIR.get(caller.db.hair),
+           "\n\n|wGender:|n {}\n|wEyes:|n {}\n|wHair:|n {}\n|wHeight:|n {}\n|wWeight:|n {}\n|wSkin:|n {}\n|wPersonality:|n {}" \
+           "\n\nPlease select an option to customize.".format(caller.db.gender, EYES.get(caller.db.eyes), HAIR.get(caller.db.hair),
                                                               caller.db.height, caller.db.weight, caller.db.skin,
                                                               ", ".join(caller.db.personality))
 
@@ -64,7 +68,125 @@ def chargen_custom(caller):
     else:
         options += ({"desc": "|xEyes|n", "goto": "select_eyes"},)
 
+
+    if caller.db.hair == 0:
+        options += ({"desc": "Hair", "goto": "select_hair"},)
+    else:
+        options += ({"desc": "|xHair|n", "goto": "select_hair"},)
+
+
+    if not caller.db.height:
+        options += ({"desc": "Height", "goto": "select_height"},)
+    else:
+        options += ({"desc": "|xHeight|n", "goto": "select_height"},)
+
+
+    if not caller.db.weight:
+        options += ({"desc": "Weight", "goto": "select_weight"},)
+    else:
+        options += ({"desc": "|xWeight|n", "goto": "select_weight"},)
+
+
+    if not caller.db.skin:
+        options += ({"desc": "Skin", "goto": "select_skin"},)
+    else:
+        options += ({"desc": "|xSkin|n", "goto": "select_skin"},)
+
+
+    if not caller.db.personality:
+        options += ({"desc": "Personality", "goto": "select_personality"},)
+    else:
+        options += ({"desc": "|xPersonality|n", "goto": "select_personality"},)
+
+
+    if not caller.db.gender:
+        options += ({"desc": "Gender", "goto": "select_gender"},)
+    else:
+        options += ({"desc": "|xGender|n", "goto": "select_gender"},)
+
     return text, options
+
+
+def select_gender(caller):
+    pass
+
+
+def set_gender(caller, caller_input):
+    pass
+
+
+def select_personality(caller):
+    pass
+
+
+def set_personality(caller, caller_input):
+    pass
+
+
+def select_skin(caller):
+    pass
+
+
+def set_skin(caller, caller_input):
+    pass
+
+
+def select_weight(caller):
+    pass
+
+
+def set_weight(caller, caller_input):
+    pass
+
+
+def select_height(caller):
+    text = "Please enter the height you wish to be.  You may select a number of inches or centimeters." \
+           "\n\n\t|wExample:|n if you wish to be 1.5 meters tall, enter: |y150cm|n or for being 5'8\" enter: |y68in|n" \
+           "\n\n|rNOTE:|n selecting a height too small or too large can result in undesirable mutation.  Therefore " \
+           "there are limitations set.  See the limitations for each unit of measure below.\n\n|wMetric:|n 150cm - " \
+           "210cm\n|wImperial:|n 53in - 70in\n\n"
+
+    options = ({"key": "_default", "exec": set_height, "goto": "chargen_custom"},)
+
+    return text, options
+
+
+def set_height(caller, caller_input):
+    height = caller_input.strip().lower()
+    regex = re.compile(r'^(?P<number>\d{2,3})(?P<string>cm|in)$')
+    if regex.match(height):
+        number, measure = regex.match.number, regex.match.string
+
+    if measure == "cm":
+        if number < 150 or number > 210:
+            caller.msg("|rERROR:|n That height is not within the specified parameter limits.  Please try again.")
+        else:
+            caller.db.height = height
+
+    if measure == "in":
+        if number < 53 or number > 70:
+            caller.msg("|rERROR:|n That height is not within the specified parameter limits.  Please try again.")
+        else:
+            caller.db.height = height
+
+
+def select_hair(caller):
+    text = "Please select from one of the following options for hair color and style.\n\n"
+
+    options = ()
+
+    for h in HAIR:
+        options += ({"desc": HAIR[h], "exec": set_hair, "goto": "chargen_custom"},)
+
+    return text, options
+
+
+def set_hair(caller, caller_input):
+    hair = int(caller_input.strip())
+    if hair in HAIR:
+        caller.db.hair = hair
+    else:
+        caller.msg("|rERROR:|n Invalid input.  Try again.")
 
 
 def select_eyes(caller):
@@ -84,7 +206,7 @@ def set_eyes(caller, caller_input):
     if eyes_input in EYES:
         caller.db.eyes = eyes_input
     else:
-        caller.msg("Invalid input.  Try again.")
+        caller.msg("|rERROR:|n Invalid input.  Try again.")
 
 
 def node_formatter(nodetext, optionstext, caller=None):
