@@ -61,7 +61,7 @@ def select_eyes(caller):
     options = ()
 
     for e in EYES:
-        options += ({"desc": EYES[e], "exec": "set_eyes", "goto": "chargen_custom"},)
+        options += ({"desc": EYES[e], "exec": set_eyes, "goto": "chargen_custom"},)
 
     return text, options
 
