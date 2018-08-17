@@ -159,7 +159,7 @@ def set_height(caller, caller_input):
         number, measure = match.group('number'), match.group('string')
 
     print("Number: {}".format(number))
-    print("Measure: {}".format(measure))
+    print("Measure: {}".format(measure == "cm"))
 
 
     if measure == "cm":
