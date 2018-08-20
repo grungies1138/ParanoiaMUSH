@@ -126,7 +126,7 @@ def select_personality(caller):
            "of personality you wish to have!  Please select one of following positive traits.  After all, a positive" \
            " outlook help improve happiness for you and your fellow citizens.  And |rHappiness is mandatory|n.\n\n"
 
-    text += ", ".join(PERSONALITY.iterkeys())
+        text += ", ".join(PERSONALITY.iterkeys())
 
     options = ()
 
@@ -146,19 +146,18 @@ def remove_personality(caller):
     options = ()
 
     for per in caller.db.personality:
-        options += ({"desc": per, "exec": del_personality, "goto": "select_personality"},)
+        options += ({"key": per, "exec": del_personality, "goto": "select_personality"},)
 
     return text, options
 
 
 def del_personality(caller, caller_input):
     per = caller_input.strip().lower()
-    print(str(per))
-    print(str(caller.db.personality))
-    pers = caller.db.personality
-    if per in caller.db.personality:
-        pers.remove(PERSONALITY[per])
-    print(str(pers))
+
+    if per not in PERSONALITY:
+        caller.msg("|rERROR:|n Invalid input.  Try again.")
+    else:
+        caller.db.personality.remove(per)
 
 
 
