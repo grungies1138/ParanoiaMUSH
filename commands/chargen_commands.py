@@ -56,10 +56,10 @@ def chargen_custom_landing(caller):
 def chargen_custom(caller):
     text = "These are the customization options and your current configuration.  To choose a custom setting, or to " \
            "change a setting once it is set, simply select the option below to be taken to the customization screen." \
-           "\n\n|wGender:|n {}\n|wEyes:|n {}\n|wHair:|n {}\n|wHeight:|n {}\n|wWeight:|n {}\n|wSkin:|n {}\n|wPersonality:|n {}" \
-           "\n\nPlease select an option to customize.".format(caller.db.gender, EYES.get(caller.db.eyes), HAIR.get(caller.db.hair),
-                                                              caller.db.height, caller.db.weight, SKIN[caller.db.skin],
-                                                              ", ".join(caller.db.personality))
+           "\n\n|wGender:|n {}\n|wEyes:|n {}\n|wHair:|n {}\n|wHeight:|n {}\n|wWeight:|n {}\n|wSkin:|n {}\n" \
+           "|wPersonality:|n {}\n|wGender:|n {}\n\nPlease select an option to customize.".format(caller.db.gender,
+            EYES.get(caller.db.eyes), HAIR.get(caller.db.hair), caller.db.height, caller.db.weight,
+            SKIN[caller.db.skin], ", ".join(caller.db.personality), caller.db.gender)
 
     options = ()
 
@@ -108,11 +108,19 @@ def chargen_custom(caller):
 
 
 def select_gender(caller):
-    pass
+    text = "Hello citizen.  I, your friend the Computer, can help you select a gender.  Gender has been deemed too " \
+           "provocative to be uncensored.  Humans tend to have difficulties when it comes to gender roles and " \
+           "stereotypes.  Therefore, I have censored all references to gender both in files and within your visual " \
+           "field.  However, clones often feel the need to express a gender of their choosing.  In order to make you " \
+           "more happy, remember that |rHappiness is Mandatory|n, please enter the gender of your choosing.  Since I " \
+           "maintain full control over procreation, this is essentially pointless and merely bit of \'window " \
+           "dressing\'.  Enjoy!"
+
+    options = ({"key": "_default", "exec": set_gender, "goto": "chargen_custom"},)
 
 
 def set_gender(caller, caller_input):
-    pass
+    caller.db.gender = caller_input.strip().lower()
 
 
 def select_personality(caller):
@@ -123,8 +131,8 @@ def select_personality(caller):
                 "done here."
     else:
         text += "Through advanced neural sequencing, I, your friend, the Computer, can even help you determine the type " \
-           "of personality you wish to have!  Please select one of following positive traits.  After all, a positive" \
-           " outlook help improve happiness for you and your fellow citizens.  And |rHappiness is mandatory|n.\n\n"
+           "of personality you wish to have! After all, a positive outlook help improve happiness for you and your " \
+                "fellow citizens.  And |rHappiness is mandatory|n.\n\nPlease select one of the following traits.\n\n"
 
         text += ", ".join(PERSONALITY.iterkeys())
 
