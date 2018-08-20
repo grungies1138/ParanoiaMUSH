@@ -2,7 +2,7 @@ import re
 from evennia import default_cmds
 from evennia.utils.evmenu import EvMenu
 from evennia.utils import evtable
-from world.static_data import EYES, HAIR
+from world.static_data import EYES, HAIR, SKIN, PERSONALITY
 
 HELP = "Chargen"
 
@@ -116,35 +116,114 @@ def set_gender(caller, caller_input):
 
 
 def select_personality(caller):
-    pass
+    text = ""
+    if len(caller.db.personality) == 3:
+        text += "You have already selected three personality traits.  No one likes someone with too much " \
+                "personality.  You may choose to remove one and replace it with another, but otherwise you are " \
+                "done here."
+    else:
+        text += "Through advanced neural sequencing, I, your friend, the Computer, can even help you determine the type " \
+           "of personality you wish to have!  Please select one of following positive traits.  After all, a positive" \
+           " outlook help improve happiness for you and your fellow citizens.  And |rHappiness is mandatory|n.\n\n"
+
+    text += ", ".join(PERSONALITY.iterkeys())
+
+    options = ()
+
+    options += ({"key": "_default", "exec": set_personality, "goto": "chargen_custom"},)
+
+    if len(caller.db.personality) > 0:
+        options += ({"desc": "Remove", "goto": "remove_personality"},)
+
+    options += ({"key": "back", "desc": "Back", "goto": "chargen_custom"},)
+
+    return text, options
+
+
+def remove_personality(caller):
+    text = "Please select the personality trait you wish to remove from your clone."
+
+    options = ()
+
+    for per in caller.db.personality:
+        options += ({"desc": per, "exec": del_personality, "goto": "select_personality"},)
+
+    return text, options
+
+
+def del_personality(caller, caller_input):
+    per = caller_input.strip().lower()
+    if per in caller.db.personality:
+        caller.db.personality.remove(per)
 
 
 def set_personality(caller, caller_input):
-    pass
+    per = caller_input.strip().lower()
+    if per not in PERSONALITY:
+        caller.msg("|rERROR:|n Invalid input.  Try again.")
+    elif per in caller.db.personality:
+        caller.msg("|rERROR:|n You have already selected that trait.  Please choose another.")
+    else:
+        caller.db.personality.append(per)
 
 
 def select_skin(caller):
-    pass
+    text = "Humans are a tapestry of colors and shades of many varieties.  To offer you the optimal skin color " \
+           "experience I have reduced the number of shades to 7!  Please select one below.\n\n"
+
+    options = ()
+
+    for s in SKIN:
+        options += ({{"desc": SKIN[s], "exec": set_skin, "goto": "chargen_custom"}},)
+
+    return text, options
 
 
 def set_skin(caller, caller_input):
-    pass
+    skin = int(caller_input.strip())
+    if skin in SKIN:
+        caller.db.skin = skin
+    else:
+        caller.msg("|rERROR:|n Invalid input.  Try again.")
 
 
 def select_weight(caller):
-    pass
+    text = "Please enter the weight you wish to be.  You may select a number of pounds or kilograms. " \
+           "\n\n|wExample:|n if you wish to be 112 pounds, enter: |y112lbs|n or for being 67 kilograms, enter:" \
+           " |y67kgs|n\n\n|rNOTE:|n Selecting a weight to small or too large can result in undesirable mutations.  " \
+           "Therefore, the following limitations are in effect:\n\n|wMetric:|n 45kgs - 100kgs\n|wImperial:|n 100lbs - " \
+           "220lbs"
+
+    options = ({"key": "_default", "exec": set_weight, "goto": "chargen_custom"},)
+
+    return text, options
 
 
 def set_weight(caller, caller_input):
-    pass
+    weight = caller_input.strip().lower()
+    regex = re.compile(r'^(?P<number>\d{2,3})(?P<string>cm|in)$')
+    match = regex.match(weight)
+    if match:
+        number, measure = int(match.group('number')), match.group('string')
+
+    if measure == "kgs":
+        if number < 45 or number > 100:
+            caller.msg("|rERROR:|n That weight is not within the specified parameter limits.  Please try again.")
+        else:
+            caller.db.weight = weight
+
+    if measure == "lbs":
+        if number < 100 or number > 220:
+            caller.msg("|rERROR:|n That weight is not within the specified parameter limits.  Please try again.")
+        else:
+            caller.db.weight = weight
 
 
 def select_height(caller):
     text = "Please enter the height you wish to be.  You may select a number of inches or centimeters." \
            "\n\n\t|wExample:|n if you wish to be 1.5 meters tall, enter: |y150cm|n or for being 5'8\" enter: |y68in|n" \
-           "\n\n|rNOTE:|n selecting a height too small or too large can result in undesirable mutation.  Therefore " \
-           "there are limitations set.  See the limitations for each unit of measure below.\n\n|wMetric:|n 150cm - " \
-           "210cm\n|wImperial:|n 53in - 70in\n\n"
+           "\n\n|rNOTE:|n Selecting a height too small or too large can result in undesirable mutation.  Therefore " \
+           "the following limitations are in effect.\n\n|wMetric:|n 135cm - 210cm\n|wImperial:|n 53in - 82in\n\n"
 
     options = ({"key": "_default", "exec": set_height, "goto": "chargen_custom"},)
 
@@ -158,18 +237,15 @@ def set_height(caller, caller_input):
     if match:
         number, measure = int(match.group('number')), match.group('string')
 
-    print("Number: {}".format(number))
-    print("Measure: {}".format(measure == "cm"))
-
 
     if measure == "cm":
-        if number < 150 or number > 210:
+        if number < 135 or number > 210:
             caller.msg("|rERROR:|n That height is not within the specified parameter limits.  Please try again.")
         else:
             caller.db.height = height
 
     if measure == "in":
-        if number < 53 or number > 70:
+        if number < 53 or number > 82:
             caller.msg("|rERROR:|n That height is not within the specified parameter limits.  Please try again.")
         else:
             caller.db.height = height
