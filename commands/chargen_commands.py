@@ -17,13 +17,13 @@ class ChargenCommand(default_cmds.MuxCommand):
 
     def func(self):
         self.caller.msg("Cerebral Coretech unit installed.")
-        utils.delay(3, self.initial_message)
+        utils.delay(3, self.initial_message, caller=self.caller)
 
-    def initial_message(self):
+    def initial_message(self, caller):
         self.caller.msg("Booting initial configuration setup menu...")
-        utils.delay(3, self.call_menu)
+        utils.delay(3, self.call_menu, caller=caller)
 
-    def call_menu(self):
+    def call_menu(self, caller):
         EvMenu(self.caller, "commands.chargen_commands",
                startnode="menu_start_node",
                cmdset_mergetype="Replace",
