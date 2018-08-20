@@ -118,6 +118,8 @@ def select_gender(caller):
 
     options = ({"key": "_default", "exec": set_gender, "goto": "chargen_custom"},)
 
+    return text, options
+
 
 def set_gender(caller, caller_input):
     caller.db.gender = caller_input.strip().lower()
