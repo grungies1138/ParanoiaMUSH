@@ -201,18 +201,18 @@ def select_weight(caller):
 
 def set_weight(caller, caller_input):
     weight = caller_input.strip().lower()
-    regex = re.compile(r'^(?P<number>\d{2,3})(?P<string>cm|in)$')
+    regex = re.compile(r'^(?P<number>\d{2,3})(?P<string>kgs|lbs)$')
     match = regex.match(weight)
     if match:
         number, measure = int(match.group('number')), match.group('string')
 
-    if measure == "kgs":
+    if measure and measure == "kgs":
         if number < 45 or number > 100:
             caller.msg("|rERROR:|n That weight is not within the specified parameter limits.  Please try again.")
         else:
             caller.db.weight = weight
 
-    if measure == "lbs":
+    if measure and measure == "lbs":
         if number < 100 or number > 220:
             caller.msg("|rERROR:|n That weight is not within the specified parameter limits.  Please try again.")
         else:
