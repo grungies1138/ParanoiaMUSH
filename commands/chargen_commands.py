@@ -1,5 +1,5 @@
 import re
-from evennia import default_cmds
+from evennia import default_cmds, utils
 from evennia.utils.evmenu import EvMenu
 from evennia.utils import evtable
 from world.static_data import EYES, HAIR, SKIN, PERSONALITY
@@ -16,6 +16,14 @@ class ChargenCommand(default_cmds.MuxCommand):
     help_category = HELP
 
     def func(self):
+        self.caller.msg("Cerebral Coretech unit installed.")
+        utils.delay(3, self.initial_message)
+
+    def initial_message(self):
+        self.caller.msg("Booting initial configuration setup menu...")
+        utils.delay(3, self.call_menu)
+
+    def call_menu(self):
         EvMenu(self.caller, "commands.chargen_commands",
                startnode="menu_start_node",
                cmdset_mergetype="Replace",
@@ -54,12 +62,22 @@ def chargen_custom_landing(caller):
 
 
 def chargen_custom(caller):
-    text = "These are the customization options and your current configuration.  To choose a custom setting, or to " \
+    text = "Welcome to the Customization and Configuration Portal.  Here you will create your clone's individual " \
+           "configuration.  Everything from the skills they have to the hair on their head, if any.  Please choose " \
+           "from the options below to begin your journey."
+
+
+def finalize_chargen(caller):
+    pass
+
+
+def chargen_personal(caller):
+    text = "These are the personal customization options and your current configuration.  To choose a custom setting, or to " \
            "change a setting once it is set, simply select the option below to be taken to the customization screen." \
            "\n\n|wGender:|n {}\n|wEyes:|n {}\n|wHair:|n {}\n|wHeight:|n {}\n|wWeight:|n {}\n|wSkin:|n {}\n" \
            "|wPersonality:|n {}\n|wGender:|n {}\n\nPlease select an option to customize.".format(caller.db.gender,
-            EYES.get(caller.db.eyes), HAIR.get(caller.db.hair), caller.db.height, caller.db.weight,
-            SKIN[caller.db.skin], ", ".join(caller.db.personality), caller.db.gender)
+                EYES.get(caller.db.eyes), HAIR.get(caller.db.hair), caller.db.height, caller.db.weight,
+                SKIN[caller.db.skin], ", ".join(caller.db.personality), caller.db.gender)
 
     options = ()
 
@@ -68,44 +86,41 @@ def chargen_custom(caller):
     else:
         options += ({"desc": "|xEyes|n", "goto": "select_eyes"},)
 
-
     if caller.db.hair == 0:
         options += ({"desc": "Hair", "goto": "select_hair"},)
     else:
         options += ({"desc": "|xHair|n", "goto": "select_hair"},)
-
 
     if not caller.db.height:
         options += ({"desc": "Height", "goto": "select_height"},)
     else:
         options += ({"desc": "|xHeight|n", "goto": "select_height"},)
 
-
     if not caller.db.weight:
         options += ({"desc": "Weight", "goto": "select_weight"},)
     else:
         options += ({"desc": "|xWeight|n", "goto": "select_weight"},)
-
 
     if not caller.db.skin:
         options += ({"desc": "Skin", "goto": "select_skin"},)
     else:
         options += ({"desc": "|xSkin|n", "goto": "select_skin"},)
 
-
     if not caller.db.personality:
         options += ({"desc": "Personality", "goto": "select_personality"},)
     else:
         options += ({"desc": "|xPersonality|n", "goto": "select_personality"},)
-
 
     if not caller.db.gender:
         options += ({"desc": "Gender", "goto": "select_gender"},)
     else:
         options += ({"desc": "|xGender|n", "goto": "select_gender"},)
 
-    return text, options
+    if caller.db.eyes > 0 and caller.db.hair > 0 and caller.db.height and caller.db.weight and caller.db.skin \
+            and caller.db.personality and caller.db.gender:
+        options += ({"desc": "Back", "goto": "chargen_custom"},)
 
+    return text, options
 
 def select_gender(caller):
     text = "Hello citizen.  I, your friend the Computer, can help you select a gender.  Gender has been deemed too " \
@@ -117,13 +132,12 @@ def select_gender(caller):
            "dressing\'.  Enjoy!"
 
     options = ({"key": "_default", "exec": set_gender, "goto": "chargen_custom"},)
+    options += ({"key": "back", "desc": "Back", "goto": "chargen_personal"},)
 
     return text, options
 
-
 def set_gender(caller, caller_input):
     caller.db.gender = caller_input.strip().lower()
-
 
 def select_personality(caller):
     text = ""
@@ -140,15 +154,14 @@ def select_personality(caller):
 
     options = ()
 
-    options += ({"key": "_default", "exec": set_personality, "goto": "chargen_custom"},)
+    options += ({"key": "_default", "exec": set_personality, "goto": "chargen_personal"},)
 
     if len(caller.db.personality) > 0:
         options += ({"desc": "Remove", "goto": "remove_personality"},)
 
-    options += ({"key": "back", "desc": "Back", "goto": "chargen_custom"},)
+    options += ({"key": "back", "desc": "Back", "goto": "chargen_personal"},)
 
     return text, options
-
 
 def remove_personality(caller):
     text = "Please select the personality trait you wish to remove from your clone."
@@ -160,7 +173,6 @@ def remove_personality(caller):
 
     return text, options
 
-
 def del_personality(caller, caller_input):
     per = caller_input.strip().lower()
 
@@ -168,8 +180,6 @@ def del_personality(caller, caller_input):
         caller.msg("|rERROR:|n Invalid input.  Try again.")
     else:
         caller.db.personality.remove(per)
-
-
 
 def set_personality(caller, caller_input):
     per = caller_input.strip().lower()
@@ -180,7 +190,6 @@ def set_personality(caller, caller_input):
     else:
         caller.db.personality.append(per)
 
-
 def select_skin(caller):
     text = "Humans are a tapestry of colors and shades of many varieties.  To offer you the optimal skin color " \
            "experience I have reduced the number of shades to 7!  Please select one below.\n\n"
@@ -188,10 +197,11 @@ def select_skin(caller):
     options = ()
 
     for s in SKIN:
-        options += ({"desc": SKIN[s], "exec": set_skin, "goto": "chargen_custom"},)
+        options += ({"desc": SKIN[s], "exec": set_skin, "goto": "chargen_personal"},)
+
+    options += ({"key": "back", "desc": "Back", "goto": "chargen_personal"},)
 
     return text, options
-
 
 def set_skin(caller, caller_input):
     skin = int(caller_input.strip())
@@ -200,7 +210,6 @@ def set_skin(caller, caller_input):
     else:
         caller.msg("|rERROR:|n Invalid input.  Try again.")
 
-
 def select_weight(caller):
     text = "Please enter the weight you wish to be.  You may select a number of pounds or kilograms. " \
            "\n\n|wExample:|n if you wish to be 112 pounds, enter: |y112lbs|n or for being 67 kilograms, enter:" \
@@ -208,10 +217,10 @@ def select_weight(caller):
            "Therefore, the following limitations are in effect:\n\n|wMetric:|n 45kgs - 100kgs\n|wImperial:|n 100lbs - " \
            "220lbs"
 
-    options = ({"key": "_default", "exec": set_weight, "goto": "chargen_custom"},)
+    options = ({"key": "_default", "exec": set_weight, "goto": "chargen_personal"},)
+    options += ({"key": "back", "desc": "Back", "goto": "chargen_personal"},)
 
     return text, options
-
 
 def set_weight(caller, caller_input):
     weight = caller_input.strip().lower()
@@ -232,17 +241,16 @@ def set_weight(caller, caller_input):
         else:
             caller.db.weight = weight
 
-
 def select_height(caller):
     text = "Please enter the height you wish to be.  You may select a number of inches or centimeters." \
            "\n\n\t|wExample:|n if you wish to be 1.5 meters tall, enter: |y150cm|n or for being 5'8\" enter: |y68in|n" \
            "\n\n|rNOTE:|n Selecting a height too small or too large can result in undesirable mutation.  Therefore " \
            "the following limitations are in effect.\n\n|wMetric:|n 135cm - 210cm\n|wImperial:|n 53in - 82in\n\n"
 
-    options = ({"key": "_default", "exec": set_height, "goto": "chargen_custom"},)
+    options = ({"key": "_default", "exec": set_height, "goto": "chargen_personal"},)
+    options += ({"key": "back", "desc": "Back", "goto": "chargen_personal"},)
 
     return text, options
-
 
 def set_height(caller, caller_input):
     height = caller_input.strip().lower()
@@ -264,17 +272,16 @@ def set_height(caller, caller_input):
         else:
             caller.db.height = height
 
-
 def select_hair(caller):
     text = "Please select from one of the following options for hair color and style.\n\n"
 
     options = ()
 
     for h in HAIR:
-        options += ({"desc": HAIR[h], "exec": set_hair, "goto": "chargen_custom"},)
+        options += ({"desc": HAIR[h], "exec": set_hair, "goto": "chargen_personal"},)
+        options += ({"key": "back", "desc": "Back", "goto": "chargen_personal"},)
 
     return text, options
-
 
 def set_hair(caller, caller_input):
     hair = int(caller_input.strip())
@@ -283,7 +290,6 @@ def set_hair(caller, caller_input):
     else:
         caller.msg("|rERROR:|n Invalid input.  Try again.")
 
-
 def select_eyes(caller):
     text = "Please select from one of the following choices for eye color.\n\n"
 
@@ -291,7 +297,9 @@ def select_eyes(caller):
     options = ()
 
     for e in EYES:
-        options += ({"desc": EYES[e], "exec": set_eyes, "goto": "chargen_custom"},)
+        options += ({"desc": EYES[e], "exec": set_eyes, "goto": "chargen_personal"},)
+
+    options += ({"key": "back", "desc": "Back", "goto": "chargen_personal"},)
 
     return text, options
 
