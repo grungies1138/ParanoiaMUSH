@@ -153,8 +153,13 @@ def remove_personality(caller):
 
 def del_personality(caller, caller_input):
     per = caller_input.strip().lower()
+    print(str(per))
+    print(str(caller.db.personality))
+    pers = caller.db.personality
     if per in caller.db.personality:
-        caller.db.personality.remove(PERSONALITY[per])
+        pers.remove(PERSONALITY[per])
+    print(str(pers))
+
 
 
 def set_personality(caller, caller_input):
