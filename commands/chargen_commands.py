@@ -174,7 +174,7 @@ def select_skin(caller):
     options = ()
 
     for s in SKIN:
-        options += ({{"desc": SKIN[s], "exec": set_skin, "goto": "chargen_custom"}},)
+        options += ({"desc": SKIN[s], "exec": set_skin, "goto": "chargen_custom"},)
 
     return text, options
 
