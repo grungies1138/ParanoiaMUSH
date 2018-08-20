@@ -58,7 +58,7 @@ def chargen_custom(caller):
            "change a setting once it is set, simply select the option below to be taken to the customization screen." \
            "\n\n|wGender:|n {}\n|wEyes:|n {}\n|wHair:|n {}\n|wHeight:|n {}\n|wWeight:|n {}\n|wSkin:|n {}\n|wPersonality:|n {}" \
            "\n\nPlease select an option to customize.".format(caller.db.gender, EYES.get(caller.db.eyes), HAIR.get(caller.db.hair),
-                                                              caller.db.height, caller.db.weight, caller.db.skin,
+                                                              caller.db.height, caller.db.weight, SKIN[caller.db.skin],
                                                               ", ".join(caller.db.personality))
 
     options = ()
@@ -288,6 +288,11 @@ def set_eyes(caller, caller_input):
         caller.db.eyes = eyes_input
     else:
         caller.msg("|rERROR:|n Invalid input.  Try again.")
+
+
+########################################################################################################################
+# UTILITY
+########################################################################################################################
 
 
 def node_formatter(nodetext, optionstext, caller=None):
