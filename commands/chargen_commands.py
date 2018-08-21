@@ -41,7 +41,7 @@ def menu_start_node(caller):
             "get you all set up, shall we?\n\nPlease select an option below."
 
     options = ({"desc": "Randomize", "goto": "chargen_random"},
-               {"desc": "Customize", "goto": "chargen_custom"},)
+               {"desc": "Customize", "goto": "chargen_custom_landing"})
 
     return text, options
 
@@ -65,6 +65,46 @@ def chargen_custom(caller):
     text = "Welcome to the Customization and Configuration Portal.  Here you will create your clone's individual " \
            "configuration.  Everything from the skills they have to the hair on their head, if any.  Please choose " \
            "from the options below to begin your journey."
+
+    options = ({"desc": "Personal", "goto": "chargen_personal"},
+               {"desc": "Skills", "goto": "chargen_skills"})
+
+    return text, options
+
+
+def chargen_skills(caller):
+    text = "Skills are how well your clone can do... stuff.  While I would love it if all of the citizens of Alpha " \
+           "Complex were trained experts in all fields of study, attempts to do so have resulted in undesirable " \
+           "mutations.  And since mutants are traitors and traitors are caught, sterilized and destroyed, well, we " \
+           "won't talk about that.  Anyway, in order to mitigate the risk of mutation, for every skill you choose to " \
+           "increase, another skill, chosen at random, will be decreased by the same level.  Now, let's get you " \
+           "learned!\n\n"
+
+    next_skill_level = 0
+
+    skills = caller.db.skills.values()
+
+    if 5 not in skills:
+        next_skill_level = 5
+    elif 4 not in skills:
+        next_skill_level = 4
+    elif 3 not in skills:
+        next_skill_level = 3
+    elif 2 not in skills:
+        next_skill_level = 2
+    elif 1 not in skills:
+        next_skill_level = 1
+
+    if next_skill_level > 0:
+        text += "Your next skill can be set to |w+{}|n.  Please choose the skill to set to this value."\
+            .format(next_skill_level)
+    else:
+        text += "All your skills have been set.  If you don't like your choices, you may reset them.  " \
+                "But this will reset all of your choices."
+
+    options = ()
+
+    return text, options
 
 
 def finalize_chargen(caller):
