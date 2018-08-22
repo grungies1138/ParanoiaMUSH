@@ -415,7 +415,20 @@ def set_eyes(caller, caller_input):
     else:
         caller.msg("|rERROR:|n Invalid input.  Try again.")
 
+
 def finalize_chargen(caller):
+    text = "So you want to finish your clone?  Well, not is a good time to review things.  make sure to type " \
+           "|w+sheet|n and look it over.  Make sure you are satisfied with everything.  If not, type |wback|n and " \
+           "just fix it for God's sake!\n\nOtherwise type |wconfirm|n to confirm you are satisfied and finish up " \
+           "your clone configuration."
+
+    options = ({"key": "confirm", "desc": "Confirm Configuration", "exec": finalize_finish, "goto": "exit_message"},
+               {"key": "back", "desc": "Go Back", "goto": "chargen_custom"})
+
+    return text, options
+
+
+def finalize_finish(caller):
     """
     TODO: Set the following items:
 
@@ -450,15 +463,12 @@ def finalize_chargen(caller):
         caller.db.stats["mechanics"] = 0
 
     new_stats = {key: value for key, value in zip(caller.db.stats.keys(), random.sample(caller.db.stats.values(), len(caller.db.stats.values())))}
+    caller.db.stats = new_stats
 
-    print(str(caller.db.stats))
-    print(str(new_stats))
+    caller.db.moxie = 6
 
-    text = ""
 
-    options = ()
 
-    return text, options
 
 ########################################################################################################################
 # UTILITY
