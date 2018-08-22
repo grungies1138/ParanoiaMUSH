@@ -10,3 +10,6 @@ SKIN = {1: "alabaster", 2: "peach", 3: "bronze", 4: "copper", 5: "coffee", 6: "m
 PERSONALITY = {"loyal": "disloyal", "brave": "cowardly", "honest" : "dishonest", "considerate": "selfish",
                "generous": "greedy", "loving": "hateful", "humble": "arrogant", "cautious": "rash", "kind": "mean",
                "calm": "nervous", "relaxed": "quick to anger"}
+
+CLEARANCE = {1: "Infrared", 2: "Red", 3: "Orange", 4: "Yellow", 5: "Green", 6: "Blue", 7: "Indigo", 8: "Violet",
+             9: "Ultraviolet"}

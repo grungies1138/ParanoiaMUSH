@@ -149,9 +149,10 @@ def chargen_personal(caller):
     text = "These are the personal customization options and your current configuration.  To choose a custom setting, or to " \
            "change a setting once it is set, simply select the option below to be taken to the customization screen." \
            "\n\n|wGender:|n {}\n|wEyes:|n {}\n|wHair:|n {}\n|wHeight:|n {}\n|wWeight:|n {}\n|wSkin:|n {}\n" \
-           "|wPersonality:|n {}\n|wGender:|n {}\n\nPlease select an option to customize.".format(caller.db.gender,
-                EYES.get(caller.db.eyes), HAIR.get(caller.db.hair), caller.db.height, caller.db.weight,
-                SKIN[caller.db.skin], ", ".join(caller.db.personality), caller.db.gender)
+           "|wPersonality:|n {}\n|wGender:|n {}\n|wHome Sector:|n {}\n\nPlease select an option to customize."\
+        .format(caller.db.gender, EYES.get(caller.db.eyes), HAIR.get(caller.db.hair), caller.db.height,
+                caller.db.weight, SKIN[caller.db.skin], ", ".join(caller.db.personality), caller.db.gender,
+                caller.db.sector)
 
     options = ()
 
@@ -190,11 +191,42 @@ def chargen_personal(caller):
     else:
         options += ({"desc": "|xGender|n", "goto": "select_gender"},)
 
+    if not caller.db.sector:
+        options += ({"desc": "Home Sector", "goto": "select_sector"},)
+    else:
+        options += ({"desc": "|xHome Sector|n", "goto": "select_sector"},)
+
+
     if caller.db.eyes > 0 and caller.db.hair > 0 and caller.db.height and caller.db.weight and caller.db.skin \
             and caller.db.personality and caller.db.gender:
         options += ({"desc": "Back", "goto": "chargen_custom"},)
 
     return text, options
+
+
+def select_sector(caller):
+    text = "Alpha Complex is a large a diverse structure.  There are many sections of the superstructure and, " \
+           "seemingly, no end.  Sectors are home!  Usually, because you are here means that there is a population " \
+           "need in one or several of the sectors.  This means you cna choose!  Simply type the designation for the " \
+           "sector you wish to be from.\n\nWhat?  You don't know what sector to choose?  To be honest, it doesn't " \
+           "really matter all that much.  Many citizens simply enter a sector at random.  To do that, just enter " \
+           "three characters, a dash and two numbers.  Like this: |wOMG-13|n or |wWTF-69|n"
+
+    options = ({"key": "_default", "exec": set_sector, "goto": "chargen_personal"})
+
+    return text, options
+
+
+def set_sector(caller, caller_input):
+    sec = caller_input.strip().upper()
+    regex = re.compile(r'^(?P<sector>[A-Z]{3}-\d{1,2})$')
+    match = regex.match(sec)
+
+    if match:
+        caller.db.sector = match.group("sector")
+    else:
+        caller.msg("|rERROR:|n Invalid input.  Try again.")
+
 
 def select_gender(caller):
     text = "Hello citizen.  I, your friend the Computer, can help you select a gender.  Gender has been deemed too " \
