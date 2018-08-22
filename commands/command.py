@@ -98,14 +98,14 @@ class SheetCommand(default_cmds.MuxCommand):
 
 
         table5 = evtable.EvTable("", "", "", "", "", "", "", "",  border=None, header=False)
-        table5.reformat_column(0, width=16)
-        table5.reformat_column(1, width=3, align="r")
-        table5.reformat_column(2, width=16)
-        table5.reformat_column(3, width=3, align="r")
-        table5.reformat_column(4, width=16)
-        table5.reformat_column(5, width=3, align="r")
-        table5.reformat_column(6, width=16)
-        table5.reformat_column(7, width=3, align="r")
+        table5.reformat_column(0, width=15)
+        table5.reformat_column(1, width=4, align="r")
+        table5.reformat_column(2, width=15)
+        table5.reformat_column(3, width=4, align="r")
+        table5.reformat_column(4, width=15)
+        table5.reformat_column(5, width=4, align="r")
+        table5.reformat_column(6, width=15)
+        table5.reformat_column(7, width=4, align="r")
 
         table5.add_row("|wAthletics: |n", self.caller.db.skills.get("athletics"),
                        "|wScience: |n", self.caller.db.skills.get("science"),
