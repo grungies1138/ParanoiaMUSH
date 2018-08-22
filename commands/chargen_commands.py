@@ -119,7 +119,7 @@ def set_skill(caller, caller_input):
 
     caller.db.skills[selected_skill] = next_skill_level
 
-    skills = {key for (key, value) in caller.db.skills.keys() if value == 0}
+    skills = {key for (key, value) in caller.db.skills.iteritems() if value == 0}
 
     print(str(skills))
 
