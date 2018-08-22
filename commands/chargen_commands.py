@@ -18,11 +18,11 @@ class ChargenCommand(default_cmds.MuxCommand):
 
     def func(self):
         self.caller.msg("Cerebral Coretech unit installed.")
-        utils.delay(3, self.initial_message, caller=self.caller)
+        utils.delay(1, self.initial_message, caller=self.caller)
 
     def initial_message(self, caller):
         self.caller.msg("Booting initial configuration setup menu...")
-        utils.delay(3, self.call_menu, caller=caller)
+        utils.delay(1, self.call_menu, caller=caller)
 
     def call_menu(self, caller):
         EvMenu(self.caller, "commands.chargen_commands",
@@ -157,15 +157,15 @@ def chargen_personal(caller):
 
     text += "\n|wWeight:|n {}".format(caller.db.weight)
 
-    # text += "\n|wSkin:|n {}".format(SKIN[caller.db.skin] or "")
+    text += "\n|wSkin:|n {}".format(SKIN.get(caller.db.skin))
 
-    # text += "\n|wPersonality:|n {}".format(", ".join(caller.db.personality))
+    text += "\n|wPersonality:|n {}".format(", ".join(caller.db.personality))
 
-    # text+= "\n|wGender:|n {}".format(caller.db.gender)
+    text+= "\n|wGender:|n {}".format(caller.db.gender)
 
-    # text += "\n|wHome Sector:|n {}".format(caller.db.sector)
-    #
-    # text += "\n\nPlease select an option to customize."
+    text += "\n|wHome Sector:|n {}".format(caller.db.sector)
+
+    text += "\n\nPlease select an option to customize."
 
     options = ()
 
