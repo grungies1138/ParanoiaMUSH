@@ -152,49 +152,49 @@ def chargen_personal(caller):
 
     options = ()
 
-    # if caller.db.eyes == 0:
-    #     options += ({"desc": "Eyes", "goto": "select_eyes"},)
-    # else:
-    #     options += ({"desc": "|xEyes|n", "goto": "select_eyes"},)
-    #
-    # if caller.db.hair == 0:
-    #     options += ({"desc": "Hair", "goto": "select_hair"},)
-    # else:
-    #     options += ({"desc": "|xHair|n", "goto": "select_hair"},)
-    #
-    # if not caller.db.height:
-    #     options += ({"desc": "Height", "goto": "select_height"},)
-    # else:
-    #     options += ({"desc": "|xHeight|n", "goto": "select_height"},)
-    #
-    # if not caller.db.weight:
-    #     options += ({"desc": "Weight", "goto": "select_weight"},)
-    # else:
-    #     options += ({"desc": "|xWeight|n", "goto": "select_weight"},)
-    #
-    # if not caller.db.skin:
-    #     options += ({"desc": "Skin", "goto": "select_skin"},)
-    # else:
-    #     options += ({"desc": "|xSkin|n", "goto": "select_skin"},)
-    #
-    # if not caller.db.personality:
-    #     options += ({"desc": "Personality", "goto": "select_personality"},)
-    # else:
-    #     options += ({"desc": "|xPersonality|n", "goto": "select_personality"},)
-    #
-    # if not caller.db.gender:
-    #     options += ({"desc": "Gender", "goto": "select_gender"},)
-    # else:
-    #     options += ({"desc": "|xGender|n", "goto": "select_gender"},)
+    if caller.db.eyes == 0:
+        options += ({"desc": "Eyes", "goto": "select_eyes"},)
+    else:
+        options += ({"desc": "|xEyes|n", "goto": "select_eyes"},)
 
-    # if not caller.db.sector:
-    #     options += ({"desc": "Home Sector", "goto": "select_sector"},)
-    # else:
-    #     options += ({"desc": "|xHome Sector|n", "goto": "select_sector"},)
+    if caller.db.hair == 0:
+        options += ({"desc": "Hair", "goto": "select_hair"},)
+    else:
+        options += ({"desc": "|xHair|n", "goto": "select_hair"},)
 
-    # if caller.db.eyes > 0 and caller.db.hair > 0 and caller.db.height and caller.db.weight and caller.db.skin \
-    #         and caller.db.personality and caller.db.gender:
-    #     options += ({"desc": "Back", "goto": "chargen_custom"},)
+    if not caller.db.height:
+        options += ({"desc": "Height", "goto": "select_height"},)
+    else:
+        options += ({"desc": "|xHeight|n", "goto": "select_height"},)
+
+    if not caller.db.weight:
+        options += ({"desc": "Weight", "goto": "select_weight"},)
+    else:
+        options += ({"desc": "|xWeight|n", "goto": "select_weight"},)
+
+    if not caller.db.skin:
+        options += ({"desc": "Skin", "goto": "select_skin"},)
+    else:
+        options += ({"desc": "|xSkin|n", "goto": "select_skin"},)
+
+    if not caller.db.personality:
+        options += ({"desc": "Personality", "goto": "select_personality"},)
+    else:
+        options += ({"desc": "|xPersonality|n", "goto": "select_personality"},)
+
+    if not caller.db.gender:
+        options += ({"desc": "Gender", "goto": "select_gender"},)
+    else:
+        options += ({"desc": "|xGender|n", "goto": "select_gender"},)
+
+    if not caller.db.sector:
+        options += ({"desc": "Home Sector", "goto": "select_sector"},)
+    else:
+        options += ({"desc": "|xHome Sector|n", "goto": "select_sector"},)
+
+    if caller.db.eyes > 0 and caller.db.hair > 0 and caller.db.height and caller.db.weight and caller.db.skin \
+            and caller.db.personality and caller.db.gender:
+        options += ({"desc": "Back", "goto": "chargen_custom"},)
 
     return text, options
 
