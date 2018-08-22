@@ -68,10 +68,10 @@ def chargen_custom(caller):
            "from the options below to begin your journey."
 
     options = ({"desc": "Personal", "goto": "chargen_personal"},
-               {"desc": "Skills", "goto": "chargen_skills"})
+               {"desc": "Skills", "goto": "chargen_skills"},
+               {"desc": "Finalize", "goto": "finalize_chargen"})
 
     return text, options
-
 
 def chargen_skills(caller):
     text = "Skills are how well your clone can do... stuff.  While I would love it if all of the citizens of Alpha " \
@@ -129,17 +129,6 @@ def set_skill(caller, caller_input):
     skills = {key for (key, value) in caller.db.skills.iteritems() if value == 0}
 
     caller.db.skills[random.choice(list(skills))] = next_skill_level * -1
-
-def finalize_chargen(caller):
-    """
-    TODO: Set the following items:
-
-    Randomize and set STATS
-    Set Moxie
-    Choose Mutant Powers
-    Choose Secret Societies
-    """
-    pass
 
 def chargen_personal(caller):
     # text = "These are the personal customization options and your current configuration.  To choose a custom setting, " \
@@ -215,7 +204,6 @@ def chargen_personal(caller):
 
     return text, options
 
-
 def select_sector(caller):
     text = "Alpha Complex is a large a diverse structure.  There are many sections of the superstructure and, " \
            "seemingly, no end.  Sectors are home!  Usually, because you are here means that there is a population " \
@@ -228,7 +216,6 @@ def select_sector(caller):
 
     return text, options
 
-
 def set_sector(caller, caller_input):
     sec = caller_input.strip().upper()
     regex = re.compile(r'^(?P<sector>[A-Z]{3}-\d{1,2})$')
@@ -239,7 +226,6 @@ def set_sector(caller, caller_input):
     else:
         caller.msg("|rERROR:|n Invalid input.  Try again.")
 
-
 def select_gender(caller):
     text = "Hello citizen.  I, your friend the Computer, can help you select a gender.  Gender has been deemed too " \
            "provocative to be uncensored.  Humans tend to have difficulties when it comes to gender roles and " \
@@ -249,7 +235,7 @@ def select_gender(caller):
            "maintain full control over procreation, this is essentially pointless and merely bit of \'window " \
            "dressing\'.  Enjoy!"
 
-    options = ({"key": "_default", "exec": set_gender, "goto": "chargen_custom"},)
+    options = ({"key": "_default", "exec": set_gender, "goto": "chargen_personal"},)
     options += ({"key": "back", "desc": "Back", "goto": "chargen_personal"},)
 
     return text, options
@@ -272,7 +258,7 @@ def select_personality(caller):
 
     options = ()
 
-    options += ({"key": "_default", "exec": set_personality, "goto": "chargen_personal"},)
+    options += ({"key": "_default", "exec": set_personality, "goto": "select_personality"},)
 
     if len(caller.db.personality) > 0:
         options += ({"desc": "Remove", "goto": "remove_personality"},)
@@ -397,7 +383,7 @@ def select_hair(caller):
 
     for h in HAIR:
         options += ({"desc": HAIR[h], "exec": set_hair, "goto": "chargen_personal"},)
-        options += ({"key": "back", "desc": "Back", "goto": "chargen_personal"},)
+    options += ({"key": "back", "desc": "Back", "goto": "chargen_personal"},)
 
     return text, options
 
@@ -429,6 +415,24 @@ def set_eyes(caller, caller_input):
     else:
         caller.msg("|rERROR:|n Invalid input.  Try again.")
 
+def finalize_chargen(caller):
+    """
+    TODO: Set the following items:
+
+    Randomize and set STATS
+    Set Moxie
+    Choose Mutant Powers
+    Choose Secret Societies
+    """
+    new_stats = {key: value for key, value in zip(caller.db.stats.keys(), random.sample(caller.db.stats.values(), len(caller.db.stats.values())))}
+
+    print(str(new_stats))
+
+    text = ""
+
+    options = ()
+
+    return text, options
 
 ########################################################################################################################
 # UTILITY

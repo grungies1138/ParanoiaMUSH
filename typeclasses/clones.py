@@ -24,7 +24,7 @@ class Clone(Character):
         self.db.gender = ""
         self.db.personality = []
         self.db.clone = 0
-        self.cmdset.add("commands.default_cmdsets.SheetCmdSet")
+        self.cmdset.add("commands.default_cmdsets.SheetCmdSet", permanent=True)
 
     def return_appearance(self, looker):
         if not looker:
@@ -33,8 +33,8 @@ class Clone(Character):
 
         message = []
         message.append(header(self.key))
-        message.append("%s has %s hair, %s eyes and %s skin.  They stand at %s height and weight %s pounds.  "
-                       "They wear a jumpsuit with a %s stripe.".format(self.key, self.db.hair or "no",
+        message.append("{} has {} hair, {} eyes and {} skin.  They stand at {} height and weight {} pounds.  "
+                       "They wear a jumpsuit with a {} stripe.".format(self.key, self.db.hair or "no",
                         self.db.eyes or "nondescript", self.db.skin or "pale", self.db.height or "indeterminate",
                         self.db.weight or "indeterminate", self.db.clearance))
         message.append(header())
