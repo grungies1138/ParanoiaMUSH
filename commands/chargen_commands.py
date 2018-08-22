@@ -1,4 +1,5 @@
 import re
+import random
 from evennia import default_cmds, utils
 from evennia.utils.evmenu import EvMenu
 from evennia.utils import evtable
@@ -121,7 +122,7 @@ def set_skill(caller, caller_input):
 
     skills = {key for (key, value) in caller.db.skills.iteritems() if value == 0}
 
-    print(str(list(skills)))
+    print(str(random.choice(list(skills))))
 
 
 
