@@ -149,8 +149,8 @@ def chargen_personal(caller):
            "or to change a setting once it is set, simply select the option below to be taken to the customization " \
            "screen.\n\n"
 
-    # text += "|wEyes:|n {}".format(EYES.get(caller.db.eyes))
-    #
+    text += "|wEyes:|n {}".format(EYES.get(caller.db.eyes))
+
     # text += "\n|wHair:|n {}".format(HAIR.get(caller.db.hair))
     #
     # text += "\n|wHeight:|n {}".format(caller.db.height)
