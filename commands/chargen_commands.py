@@ -157,7 +157,7 @@ def chargen_personal(caller):
 
     text += "\n|wWeight:|n {}".format(caller.db.weight)
 
-    text += "\n|wSkin:|n {}".format(SKIN[caller.db.skin] or "")
+    # text += "\n|wSkin:|n {}".format(SKIN[caller.db.skin] or "")
 
     # text += "\n|wPersonality:|n {}".format(", ".join(caller.db.personality))
 
