@@ -99,12 +99,28 @@ def chargen_skills(caller):
         text += "Your next skill can be set to |w+{}|n.  Please choose the skill to set to this value."\
             .format(next_skill_level)
     else:
+        setattr(caller.ndb._menutree, 'next_skill_level', next_skill_level)
         text += "All your skills have been set.  If you don't like your choices, you may reset them.  " \
                 "But this will reset all of your choices."
 
     options = ()
 
+    for skill, value in caller.db.skills.iteritems():
+        if value == 0:
+            options += ({"key": skill, "desc": skill, "exec": set_skill, "goto": "chargen_skills"},)
+
     return text, options
+
+
+def set_skill(caller, caller_input):
+    selected_skill = caller_input.strip().lower()
+    next_skill_level = caller.ndb._menutree.next_skill_level
+
+    caller.db.skills[selected_skill] = next_skill_level
+
+    skills = {key for (key, value) in caller.db.skills.keys() if value == 0}
+
+    print(str(skills))
 
 
 def finalize_chargen(caller):
