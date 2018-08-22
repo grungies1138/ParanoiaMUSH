@@ -18,12 +18,19 @@ from evennia import default_cmds
 from commands.command import SheetCommand
 from commands.chargen_commands import ChargenCommand
 
+class SheetCmdSet(default_cmds.CharacterCmdSet):
+    key = "SheetCmdSet"
+    priority = 3
+
+    def at_cmdset_creation(self):
+        self.add(SheetCommand())
+
 class ChargenCmdSet(default_cmds.CharacterCmdSet):
     key = "ChargenCommands"
     priority = 2
 
     def at_cmdset_creation(self):
-        pass
+        self.add(ChargenCommand())
 
 
 class CharacterCmdSet(default_cmds.CharacterCmdSet):
@@ -39,11 +46,12 @@ class CharacterCmdSet(default_cmds.CharacterCmdSet):
         Populates the cmdset
         """
         super(CharacterCmdSet, self).at_cmdset_creation()
+
         #
         # any commands you add below will overload the default ones.
         #
-        self.add(SheetCommand())
-        self.add(ChargenCommand())
+        # self.add(SheetCommand())
+
 
 
 class AccountCmdSet(default_cmds.AccountCmdSet):

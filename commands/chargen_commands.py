@@ -97,11 +97,11 @@ def chargen_skills(caller):
         next_skill_level = 1
 
     if next_skill_level > 0:
-        text += "Your next skill can be set to |w+{}|n.  Please choose the skill to set to this value."\
-            .format(next_skill_level)
+        text += "Your next skill can be set to |w+{}|n.  Please choose the skill to set to this value.  If you " \
+                "don't see a skill listed below, that means it's been selected for the negative modifier.  Type " \
+                "|w+sheet|n at any time to review your skill layout.".format(next_skill_level)
         setattr(caller.ndb._menutree, 'next_skill_level', next_skill_level)
     else:
-
         text += "All your skills have been set.  If you don't like your choices, you may reset them.  " \
                 "But this will reset all of your choices."
 
@@ -111,7 +111,15 @@ def chargen_skills(caller):
         if value == 0:
             options += ({"key": skill, "desc": skill, "exec": set_skill, "goto": "chargen_skills"},)
 
+    options += ({"key": "reset", "desc": "Reset all skills", "exec": reset_skills, "goto": "chargen_skills"},
+                {"key": "back", "desc": "Go Back", "goto": "chargen_custom"})
+
     return text, options
+
+
+def reset_skills(caller):
+    for skill in caller.db.skills:
+        caller.db.skills[skill] = 0
 
 
 def set_skill(caller, caller_input):
@@ -122,11 +130,18 @@ def set_skill(caller, caller_input):
 
     skills = {key for (key, value) in caller.db.skills.iteritems() if value == 0}
 
-    print(str(random.choice(list(skills))))
-
+    caller.db.skills[random.choice(list(skills))] = next_skill_level * -1
 
 
 def finalize_chargen(caller):
+    """
+    TODO: Set the following items:
+
+    Randomize and set STATS
+    Set Moxie
+    Choose Mutant Powers
+    Choose Secret Societies
+    """
     pass
 
 
