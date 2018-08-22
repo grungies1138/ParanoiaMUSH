@@ -424,6 +424,31 @@ def finalize_chargen(caller):
     Choose Mutant Powers
     Choose Secret Societies
     """
+    violence = caller.db.skills.get("athletics") + caller.db.skills.get("guns") + caller.db.skills.get("melee") + caller.db.skills.get("throw")
+    brains = caller.db.skills.get("science") + caller.db.skills.get("psychology") + caller.db.skills.get("bureaucracy") + caller.db.skills.get("alpha complex")
+    chutzpah = caller.db.skills.get("bluff") + caller.db.skills.get("charm") + caller.db.skills.get("intimidate") + caller.db.skills.get("stealth")
+    mechanics = caller.db.skills.get("operate") + caller.db.skills.get("engineer") + caller.db.skills.get("program") + caller.db.skills.get("demolitions")
+
+    if violence > 0:
+        caller.db.stats["violence"] = violence
+    else:
+        caller.db.stats["violence"] = 0
+
+    if brains > 0:
+        caller.db.stats["brains"] = brains
+    else:
+        caller.db.stats["brains"] = 0
+
+    if chutzpah > 0:
+        caller.db.stats["chutzpah"] = chutzpah
+    else:
+        caller.db.stats["chutzpah"] = 0
+
+    if mechanics > 0:
+        caller.db.stats["mechanics"] = mechanics
+    else:
+        caller.db.stats["mechanics"] = 0
+
     new_stats = {key: value for key, value in zip(caller.db.stats.keys(), random.sample(caller.db.stats.values(), len(caller.db.stats.values())))}
 
     print(str(new_stats))
