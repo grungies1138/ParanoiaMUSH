@@ -141,15 +141,13 @@ def finalize_chargen(caller):
     """
     pass
 
-
 def chargen_personal(caller):
     text = "These are the personal customization options and your current configuration.  To choose a custom setting, " \
            "or to change a setting once it is set, simply select the option below to be taken to the customization " \
            "screen.\n\n|wGender:|n {}\n|wEyes:|n {}\n|wHair:|n {}\n|wHeight:|n {}\n|wWeight:|n {}\n|wSkin:|n {}" \
            "\n|wPersonality:|n {}\n|wGender:|n {}\n|wHome Sector:|n {}\n\nPlease select an option to " \
            "customize.".format(caller.db.gender, EYES.get(caller.db.eyes), HAIR.get(caller.db.hair), caller.db.height,
-                caller.db.weight, SKIN[caller.db.skin], ", ".join(caller.db.personality), caller.db.gender,
-                caller.db.sector)
+                caller.db.weight, SKIN[caller.db.skin], ", ".join(caller.db.personality), caller.db.gender, caller.db.sector)
 
     options = ()
 
@@ -188,11 +186,10 @@ def chargen_personal(caller):
     else:
         options += ({"desc": "|xGender|n", "goto": "select_gender"},)
 
-    if not caller.db.sector:
-        options += ({"desc": "Home Sector", "goto": "select_sector"},)
-    else:
-        options += ({"desc": "|xHome Sector|n", "goto": "select_sector"},)
-
+    # if not caller.db.sector:
+    #     options += ({"desc": "Home Sector", "goto": "select_sector"},)
+    # else:
+    #     options += ({"desc": "|xHome Sector|n", "goto": "select_sector"},)
 
     if caller.db.eyes > 0 and caller.db.hair > 0 and caller.db.height and caller.db.weight and caller.db.skin \
             and caller.db.personality and caller.db.gender:
