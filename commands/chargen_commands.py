@@ -98,8 +98,9 @@ def chargen_skills(caller):
     if next_skill_level > 0:
         text += "Your next skill can be set to |w+{}|n.  Please choose the skill to set to this value."\
             .format(next_skill_level)
-    else:
         setattr(caller.ndb._menutree, 'next_skill_level', next_skill_level)
+    else:
+
         text += "All your skills have been set.  If you don't like your choices, you may reset them.  " \
                 "But this will reset all of your choices."
 
