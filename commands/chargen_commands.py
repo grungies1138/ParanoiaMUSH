@@ -428,7 +428,7 @@ def finalize_chargen(caller):
     return text, options
 
 
-def finalize_finish(caller):
+def finalize_finish(caller, caller_input):
     """
     TODO: Set the following items:
 
