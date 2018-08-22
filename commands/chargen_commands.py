@@ -451,6 +451,7 @@ def finalize_chargen(caller):
 
     new_stats = {key: value for key, value in zip(caller.db.stats.keys(), random.sample(caller.db.stats.values(), len(caller.db.stats.values())))}
 
+    print(str(caller.db.stats))
     print(str(new_stats))
 
     text = ""
