@@ -149,10 +149,23 @@ def chargen_personal(caller):
            "or to change a setting once it is set, simply select the option below to be taken to the customization " \
            "screen.\n\n"
 
-    text += "|wEyes:|n {}\n|wHair:|n {}\n|wHeight:|n {}\n|wWeight:|n {}\n|wSkin:|n {}" \
-           "\n|wPersonality:|n {}\n|wGender:|n {}\n|wHome Sector:|n {}\n\nPlease select an option to " \
-           "customize.".format(EYES.get(caller.db.eyes), HAIR.get(caller.db.hair), caller.db.height,
-                caller.db.weight, SKIN[caller.db.skin], ", ".join(caller.db.personality), caller.db.gender, caller.db.sector)
+    text += "|wEyes:|n {}".format(EYES.get(caller.db.eyes))
+
+    text += "\n|wHair:|n {}".format(HAIR.get(caller.db.hair))
+
+    text += "\n|wHeight:|n {}".format(caller.db.height)
+
+    text += "\n|wWeight:|n {}".format(caller.db.weight)
+
+    text += "\n|wSkin:|n {}".format(SKIN[caller.db.skin])
+
+    text += "\n|wPersonality:|n {}".format(", ".join(caller.db.personality))
+
+    text+= "\n|wGender:|n {}".format(caller.db.gender)
+
+    text += "\n|wHome Sector:|n {}".format(caller.db.sector)
+
+    text += "\n\nPlease select an option to customize."
 
     options = ()
 
