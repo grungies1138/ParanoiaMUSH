@@ -142,13 +142,15 @@ def finalize_chargen(caller):
     pass
 
 def chargen_personal(caller):
-    text = "This is a test"
     # text = "These are the personal customization options and your current configuration.  To choose a custom setting, " \
     #        "or to change a setting once it is set, simply select the option below to be taken to the customization " \
-    #        "screen.\n\n|wGender:|n {}\n|wEyes:|n {}\n|wHair:|n {}\n|wHeight:|n {}\n|wWeight:|n {}\n|wSkin:|n {}" \
-    #        "\n|wPersonality:|n {}\n|wGender:|n {}\n|wHome Sector:|n {}\n\nPlease select an option to " \
-    #        "customize.".format(caller.db.gender, EYES.get(caller.db.eyes), HAIR.get(caller.db.hair), caller.db.height,
-    #             caller.db.weight, SKIN[caller.db.skin], ", ".join(caller.db.personality), caller.db.gender, caller.db.sector)
+    #        "screen."
+    text = "These are the personal customization options and your current configuration.  To choose a custom setting, " \
+           "or to change a setting once it is set, simply select the option below to be taken to the customization " \
+           "screen.\n\n|wEyes:|n {}\n|wHair:|n {}\n|wHeight:|n {}\n|wWeight:|n {}\n|wSkin:|n {}" \
+           "\n|wPersonality:|n {}\n|wGender:|n {}\n|wHome Sector:|n {}\n\nPlease select an option to " \
+           "customize.".format(EYES.get(caller.db.eyes), HAIR.get(caller.db.hair), caller.db.height,
+                caller.db.weight, SKIN[caller.db.skin], ", ".join(caller.db.personality), caller.db.gender, caller.db.sector)
 
     options = ()
 
