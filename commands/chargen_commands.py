@@ -422,7 +422,7 @@ def finalize_chargen(caller):
            "just fix it for God's sake!\n\nOtherwise type |wconfirm|n to confirm you are satisfied and finish up " \
            "your clone configuration."
 
-    options = ({"key": "confirm", "desc": "Confirm Configuration", "exec": finalize_finish, "goto": "exit_message"},
+    options = ({"key": "confirm", "desc": "Confirm Configuration", "exec": finalize_finish, "goto": "exit"},
                {"key": "back", "desc": "Go Back", "goto": "chargen_custom"})
 
     return text, options
@@ -468,6 +468,11 @@ def finalize_finish(caller, caller_input):
     caller.db.moxie = 6
 
 
+def exit(caller):
+    text = ""
+
+    options = ()
+    return text, options
 
 
 ########################################################################################################################
