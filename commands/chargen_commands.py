@@ -151,8 +151,8 @@ def chargen_personal(caller):
 
     text += "|wEyes:|n {}".format(EYES.get(caller.db.eyes))
 
-    # text += "\n|wHair:|n {}".format(HAIR.get(caller.db.hair))
-    #
+    text += "\n|wHair:|n {}".format(HAIR.get(caller.db.hair))
+
     # text += "\n|wHeight:|n {}".format(caller.db.height)
     #
     # text += "\n|wWeight:|n {}".format(caller.db.weight)
