@@ -124,6 +124,7 @@ def set_skill(caller, caller_input):
     print(str(skills))
 
 
+
 def finalize_chargen(caller):
     pass
 
