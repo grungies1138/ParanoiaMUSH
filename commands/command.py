@@ -156,9 +156,8 @@ class SheetCommand(default_cmds.MuxCommand):
 
 class TimeCommand(default_cmds.MuxCommand):
     """
-    Displays the IC time.
+    Displays the IC date and time.
     """
-
     key = "+time"
     aliases = ["time"]
     lock = "cmd:perm(Player)"
@@ -173,4 +172,4 @@ class TimeCommand(default_cmds.MuxCommand):
         self.caller.msg("|wInvention of the Hot Cold Fusion Reactor:|n April 28, 214")
         self.caller.msg("|wDeath of famous programmer ANI-12-FTT-2:|n November 5, 214")
         self.caller.msg("|wIntroduction of Dazzling Blue Raspberry PoppyFizz soda:|n January 2, 214")
-        self.caller.msg("|wCentennial anniversary of Dazzling Blue Raspberry PoppyFizz soda:|n January 2, 214")
+        self.caller.msg("|w100th anniversary of Dazzling Blue Raspberry PoppyFizz soda:|n January 2, 214")
