@@ -3,7 +3,7 @@ import random
 from evennia import default_cmds, utils
 from evennia.utils.evmenu import EvMenu
 from evennia.utils import evtable
-from world.static_data import EYES, HAIR, SKIN, PERSONALITY
+from world.static_data import EYES, HAIR, SKIN, PERSONALITY, MUTANT_POWERS, SECRET_SOCIETIES
 
 HELP = "Chargen"
 
@@ -431,16 +431,12 @@ def finalize_chargen(caller):
 def finalize_finish(caller, caller_input):
     """
     TODO: Set the following items:
-
-    Randomize and set STATS
-    Set Moxie
     Choose Mutant Powers
-    Choose Secret Societies
     """
-    violence = caller.db.skills.get("athletics") + caller.db.skills.get("guns") + caller.db.skills.get("melee") + caller.db.skills.get("throw")
-    brains = caller.db.skills.get("science") + caller.db.skills.get("psychology") + caller.db.skills.get("bureaucracy") + caller.db.skills.get("alpha complex")
-    chutzpah = caller.db.skills.get("bluff") + caller.db.skills.get("charm") + caller.db.skills.get("intimidate") + caller.db.skills.get("stealth")
-    mechanics = caller.db.skills.get("operate") + caller.db.skills.get("engineer") + caller.db.skills.get("program") + caller.db.skills.get("demolitions")
+    violence = calculate_violence(caller)
+    brains = calculate_brains(caller)
+    chutzpah = calculate_chutzpah(caller)
+    mechanics = calculate_mechanics(caller)
 
     if violence > 0:
         caller.db.stats["violence"] = violence
@@ -466,6 +462,8 @@ def finalize_finish(caller, caller_input):
     caller.db.stats = new_stats
 
     caller.db.moxie = 6
+    caller.db.mutant_power = random.choice(MUTANT_POWERS.keys())
+    caller.db.secret_societies.append[random.choice(SECRET_SOCIETIES.keys())]
 
 
 def exit(caller):
@@ -478,6 +476,26 @@ def exit(caller):
 ########################################################################################################################
 # UTILITY
 ########################################################################################################################
+
+def calculate_violence(caller):
+    violence = [caller.db.skills.get("athletics"), caller.db.skills.get("guns"), caller.db.skills.get("melee"),
+                     caller.db.skills.get("throw")]
+    return max(violence)
+
+def calculate_brains(caller):
+    brains = [caller.db.skills.get("science"), caller.db.skills.get("psychology"), caller.db.skills.get("bureaucracy"),
+              caller.db.skills.get("alpha complex")]
+    return max(brains)
+
+def calculate_chutzpah(caller):
+    chutzpah = [caller.db.skills.get("bluff"), caller.db.skills.get("charm"), caller.db.skills.get("intimidate"),
+                caller.db.skills.get("stealth")]
+    return max(chutzpah)
+
+def calculate_mechanics(caller):
+    mechanics = [caller.db.skills.get("operate"), caller.db.skills.get("engineer"), caller.db.skills.get("program"),
+                 caller.db.skills.get("demolitions")]
+    return max(mechanics)
 
 
 def node_formatter(nodetext, optionstext, caller=None):
