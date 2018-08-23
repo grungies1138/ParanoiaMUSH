@@ -23,3 +23,24 @@ def titlecase(s):
 
 def pad_right(main, right, width):
     return "{}$pad({}, {}, r)".format(main, right, width - len(str(main)))
+
+
+def clearance_color(clearance):
+    if clearance == "Infrared":
+        return "x"
+    if clearance == "Red":
+        return "r"
+    if clearance == "Orange":
+        return "520"
+    if clearance == "Yellow":
+        return "y"
+    if clearance == "Green":
+        return "g"
+    if clearance == "Blue":
+        return "b"
+    if clearance == "Indigo":
+        return "M"
+    if clearance == "Violet":
+        return "m"
+    if clearance == "Ultraviolet":
+        return "[W"
