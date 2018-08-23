@@ -24,6 +24,7 @@ class Clone(Character):
         self.db.gender = ""
         self.db.personality = []
         self.db.clone = 0
+        self.db.chargen_complete = 0
         self.cmdset.add("commands.default_cmdsets.SheetCmdSet", permanent=True)
 
     def return_appearance(self, looker):

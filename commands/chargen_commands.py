@@ -1,3 +1,4 @@
+import datetime
 import re
 import random
 from evennia import default_cmds, utils
@@ -17,11 +18,14 @@ class ChargenCommand(default_cmds.MuxCommand):
     help_category = HELP
 
     def func(self):
-        self.caller.msg("Cerebral Coretech unit installed.")
-        utils.delay(1, self.initial_message, caller=self.caller)
+        if self.caller.db.chargen_complete > 0:
+            self.caller.msg("|rERROR:|n Your clone has already been configured.  Please move along now, citizen.")
+        else:
+            self.caller.msg("|yComputer:|n Cerebral Coretech unit installed.")
+            utils.delay(1, self.initial_message, caller=self.caller)
 
     def initial_message(self, caller):
-        self.caller.msg("Booting initial configuration setup menu...")
+        self.caller.msg("|yComputer:|n Booting initial configuration setup menu...")
         utils.delay(1, self.call_menu, caller=caller)
 
     def call_menu(self, caller):
@@ -37,9 +41,9 @@ def menu_start_node(caller):
     text = "Initiating Clone Replication and Configuration Subroutine...\n"
     text += "Subroutine initiated.\n\n"
     text += "Welcome, new Citizen!  I am the Computer.  I am your friend.  You are about to enter Alpha Complex. " \
-            "Humanity's home since the year |y<REDACTED>|n.  Long ago, I helped save the human race from the " \
+            "Humanity's home since the year |y214|n.  Todays date is |y{} {}, 214|n. Long ago, I helped save the human race from the " \
             "devastation caused by |y<DATA NOT FOUND>|n when the |y<CORRUPTION DETECTED>|n swarming.  Anyway, let's " \
-            "get you all set up, shall we?\n\nPlease select an option below."
+            "get you all set up, shall we?\n\nPlease select an option below.".format(datetime.datetime.now().strftime("%B"), datetime.datetime.now().day)
 
     options = ({"desc": "Randomize", "goto": "chargen_random"},
                {"desc": "Customize", "goto": "chargen_custom_landing"})
@@ -415,7 +419,6 @@ def set_eyes(caller, caller_input):
     else:
         caller.msg("|rERROR:|n Invalid input.  Try again.")
 
-
 def finalize_chargen(caller):
     text = "So you want to finish your clone?  Well, not is a good time to review things.  make sure to type " \
            "|w+sheet|n and look it over.  Make sure you are satisfied with everything.  If not, type |wback|n and " \
@@ -426,7 +429,6 @@ def finalize_chargen(caller):
                {"key": "back", "desc": "Go Back", "goto": "chargen_custom"})
 
     return text, options
-
 
 def finalize_finish(caller, caller_input):
     violence = calculate_violence(caller)
@@ -454,23 +456,26 @@ def finalize_finish(caller, caller_input):
     else:
         caller.db.stats["mechanics"] = 0
 
-    new_stats = {key: value for key, value in zip(caller.db.stats.keys(), random.sample(caller.db.stats.values(), len(caller.db.stats.values())))}
+    new_stats = {key: value for key, value in zip(caller.db.stats.keys(), random.sample(caller.db.stats.values(),
+                                                                                        len(caller.db.stats.values())))}
     caller.db.stats = new_stats
 
     # Set starting moxie level
     caller.db.moxie = 6
 
     # Set random mutant power
+
     caller.db.mutant_power = random.choice(MUTANT_POWERS.keys())
 
     # set random secret society membership
+    caller.db.secret_societies = []
     caller.db.secret_societies.append(random.choice(SECRET_SOCIETIES.keys()))
 
     # Flip one personality trait
     selected_trait = random.choice(caller.db.personality)
     selected_index = caller.db.personality.index(selected_trait)
     caller.db.personality[selected_index] = PERSONALITY.get(selected_trait)
-
+    caller.db.chargen_complete = 1
 
 def exit(caller):
     text = ""
