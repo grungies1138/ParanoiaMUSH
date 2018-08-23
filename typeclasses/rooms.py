@@ -26,10 +26,10 @@ class Room(DefaultRoom):
         message = []
         # message.append(header(self.key))
         message.append("|w_|n" * 78)
-        message.append("|[002|w{}{}|n".format(self.key, " " * (78 - len(self.key))))
+        message.append("|[002|w{}{}|n\n".format(self.key, " " * (78 - len(self.key))))
         # message.append("|w-|n" * 78)
         message.append(self.db.desc)
-        message.append(header())
+        message.append("|w_|n" * 78)
 
         chars = self.list_characters()
         objects = self.list_non_characters()
