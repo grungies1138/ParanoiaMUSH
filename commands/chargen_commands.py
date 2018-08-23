@@ -463,7 +463,7 @@ def finalize_finish(caller, caller_input):
 
     caller.db.moxie = 6
     caller.db.mutant_power = random.choice(MUTANT_POWERS.keys())
-    caller.db.secret_societies.append[random.choice(SECRET_SOCIETIES.keys())]
+    # caller.db.secret_societies.append[random.choice(SECRET_SOCIETIES.keys())]
 
 
 def exit(caller):
