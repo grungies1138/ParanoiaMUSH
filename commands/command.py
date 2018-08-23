@@ -8,7 +8,7 @@ import datetime
 from evennia import Command as BaseCommand
 from evennia import default_cmds
 from evennia.utils import evtable
-from world.static_data import HEALTH
+from world.static_data import HEALTH, CLEARANCE
 
 
 class Command(BaseCommand):
@@ -49,7 +49,7 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append("|[002|w/// PART ONE    |n|[005 |wCORE INFORMATION >>>                                         |n")
 
         name = "|wName: |n{}".format(self.caller.key)
-        clearance = "|wSecurity Clearance: |n{}".format(self.caller.db.clearance or "")
+        clearance = "|wSecurity Clearance: |n{}".format(CLEARANCE.get(self.caller.db.clearance))
         sector = "|wHome Sector: |n{}".format(self.caller.db.sector or "")
         clone = "|wClone #: |n{}".format(self.caller.db.clone)
         gender = "|wGender: |n{}".format(self.caller.db.gender)

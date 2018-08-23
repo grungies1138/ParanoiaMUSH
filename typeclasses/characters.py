@@ -32,7 +32,7 @@ class Character(DefaultCharacter):
 
     """
     def at_object_creation(self):
-        self.db.clearance = "Infrared"
+        self.db.clearance = 1
         self.db.treason = 0
         self.db.wounds = 0
         self.db.equipment = []

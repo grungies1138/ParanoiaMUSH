@@ -58,7 +58,12 @@ def menu_start_node(caller):
 # RANDOMIZE
 ########################################################################################################################
 def chargen_random(caller):
-    pass
+    text = "Wow!  You are a wise one!  Trusting the genius of the Computer to select your clone configuration for " \
+           "you.  Never has a more noble choice been made.  I will do my best to make something that you will like."
+
+    options = ()
+
+    return text, options
 
 
 def chargen_custom_landing(caller):
