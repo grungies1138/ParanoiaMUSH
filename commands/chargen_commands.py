@@ -429,10 +429,6 @@ def finalize_chargen(caller):
 
 
 def finalize_finish(caller, caller_input):
-    """
-    TODO: Set the following items:
-    Choose Mutant Powers
-    """
     violence = calculate_violence(caller)
     brains = calculate_brains(caller)
     chutzpah = calculate_chutzpah(caller)
@@ -461,9 +457,19 @@ def finalize_finish(caller, caller_input):
     new_stats = {key: value for key, value in zip(caller.db.stats.keys(), random.sample(caller.db.stats.values(), len(caller.db.stats.values())))}
     caller.db.stats = new_stats
 
+    # Set starting moxie level
     caller.db.moxie = 6
+
+    # Set random mutant power
     caller.db.mutant_power = random.choice(MUTANT_POWERS.keys())
+
+    # set random secret society membership
     caller.db.secret_societies.append(random.choice(SECRET_SOCIETIES.keys()))
+
+    # Flip one personality trait
+    selected_trait = random.choice(caller.db.personality)
+    selected_index = caller.db.personality.indexof(selected_trait)
+    caller.db.personality[selected_index] = PERSONALITY.get(selected_trait)
 
 
 def exit(caller):
