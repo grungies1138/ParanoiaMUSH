@@ -21,8 +21,11 @@ class ChargenCommand(default_cmds.MuxCommand):
         if self.caller.db.chargen_complete > 0:
             self.caller.msg("|rERROR:|n Your clone has already been configured.  Please move along now, citizen.")
         else:
-            self.caller.msg("|yComputer:|n Cerebral Coretech unit installed.")
-            utils.delay(1, self.initial_message, caller=self.caller)
+            if self.caller.db.initial_setup > 0:
+                self.call_menu(self.caller)
+            else:
+                self.caller.msg("|yComputer:|n Cerebral Coretech unit installed.")
+                utils.delay(1, self.initial_message, caller=self.caller)
 
     def initial_message(self, caller):
         self.caller.msg("|yComputer:|n Booting initial configuration setup menu...")
@@ -38,6 +41,7 @@ class ChargenCommand(default_cmds.MuxCommand):
 
 
 def menu_start_node(caller):
+
     text = "Initiating Clone Replication and Configuration Subroutine...\n"
     text += "Subroutine initiated.\n\n"
     text += "Welcome, new Citizen!  I am the Computer.  I am your friend.  You are about to enter Alpha Complex. " \
