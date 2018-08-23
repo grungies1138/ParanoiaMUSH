@@ -6,10 +6,11 @@ Rooms are simple containers that has no location of their own.
 """
 
 from evennia import DefaultRoom
-from commands.library import header
+from commands.library import header, clearance_color
 from evennia.utils import evtable
 from clones import Clone
 from typeclasses.objects import Object
+from world.static_data import CLEARANCE
 
 
 class Room(DefaultRoom):
@@ -32,7 +33,7 @@ class Room(DefaultRoom):
         message.append("|[002|w{}{}|n\n".format(self.key, " " * (78 - len(self.key))))
         # message.append("|w-|n" * 78)
         message.append(self.db.desc)
-        message.append("|{}_|n".format(self.db.clearance) * 78)
+        message.append("|{}_|n".format(clearance_color(CLEARANCE.get(self.db.clearance))) * 78)
 
         chars = self.list_characters()
         objects = self.list_non_characters()
