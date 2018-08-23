@@ -170,7 +170,7 @@ class TimeCommand(default_cmds.MuxCommand):
         self.caller.msg("|wCurrent Date and Time:|n {} {}, 214 {}"
                         .format(month, day,datetime.datetime.now().strftime("%I:%M:%S %P")))
         self.caller.msg("\n|[035|002 Notable Epochs >>>                                                           |n")
-        self.caller.msg("Invention of the Hot Cold Fusion Reactor: April 28, 214")
-        self.caller.msg("Death of famous programmer ANI-12-FTT-2: November 5, 214")
-        self.caller.msg("Introduction of Dazzling Blue Raspberry PoppyFizz soda: January 2, 214")
-        self.caller.msg("Centennial anniversary of the introduction of Dazzling Blue Raspberry PoppyFizz soda: January 2, 214")
+        self.caller.msg("|wInvention of the Hot Cold Fusion Reactor:|n April 28, 214")
+        self.caller.msg("|wDeath of famous programmer ANI-12-FTT-2:|n November 5, 214")
+        self.caller.msg("|wIntroduction of Dazzling Blue Raspberry PoppyFizz soda:|n January 2, 214")
+        self.caller.msg("|wCentennial anniversary of Dazzling Blue Raspberry PoppyFizz soda:|n January 2, 214")
