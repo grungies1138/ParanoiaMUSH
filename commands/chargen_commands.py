@@ -468,7 +468,7 @@ def finalize_finish(caller, caller_input):
 
     # Flip one personality trait
     selected_trait = random.choice(caller.db.personality)
-    selected_index = caller.db.personality.indexof(selected_trait)
+    selected_index = caller.db.personality.index(selected_trait)
     caller.db.personality[selected_index] = PERSONALITY.get(selected_trait)
 
 
