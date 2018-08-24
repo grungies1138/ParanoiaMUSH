@@ -1,6 +1,7 @@
 import datetime
 import re
 import random
+import string
 from evennia import default_cmds, utils
 from evennia.utils.evmenu import EvMenu
 from evennia.utils import evtable
@@ -83,6 +84,9 @@ def chargen_random(caller):
     text = "Wow!  You are a wise one!  Trusting the genius of the Computer to select your clone configuration for " \
            "you.  Never has a more noble choice been made.  I will do my best to make something that you will like."
 
+    options = ({"desc": "Randomize", "exec": exec_random, "goto": "chargen_random"},
+               {"key": "back", "desc": "Go Back", "goto": "menu_start_node" "exec": reset_random})
+
     if caller.db.eyes > 0:
         text += "|wEyes:|n {}".format(EYES.get(caller.db.eyes))
 
@@ -100,11 +104,51 @@ def chargen_random(caller):
 
         text += "\n|wHome Sector:|n {}".format(caller.db.sector)
 
-    options = ({"desc": ""},
-               {})
+        text += "\n\nIf you are satisfied with the configuration, type |wfinalize|n to complete your setup."
+
+        options += ({"key": "finalize", "desc": "Finalize Configuration", "goto": "finalize_chargen"},)
 
     return text, options
 
+def exec_random(caller):
+    for i in range(5):
+        skills = []
+        setattr(caller.ndb._menutree, 'next_skill_level', i + 1)
+        for skill, value in caller.db.skills.iteritems():
+            if value == 0:
+                skills.append(skill)
+
+        set_skill(caller, random.choice(skills))
+
+    caller.db.eyes = random.choice(EYES.keys())
+    caller.db.hair = random.choice(HAIR.keys())
+    caller.db.skin = random.choice(SKIN.keys())
+    caller.db.height = "{}cm".format(random.randint(135, 210))
+    caller.db.weight = "{}kgs".format(random.randint(45, 90))
+    caller.db.gender = random.choice(["male", "female"])
+    caller.db.sector = "{}{}{}-{}".format(random.choice(string.ascii_uppercase), random.choice(string.ascii_uppercase),
+                                          random.choice(string.ascii_uppercase), random.randint(01, 99))
+    while len(caller.db.personality) < 3:
+        per = random.choice(PERSONALITY.keys())
+
+        if per not in caller.db.personality:
+            caller.db.personality.append(per)
+        else:
+            continue
+
+def reset_random(caller):
+    caller.db.eyes = 0
+    caller.db.hair = 0
+    caller.db.skin = 0
+    caller.db.height = ""
+    caller.db.weight = ""
+    caller.db.sector = ""
+    caller.db.gender = ""
+    caller.db.skills = {"athletics": 0, "guns": 0, "melee": 0, "throw": 0,
+                          "science": 0, "psychology": 0, "bureaucracy": 0, "alpha complex": 0,
+                          "bluff": 0, "charm": 0, "intimidate": 0, "stealth": 0,
+                          "operate": 0, "engineer": 0, "program": 0, "demolitions": 0}
+    caller.db.personality = []
 
 ########################################################################################################################
 # CUSTOMIZE
