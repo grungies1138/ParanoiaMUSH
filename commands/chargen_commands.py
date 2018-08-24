@@ -80,8 +80,14 @@ def chargen_custom(caller):
            "configuration.  Everything from the skills they have to the hair on their head, if any.  Please choose " \
            "from the options below to begin your journey."
 
-    options = ({"desc": "Personal", "goto": "chargen_personal"},
-               {"desc": "Skills", "goto": "chargen_skills"},
+
+    options = ()
+    if caller.db.eyes > 0 and caller.db.hair > 0 and caller.db.height and caller.db.weight and caller.db.personality and caller.db.gender and caller.db.sector:
+        options += ({"desc": "|xPersonal|n", "goto": "chargen_personal"},)
+    else:
+        options += ({"desc": "Personal", "goto": "chargen_personal"},)
+
+    options = ({"desc": "Skills", "goto": "chargen_skills"},
                {"desc": "Finalize", "goto": "finalize_chargen"})
 
     return text, options
@@ -268,6 +274,8 @@ def select_personality(caller):
                 "fellow citizens.  And |rHappiness is mandatory|n.\n\nPlease select one of the following traits.\n\n"
 
         text += ", ".join(PERSONALITY.iterkeys())
+
+    text += "\n\n|wCurrent selected traits:|n {}".format(", ".join(caller.db.personality))
 
     options = ()
 
@@ -517,9 +525,8 @@ def calculate_mechanics(caller):
                  caller.db.skills.get("demolitions")]
     return max(mechanics)
 
-
 def node_formatter(nodetext, optionstext, caller=None):
-    separator1 = "|002_|n" * 78 + "\n\n"
+    separator1 = "\n\n\n|002_|n" * 78 + "\n\n"
     separator2 = "\n" + "|002_|n" * 78 + "\n\nYou may type '|gq|n' or '|gquit|n' " \
                                          "at any time to quit this application.\n" + "|002_|n" * 78 + "\n\n"
     return separator1 + nodetext + separator2 + optionstext
@@ -545,7 +552,6 @@ def options_formatter(optionlist, caller=None):
 
     else:
         return "\n".join(options)
-
 
 def exit_message(caller, menu):
     caller.msg("Exiting Clone Setup.  Goodbye.")
