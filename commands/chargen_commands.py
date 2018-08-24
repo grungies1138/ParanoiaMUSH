@@ -87,7 +87,7 @@ def chargen_custom(caller):
     else:
         options += ({"desc": "Personal", "goto": "chargen_personal"},)
 
-    options = ({"desc": "Skills", "goto": "chargen_skills"},
+    options += ({"desc": "Skills", "goto": "chargen_skills"},
                {"desc": "Finalize", "goto": "finalize_chargen"})
 
     return text, options
