@@ -64,11 +64,12 @@ def select_name(caller):
            "clone chooses the name ALAN.  They are the third clone and they are from sector WTF-69.  So their " \
            "fullname would be ALAN-3-WTF-69.  Understand?  No?  Great, let's get started.  Please enter the name you " \
            "wish to choose."
-    options = ({"key": "_default", "exec": set_name, "goto": "select_name"},
+    options = ({"key": "_default", "exec": set_name, "goto": "menu_start_node"},
                {"key": "back", "desc": "Go Back", "goto": "menu_start_node"})
     return text, options
 
 def set_name(caller, caller_input):
+    # TODO: fix issue with error on not found name
     new_name = caller_input.strip().lower()
     existing = caller.search(new_name, global_search=True)
 
@@ -76,6 +77,8 @@ def set_name(caller, caller_input):
         caller.msg("|rERROR:|n That name is already assigned to an existing clone. Please pick another.")
     else:
         caller.key = new_name.upper()
+        caller.msg("|yComputer:|n You are not named: {}".format(caller.key))
+
 
 ########################################################################################################################
 # RANDOMIZE
@@ -183,7 +186,7 @@ def chargen_custom(caller):
         options +=({"desc": "Skills", "goto": "chargen_skills"},)
 
     if personal and 1 in skills:
-        options += ({"desc": "Finalize", "goto": "finalize_chargen"})
+        options += ({"desc": "Finalize", "goto": "finalize_chargen"},)
 
     return text, options
 
@@ -323,7 +326,11 @@ def select_sector(caller):
            "really matter all that much.  Many citizens simply enter a sector at random.  To do that, just enter " \
            "three characters, a dash and two numbers.  Like this: |wOMG-13|n or |wWTF-69|n"
 
-    options = ({"key": "_default", "exec": set_sector, "goto": "chargen_personal"})
+    if caller.db.sector:
+        text += "|wChosen Sector:|n {}".format(caller.db.sector)
+
+    options = ({"key": "_default", "exec": set_sector, "goto": "select_sector"},
+               {"key": "back", "desc": "Go Back", "goto": "chargen_personal"})
 
     return text, options
 
@@ -387,6 +394,7 @@ def remove_personality(caller):
 
     for per in caller.db.personality:
         options += ({"key": per, "exec": del_personality, "goto": "select_personality"},)
+    options += ({"key": "back", "desc": "Go Back", "goto": "select_personality"},)
 
     return text, options
 
@@ -446,17 +454,19 @@ def set_weight(caller, caller_input):
     if match:
         number, measure = int(match.group('number')), match.group('string')
 
-    if measure and measure == "kgs":
-        if number < 45 or number > 100:
-            caller.msg("|rERROR:|n That weight is not within the specified parameter limits.  Please try again.")
-        else:
-            caller.db.weight = weight
+        if measure and measure == "kgs":
+            if number < 45 or number > 100:
+                caller.msg("|rERROR:|n That weight is not within the specified parameter limits.  Please try again.")
+            else:
+                caller.db.weight = weight
 
-    if measure and measure == "lbs":
-        if number < 100 or number > 220:
-            caller.msg("|rERROR:|n That weight is not within the specified parameter limits.  Please try again.")
-        else:
-            caller.db.weight = weight
+        if measure and measure == "lbs":
+            if number < 100 or number > 220:
+                caller.msg("|rERROR:|n That weight is not within the specified parameter limits.  Please try again.")
+            else:
+                caller.db.weight = weight
+    else:
+        caller.msg("|rERROR:|n Invalid input.  Try again.")
 
 def select_height(caller):
     text = "Please enter the height you wish to be.  You may select a number of inches or centimeters." \
@@ -476,18 +486,19 @@ def set_height(caller, caller_input):
     if match:
         number, measure = int(match.group('number')), match.group('string')
 
+        if measure == "cm":
+            if number < 135 or number > 210:
+                caller.msg("|rERROR:|n That height is not within the specified parameter limits.  Please try again.")
+            else:
+                caller.db.height = height
 
-    if measure == "cm":
-        if number < 135 or number > 210:
-            caller.msg("|rERROR:|n That height is not within the specified parameter limits.  Please try again.")
-        else:
-            caller.db.height = height
-
-    if measure == "in":
-        if number < 53 or number > 82:
-            caller.msg("|rERROR:|n That height is not within the specified parameter limits.  Please try again.")
-        else:
-            caller.db.height = height
+        if measure == "in":
+            if number < 53 or number > 82:
+                caller.msg("|rERROR:|n That height is not within the specified parameter limits.  Please try again.")
+            else:
+                caller.db.height = height
+    else:
+        caller.msg("|rERROR:|n Invalid input.  Try again.")
 
 def select_hair(caller):
     text = "Please select from one of the following options for hair color and style.\n\n"
@@ -638,8 +649,8 @@ def options_formatter(optionlist, caller=None):
             colB = options[len(options) / 2:]
         table = evtable.EvTable(table=[colA, colB], border=None)
 
-        table.reformat_column(0, width=40)
-        table.reformat_column(1, width=40)
+        table.reformat_column(0, width=39)
+        table.reformat_column(1, width=39)
 
         return str(table) + "\n"
 
