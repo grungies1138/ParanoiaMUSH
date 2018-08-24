@@ -526,10 +526,10 @@ def calculate_mechanics(caller):
     return max(mechanics)
 
 def node_formatter(nodetext, optionstext, caller=None):
-    separator1 = "\n\n\n|002_|n" * 78 + "\n\n"
+    separator1 = "|002_|n" * 78 + "\n\n"
     separator2 = "\n" + "|002_|n" * 78 + "\n\nYou may type '|gq|n' or '|gquit|n' " \
                                          "at any time to quit this application.\n" + "|002_|n" * 78 + "\n\n"
-    return separator1 + nodetext + separator2 + optionstext
+    return "\n\n\n" + separator1 + nodetext + separator2 + optionstext
 
 def options_formatter(optionlist, caller=None):
     options = []
