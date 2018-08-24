@@ -59,7 +59,7 @@ class Room(DefaultRoom):
         #     message2.append(unicode(line))
         #
         # return "\n".join(message2)
-        pass
+        return "{}\n{}\n".format(self.key, self.desc)
 
     def list_characters(self):
         return sorted([char for char in self.contents if char.is_typeclass(Clone, exact=False)])
