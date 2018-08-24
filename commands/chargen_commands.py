@@ -49,10 +49,33 @@ def menu_start_node(caller):
             "devastation caused by |y<DATA NOT FOUND>|n when the |y<CORRUPTION DETECTED>|n swarming.  Anyway, let's " \
             "get you all set up, shall we?\n\nPlease select an option below.".format(datetime.datetime.now().strftime("%B"), datetime.datetime.now().day)
 
-    options = ({"desc": "Randomize", "goto": "chargen_random"},
+    options = ({"desc": "Set Name", "goto": "select_name"},
+               {"desc": "Randomize", "goto": "chargen_random"},
                {"desc": "Customize", "goto": "chargen_custom_landing"})
 
     return text, options
+
+def select_name(caller):
+    text = "First things first, citizen!  You need to pick your name.  A name is your personal designation.  It's how " \
+           "your friends know who they are talking about behind your back.  Without it, I would be forced to number " \
+           "all of you and that's just too Orwellian, even for me.\n\nNames consist of up to four alpha characters " \
+           "which is then followed by your clone number and you home sector (more on this later).  For example: a " \
+           "clone chooses the name ALAN.  They are the third clone and they are from sector WTF-69.  So their " \
+           "fullname would be ALAN-3-WTF-69.  Understand?  No?  Great, let's get started.  Please enter the name you " \
+           "wish to choose."
+    options = ({"key": "_default", "exec": set_name, "goto": "menu_node_start"},
+               {"key": "back", "desc": "Go Back", "goto": "menu_node_start"})
+    return text, options
+
+def set_name(caller, caller_input):
+    new_name = caller_input.strip().lower()
+    existing = caller.search(new_name, global_search=True)
+
+    if existing:
+        caller.msg("|rERROR:|n That name is already assigned to an existing clone. Please pick another.")
+        return None
+    else:
+        caller.key = new_name.upper()
 
 ########################################################################################################################
 # RANDOMIZE
@@ -61,11 +84,32 @@ def chargen_random(caller):
     text = "Wow!  You are a wise one!  Trusting the genius of the Computer to select your clone configuration for " \
            "you.  Never has a more noble choice been made.  I will do my best to make something that you will like."
 
-    options = ()
+    if caller.db.eyes > 0:
+        text += "|wEyes:|n {}".format(EYES.get(caller.db.eyes))
+
+        text += "\n|wHair:|n {}".format(HAIR.get(caller.db.hair))
+
+        text += "\n|wHeight:|n {}".format(caller.db.height)
+
+        text += "\n|wWeight:|n {}".format(caller.db.weight)
+
+        text += "\n|wSkin:|n {}".format(SKIN.get(caller.db.skin))
+
+        text += "\n|wPersonality:|n {}".format(", ".join(caller.db.personality))
+
+        text += "\n|wGender:|n {}".format(caller.db.gender)
+
+        text += "\n|wHome Sector:|n {}".format(caller.db.sector)
+
+    options = ({"desc": ""},
+               {})
 
     return text, options
 
 
+########################################################################################################################
+# CUSTOMIZE
+########################################################################################################################
 def chargen_custom_landing(caller):
     text = "You've selected: |yRANDOMIZE|n.\n\nInitiating randomization...\n\n|rError:|n Randomization algorithm " \
            "fault detected.  Defaulting to customization mode."
@@ -73,7 +117,6 @@ def chargen_custom_landing(caller):
     options = ({"desc": "Continue", "goto": "chargen_custom"},)
 
     return text, options
-
 
 def chargen_custom(caller):
     text = "Welcome to the Customization and Configuration Portal.  Here you will create your clone's individual " \
@@ -499,9 +542,10 @@ def finalize_finish(caller, caller_input):
     selected_index = caller.db.personality.index(selected_trait)
     caller.db.personality[selected_index] = PERSONALITY.get(selected_trait)
     caller.db.chargen_complete = 1
+    caller.db.clone = 1
 
 def exit(caller):
-    text = "Clone configuration complete.  Prepare for final growth stage.  This will hurt.  A lot."
+    text = "Clone configuration complete.  Prepare for final growth stage.  This will hurt.  A lot.  Enjoy!"
 
     options = ()
     return text, options
