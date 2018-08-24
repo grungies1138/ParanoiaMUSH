@@ -63,8 +63,8 @@ def select_name(caller):
            "clone chooses the name ALAN.  They are the third clone and they are from sector WTF-69.  So their " \
            "fullname would be ALAN-3-WTF-69.  Understand?  No?  Great, let's get started.  Please enter the name you " \
            "wish to choose."
-    options = ({"key": "_default", "exec": set_name, "goto": "menu_node_start"},
-               {"key": "back", "desc": "Go Back", "goto": "menu_node_start"})
+    options = ({"key": "_default", "exec": set_name, "goto": "select_name"},
+               {"key": "back", "desc": "Go Back", "goto": "menu_start_node"})
     return text, options
 
 def set_name(caller, caller_input):
@@ -73,7 +73,6 @@ def set_name(caller, caller_input):
 
     if existing:
         caller.msg("|rERROR:|n That name is already assigned to an existing clone. Please pick another.")
-        return None
     else:
         caller.key = new_name.upper()
 
