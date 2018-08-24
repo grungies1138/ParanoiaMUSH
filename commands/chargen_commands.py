@@ -195,7 +195,8 @@ def chargen_skills(caller):
            "Complex were trained experts in all fields of study, attempts to do so have resulted in undesirable " \
            "mutations.  And since mutants are traitors and traitors are caught, sterilized and destroyed, well, we " \
            "won't talk about that.  Anyway, in order to mitigate the risk of mutation, for every skill you choose to " \
-           "increase, another skill, chosen at random, will be decreased by the same level.  Now, let's get you " \
+           "increase, another skill, chosen at random, will be decreased by the same level.  A skill, once chose for " \
+           "either positive or negative assignments are then no longer available for selection.  Now, let's get you " \
            "learned!\n\n"
 
     next_skill_level = 0
