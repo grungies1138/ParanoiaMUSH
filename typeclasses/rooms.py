@@ -26,7 +26,7 @@ class Room(DefaultRoom):
     def at_object_creation(self):
         self.db.clearance = 1
 
-    def return_appearance(self, looker):
+    #def return_appearance(self, looker):
         # message = []
         # message.append(header(self.key))
         # message.append("|w_|n" * 78)
@@ -59,7 +59,7 @@ class Room(DefaultRoom):
         #     message2.append(unicode(line))
         #
         # return "\n".join(message2)
-        return "{}\n{}\n".format(self.key, self.desc)
+        #return "{}\n{}\n".format(self.key, self.desc)
 
     def list_characters(self):
         return sorted([char for char in self.contents if char.is_typeclass(Clone, exact=False)])
