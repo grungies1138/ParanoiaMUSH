@@ -85,7 +85,7 @@ def chargen_random(caller):
            "you.  Never has a more noble choice been made.  I will do my best to make something that you will like."
 
     options = ({"desc": "Randomize", "exec": exec_random, "goto": "chargen_random"},
-               {"key": "back", "desc": "Go Back", "goto": "menu_start_node" "exec": reset_random})
+               {"key": "back", "desc": "Go Back", "goto": "menu_start_node", "exec": reset_random})
 
     if caller.db.eyes > 0:
         text += "|wEyes:|n {}".format(EYES.get(caller.db.eyes))
