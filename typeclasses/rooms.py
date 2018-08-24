@@ -29,11 +29,15 @@ class Room(DefaultRoom):
     def return_appearance(self, looker):
         message = []
         # message.append(header(self.key))
-        message.append("|w_|n" * 78)
-        message.append("|[002|w{}{}|n\n".format(self.key, " " * (78 - len(self.key))))
+        # message.append("|w_|n" * 78)
+        looker.msg("|w_|n" * 78)
+        looker.msg("|[002|w{}{}|n\n".format(self.key, " " * (78 - len(self.key))))
+        looker.msg(self.db.desc)
+        # message.append("|[002|w{}{}|n\n".format(self.key, " " * (78 - len(self.key))))
         # message.append("|w-|n" * 78)
-        message.append(self.db.desc)
-        message.append("|{}_|n".format(clearance_color(CLEARANCE.get(self.db.clearance))) * 78)
+        # message.append(self.db.desc)
+        # message.append("|{}_|n".format(clearance_color(CLEARANCE.get(self.db.clearance))) * 78)
+        looker.msg("|{}_|n".format(clearance_color(CLEARANCE.get(self.db.clearance))) * 78)
 
         chars = self.list_characters()
         objects = self.list_non_characters()
@@ -50,14 +54,16 @@ class Room(DefaultRoom):
         table = evtable.EvTable("|wCharacters and Objects:|n", "|wExits:|n", table=[chars + colored_objects, exits],
                                 border=None)
         table.reformat_column(0, width=28, align="l")
-        message.append(table)
-        message.append("\n")
+        looker.msg(unicode(table))
+        looker.msg("\n")
+        # message.append(table)
+        # message.append("\n")
 
-        message2 = []
-        for line in message:
-            message2.append(unicode(line))
+        #message2 = []
+        # for line in message:
+        #     message2.append(unicode(line))
 
-        return "\n".join(message2)
+        # return "\n".join(message2)
 
     def list_characters(self):
         return sorted([char for char in self.contents if char.is_typeclass(Clone, exact=False)])
