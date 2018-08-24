@@ -1,5 +1,6 @@
 from characters import Character
 from commands.library import header
+from world.static_data import EYES, HAIR, CLEARANCE, SKIN
 
 class Clone(Character):
     def at_object_creation(self):
@@ -35,9 +36,9 @@ class Clone(Character):
         message = []
         message.append(header(self.key))
         message.append("{} has {} hair, {} eyes and {} skin.  They stand at {} height and weight {} pounds.  "
-                       "They wear a jumpsuit with a {} stripe.".format(self.key, self.db.hair or "no",
-                        self.db.eyes or "nondescript", self.db.skin or "pale", self.db.height or "indeterminate",
-                        self.db.weight or "indeterminate", self.db.clearance))
+                       "They wear a jumpsuit with a {} stripe.".format(self.key, HAIR.get(self.db.hair) or "no",
+                        EYES.get(self.db.eyes) or "nondescript", SKIN.get(self.db.skin) or "pale", self.db.height
+                        or "indeterminate", self.db.weight or "indeterminate", CLEARANCE.get(self.db.clearance)))
         message.append(header())
         if equipment:
             message.append("Equipment:")

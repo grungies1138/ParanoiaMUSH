@@ -80,15 +80,24 @@ def chargen_custom(caller):
            "configuration.  Everything from the skills they have to the hair on their head, if any.  Please choose " \
            "from the options below to begin your journey."
 
+    personal = caller.db.eyes > 0 and caller.db.hair > 0 and caller.db.height and caller.db.weight and \
+               caller.db.personality and caller.db.gender and caller.db.sector
+
+    skills = caller.db.skills.values()
 
     options = ()
-    if caller.db.eyes > 0 and caller.db.hair > 0 and caller.db.height and caller.db.weight and caller.db.personality and caller.db.gender and caller.db.sector:
+    if personal:
         options += ({"desc": "|xPersonal|n", "goto": "chargen_personal"},)
     else:
         options += ({"desc": "Personal", "goto": "chargen_personal"},)
 
-    options += ({"desc": "Skills", "goto": "chargen_skills"},
-               {"desc": "Finalize", "goto": "finalize_chargen"})
+    if 1 in skills:
+        options += ({"desc": "|xSkills|n", "goto": "chargen_skills"},)
+    else:
+        options +=({"desc": "Skills", "goto": "chargen_skills"},)
+
+    if personal and 1 in skills:
+        options += ({"desc": "Finalize", "goto": "finalize_chargen"})
 
     return text, options
 
@@ -114,21 +123,18 @@ def chargen_skills(caller):
         next_skill_level = 2
     elif 1 not in skills:
         next_skill_level = 1
-
+    options = ()
     if next_skill_level > 0:
         text += "Your next skill can be set to |w+{}|n.  Please choose the skill to set to this value.  If you " \
                 "don't see a skill listed below, that means it's been selected for the negative modifier.  Type " \
                 "|w+sheet|n at any time to review your skill layout.".format(next_skill_level)
         setattr(caller.ndb._menutree, 'next_skill_level', next_skill_level)
+        for skill, value in caller.db.skills.iteritems():
+            if value == 0:
+                options += ({"key": skill, "desc": skill, "exec": set_skill, "goto": "chargen_skills"},)
     else:
         text += "All your skills have been set.  If you don't like your choices, you may reset them.  " \
                 "But this will reset all of your choices."
-
-    options = ()
-
-    for skill, value in caller.db.skills.iteritems():
-        if value == 0:
-            options += ({"key": skill, "desc": skill, "exec": set_skill, "goto": "chargen_skills"},)
 
     options += ({"key": "reset", "desc": "Reset all skills", "exec": reset_skills, "goto": "chargen_skills"},
                 {"key": "back", "desc": "Go Back", "goto": "chargen_custom"})
@@ -495,7 +501,7 @@ def finalize_finish(caller, caller_input):
     caller.db.chargen_complete = 1
 
 def exit(caller):
-    text = ""
+    text = "Clone configuration complete.  Prepare for final growth stage.  This will hurt.  A lot."
 
     options = ()
     return text, options
