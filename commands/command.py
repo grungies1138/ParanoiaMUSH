@@ -251,7 +251,7 @@ class WhoCommand(default_cmds.MuxCommand):
         table.reformat_column(4, width=27)
 
         self.caller.msg("|w_|n" * 78)
-        self.caller.msg("|[002|w|u{}|n".center(78, "|[002|w_|n").format(settings.SERVERNAME))
+        self.caller.msg("|[002|w|u{}|n".center(78, '|[002|w_|n').format(settings.SERVERNAME))
         self.caller.msg("|b-|n" * 78)
         self.caller.msg(table)
         self.caller.msg("|b-|n" * 78)
