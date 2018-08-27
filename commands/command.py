@@ -221,7 +221,7 @@ class WhoCommand(default_cmds.MuxCommand):
     def func(self):
         session_list = SESSIONS.get_sessions()
 
-        table = evtable.EvTable(" "," |wName:|n", "|wIdle:|n", "|wConn:|n", "|wClearance:|n", table=None,
+        table = evtable.EvTable(" "," |w|uName:|n", "|w|uIdle:|n", "|w|uConn:|n", "|w|uClearance:|n", table=None,
                                 border=None, width=78)
 
         for session in session_list:
@@ -263,3 +263,4 @@ class WhoCommand(default_cmds.MuxCommand):
         whotable.add_row("|y!|n - Administrators", "|g&|n - Storytellers", "|r$|n - Player Helpers")
         self.caller.msg(whotable)
         self.caller.msg("|w_|n" * 78)
+        self.caller.msg("\n")
