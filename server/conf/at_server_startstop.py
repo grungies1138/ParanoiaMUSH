@@ -15,6 +15,7 @@ at_server_cold_start()
 at_server_cold_stop()
 
 """
+import subprocess
 
 
 def at_server_start():
@@ -37,7 +38,16 @@ def at_server_reload_start():
     """
     This is called only when server starts back up after a reload.
     """
-    pass
+    print("Starting git pull")
+    process = subprocess.Popen("git pull origin master", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = process.communicate()
+    if out:
+        print(out)
+    if err:
+        print(err)
+
+
+print("git pull completed.")
 
 
 def at_server_reload_stop():
