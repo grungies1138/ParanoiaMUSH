@@ -9,6 +9,7 @@ import datetime
 from evennia import Command as BaseCommand
 from evennia import default_cmds
 from evennia.utils import evtable, utils
+from commands.library import clearance_color
 from world.static_data import HEALTH, CLEARANCE
 from django.conf import settings
 from evennia.server.sessionhandler import SESSIONS
@@ -242,7 +243,7 @@ class WhoCommand(default_cmds.MuxCommand):
             else:
                 flag = " "
             table.add_row(flag + utils.crop(player.name), utils.time_format(idle, 0),
-                          utils.time_format(conn, 0), CLEARANCE.get(clearance))
+                          utils.time_format(conn, 0), "|{}{}|n".format(clearance_color(CLEARANCE.get(clearance)), clearance))
 
         table.reformat_column(0, width=24)
         table.reformat_column(1, width=12)
@@ -261,5 +262,4 @@ class WhoCommand(default_cmds.MuxCommand):
         whotable.reformat_column(2, width=26)
         whotable.add_row("|y!|n - Administrators", "|g&|n - Storytellers", "|r$|n - Player Helpers")
         self.caller.msg(whotable)
-        self.caller.msg("|w_|n" * 78)
-        self.caller.msg("\n")
+        self.caller.msg("|w_|n" * 78 + "\n")
