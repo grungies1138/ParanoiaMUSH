@@ -43,4 +43,4 @@ def clearance_color(clearance):
     if clearance == "Violet":
         return "m"
     if clearance == "Ultraviolet":
-        return "[W"
+        return "[W|X"
