@@ -15,7 +15,7 @@ own cmdsets by inheriting from them or directly from `evennia.CmdSet`.
 """
 
 from evennia import default_cmds
-from commands.command import SheetCommand, TimeCommand
+from commands.command import SheetCommand, TimeCommand, OOCCommand
 from commands.chargen_commands import ChargenCommand
 
 class SheetCmdSet(default_cmds.CharacterCmdSet):
@@ -51,6 +51,7 @@ class CharacterCmdSet(default_cmds.CharacterCmdSet):
         # any commands you add below will overload the default ones.
         #
         self.add(TimeCommand())
+        self.add(OOCCommand())
 
 
 
