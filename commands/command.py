@@ -221,7 +221,7 @@ class WhoCommand(default_cmds.MuxCommand):
     def func(self):
         session_list = SESSIONS.get_sessions()
 
-        table = evtable.EvTable(" |w|uName:                              |n", "|w|uIdle:|n", "|w|uConn:|n", "|w|uClearance:|n", table=None,
+        table = evtable.EvTable(" |w|uName:                |n", "|w|uIdle:|n", "|w|uConn:|n", "|w|uClearance:|n", table=None,
                                 border=None, width=78)
 
         for session in session_list:
