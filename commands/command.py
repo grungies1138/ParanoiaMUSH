@@ -221,7 +221,7 @@ class WhoCommand(default_cmds.MuxCommand):
     def func(self):
         session_list = SESSIONS.get_sessions()
 
-        table = evtable.EvTable(" "," |[002|wName:|n", "|[002|wIdle:|n", "|[002|wConn:|n", "|[002|wClearance:|n", table=None,
+        table = evtable.EvTable(" "," |wName:|n", "|wIdle:|n", "|wConn:|n", "|wClearance:|n", table=None,
                                 border=None, width=78)
 
         for session in session_list:
@@ -250,8 +250,8 @@ class WhoCommand(default_cmds.MuxCommand):
         table.reformat_column(3, width=12)
         table.reformat_column(4, width=27)
 
-        self.caller.msg("|b-|n" * 78)
-        self.caller.msg("|y{}|n".center(78).format(settings.SERVERNAME))
+        self.caller.msg("|w_|n" * 78)
+        self.caller.msg("|[002{}|n".center(78, " ").format(settings.SERVERNAME))
         self.caller.msg("|b-|n" * 78)
         self.caller.msg(table)
         self.caller.msg("|b-|n" * 78)
