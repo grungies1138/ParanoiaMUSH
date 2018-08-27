@@ -2,7 +2,7 @@ import datetime
 import re
 import random
 import string
-from evennia import default_cmds, utils
+from evennia import default_cmds, utils, AccountDB
 from evennia.utils.evmenu import EvMenu
 from evennia.utils import evtable
 from world.static_data import EYES, HAIR, SKIN, PERSONALITY, MUTANT_POWERS, SECRET_SOCIETIES
@@ -71,7 +71,7 @@ def select_name(caller):
 def set_name(caller, caller_input):
     # TODO: fix issue with error on not found name
     new_name = caller_input.strip().lower()
-    existing = caller.search(new_name, global_search=True, quiet=True)
+    existing = AccountDB.objects.filter(username=new_name).exists()
 
     if existing:
         caller.msg("|rERROR:|n That name is already assigned to an existing clone. Please pick another.")
