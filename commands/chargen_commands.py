@@ -71,7 +71,7 @@ def select_name(caller):
 def set_name(caller, caller_input):
     # TODO: fix issue with error on not found name
     new_name = caller_input.strip().lower()
-    existing = caller.search(new_name, global_search=True)
+    existing = caller.search(new_name, global_search=True, quiet=True)
 
     if existing:
         caller.msg("|rERROR:|n That name is already assigned to an existing clone. Please pick another.")
