@@ -244,11 +244,11 @@ class WhoCommand(default_cmds.MuxCommand):
             table.add_row(flag, utils.crop(player.name), utils.time_format(idle, 0),
                           utils.time_format(conn, 0), CLEARANCE.get(clearance))
 
-        table.reformat_column(0, width=2)
+        table.reformat_column(0, width=3)
         table.reformat_column(1, width=24)
         table.reformat_column(2, width=12)
         table.reformat_column(3, width=12)
-        table.reformat_column(4, width=28)
+        table.reformat_column(4, width=27)
 
         self.caller.msg("|b-|n" * 78)
         self.caller.msg("|y{}|n".center(78).format(settings.SERVERNAME))
