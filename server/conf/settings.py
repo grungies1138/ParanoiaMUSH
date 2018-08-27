@@ -34,7 +34,7 @@ from evennia.settings_default import *
 INLINEFUNC_ENABLED=True
 
 # This is the name of your game. Make it catchy!
-SERVERNAME = "ParanoiaMUSH"
+SERVERNAME = "Paranoia MUSH"
 
 # Server ports. If enabled and marked as "visible", the port
 # should be visible to the outside world on a production server.
