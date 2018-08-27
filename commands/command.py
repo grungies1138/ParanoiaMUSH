@@ -229,10 +229,7 @@ class WhoCommand(default_cmds.MuxCommand):
             player = session.get_account()
             idle = time.time() - session.cmd_last_visible
             conn = time.time() - session.conn_time
-            if session.get_puppet():
-                clearance = session.get_puppet().db.clearance
-            else:
-                clerarance = 1
+            clearance = session.get_puppet().db.clearance
             flag = None
             if player.locks.check_lockstring(player, "dummy:perm(Admin)"):
                 flag = "|y!|n"
