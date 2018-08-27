@@ -156,7 +156,6 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append("*|w---------------------------------------------------" + "|500This form is MANDATORY|w---|n*")
         self.caller.msg("\n".join(message))
 
-
 class TimeCommand(default_cmds.MuxCommand):
     """
     Displays the IC date and time.
@@ -176,7 +175,6 @@ class TimeCommand(default_cmds.MuxCommand):
         self.caller.msg("|wDeath of famous programmer ANI-12-FTT-2:|n November 5, 214")
         self.caller.msg("|wIntroduction of Dazzling Blue Raspberry PoppyFizz soda:|n January 2, 214")
         self.caller.msg("|w100th anniversary of Dazzling Blue Raspberry PoppyFizz soda:|n January 2, 214")
-
 
 class OOCCommand(default_cmds.MuxCommand):
     """
@@ -207,7 +205,6 @@ class OOCCommand(default_cmds.MuxCommand):
         else:
             self.caller.location.msg_contents("%s %s says, \"%s\"" % (prefix, self.caller.name, speech))
 
-
 class WhoCommand(default_cmds.MuxCommand):
     """
     Shows the currently connected players.
@@ -224,7 +221,7 @@ class WhoCommand(default_cmds.MuxCommand):
     def func(self):
         session_list = SESSIONS.get_sessions()
 
-        table = evtable.EvTable(" |wName:|n", "|wIdle:|n", "|wConn:|n", "|wAffiliation:|n", table=None,
+        table = evtable.EvTable(" |wName:|n", "|wIdle:|n", "|wConn:|n", "|wClearance:|n", table=None,
                                 border='header', header_line_char='-', width=78)
 
         for session in session_list:
@@ -232,9 +229,9 @@ class WhoCommand(default_cmds.MuxCommand):
             idle = time.time() - session.cmd_last_visible
             conn = time.time() - session.conn_time
             if session.get_puppet():
-                affiliation = session.get_puppet().db.affiliation
+                clearance = session.get_puppet().db.clearance
             else:
-                affiliation = ""
+                clerarance = 1
             flag = None
             if player.locks.check_lockstring(player, "dummy:perm(Admin)"):
                 flag = "|y!|n"
@@ -245,7 +242,7 @@ class WhoCommand(default_cmds.MuxCommand):
             else:
                 flag = " "
             table.add_row(flag + utils.crop(player.name), utils.time_format(idle, 0),
-                          utils.time_format(conn, 0), affiliation)
+                          utils.time_format(conn, 0), CLEARANCE.get(clearance))
 
         table.reformat_column(0, width=24)
         table.reformat_column(1, width=12)
