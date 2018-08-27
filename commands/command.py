@@ -173,3 +173,33 @@ class TimeCommand(default_cmds.MuxCommand):
         self.caller.msg("|wDeath of famous programmer ANI-12-FTT-2:|n November 5, 214")
         self.caller.msg("|wIntroduction of Dazzling Blue Raspberry PoppyFizz soda:|n January 2, 214")
         self.caller.msg("|w100th anniversary of Dazzling Blue Raspberry PoppyFizz soda:|n January 2, 214")
+
+
+class OOCCommand(default_cmds.MuxCommand):
+    """
+    Send an OOC message just to the people in your current room.
+    Usage:
+        ooc [:, ;]<text>
+    """
+
+    key = "ooc"
+    aliases = []
+    lock = "cmd:all()"
+    help_category = "General"
+
+    def func(self):
+        if not self.args:
+            self.caller.msg("Huh?")
+
+        prefix = "|w<|n|005OOC|n|w>|n"
+
+        speech = self.args.strip()
+
+        if speech[0] == ":":
+            speech_text = speech[1:]
+            self.caller.location.msg_contents("%s %s %s" % (prefix, self.caller.name, speech_text))
+        elif speech[0] == ";":
+            speech_text = speech[1:]
+            self.caller.location.msg_contents("%s %s%s" % (prefix, self.caller.name, speech_text))
+        else:
+            self.caller.location.msg_contents("%s %s says, \"%s\"" % (prefix, self.caller.name, speech))
