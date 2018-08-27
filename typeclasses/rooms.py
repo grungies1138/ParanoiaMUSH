@@ -28,7 +28,6 @@ class Room(DefaultRoom):
 
     def return_appearance(self, looker):
         message = []
-        message.append(header(self.key))
         message.append("|w_|n" * 78)
         message.append("|[002|w{}{}|n\n".format(self.key, " " * (78 - len(self.key))))
         message.append("|w-|n" * 78)
