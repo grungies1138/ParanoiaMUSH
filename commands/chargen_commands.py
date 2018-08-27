@@ -78,7 +78,7 @@ def set_name(caller, caller_input):
     else:
         caller.key = new_name.upper()
         caller.account.username = new_name.upper()
-        caller.msg("|yComputer:|n You are not named: {}".format(caller.key))
+        caller.msg("|yComputer:|n You are now named: {}".format(caller.key))
 
 
 ########################################################################################################################
