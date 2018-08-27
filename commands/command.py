@@ -221,7 +221,7 @@ class WhoCommand(default_cmds.MuxCommand):
     def func(self):
         session_list = SESSIONS.get_sessions()
 
-        table = evtable.EvTable(" "," |w|uName:|n", "|w|uIdle:|n", "|w|uConn:|n", "|w|uClearance:|n", table=None,
+        table = evtable.EvTable(" |w|uName:                   |n", "|w|uIdle:       |n", "|w|uConn:       |n", "|w|uClearance:                    |n", table=None,
                                 border=None, width=78)
 
         for session in session_list:
@@ -244,11 +244,10 @@ class WhoCommand(default_cmds.MuxCommand):
             table.add_row(flag, utils.crop(player.name), utils.time_format(idle, 0),
                           utils.time_format(conn, 0), CLEARANCE.get(clearance))
 
-        table.reformat_column(0, width=3)
-        table.reformat_column(1, width=24)
+        table.reformat_column(0, width=24)
+        table.reformat_column(1, width=12)
         table.reformat_column(2, width=12)
-        table.reformat_column(3, width=12)
-        table.reformat_column(4, width=27)
+        table.reformat_column(3, width=30)
 
         self.caller.msg("|w_|n" * 78)
         self.caller.msg("|[002|w|u{}|n".center(78, '^').format(settings.SERVERNAME).replace('^', "|[002|w_|n"))
