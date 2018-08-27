@@ -77,6 +77,7 @@ def set_name(caller, caller_input):
         caller.msg("|rERROR:|n That name is already assigned to an existing clone. Please pick another.")
     else:
         caller.key = new_name.upper()
+        caller.account.username = new_name.upper()
         caller.msg("|yComputer:|n You are not named: {}".format(caller.key))
 
 

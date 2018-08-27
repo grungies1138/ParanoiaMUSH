@@ -51,7 +51,7 @@ class SheetCommand(default_cmds.MuxCommand):
         message.append("|w.---|n|yAlpha Complex Identity Form|n|w----------------------------------------------.|n")
         message.append("|[002|w/// PART ONE    |n|[005 |wCORE INFORMATION >>>                                         |n")
 
-        name = "|wName: |n{}".format(self.caller.key)
+        name = "|wName: |n{}-{}-{}".format(self.caller.key, self.caller.db.clone, self.caller.db.sector)
         clearance = "|wSecurity Clearance: |n{}".format(CLEARANCE.get(self.caller.db.clearance))
         sector = "|wHome Sector: |n{}".format(self.caller.db.sector or "")
         clone = "|wClone #: |n{}".format(self.caller.db.clone)
