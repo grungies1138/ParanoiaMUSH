@@ -13,6 +13,7 @@ to be modified.
 """
 
 from evennia import DefaultChannel
+from world.channel_colors import COLORS
 
 
 class Channel(DefaultChannel):
@@ -58,4 +59,38 @@ class Channel(DefaultChannel):
         post_send_message(msg) - called just after message was sent to channel
 
     """
-    pass
+
+    def channel_prefix(self, msg, emit=False):
+        prefix_string = ""
+        if self.key in COLORS:
+            prefix_string = "[%s] " % COLORS.get(self.key)
+        else:
+            prefix_string = "[%s] " % self.key
+        return prefix_string
+
+    def pose_transform(self, msgobj, sender_string):
+        """
+        Hook method. Detects if the sender is posing, and modifies the
+        message accordingly.
+        Args:
+            msgobj (Msg or TempMsg): The message to analyze for a pose.
+            sender_string (str): The name of the sender/poser.
+        Returns:
+            string (str): A message that combines the `sender_string`
+                component with `msg` in different ways depending on if a
+                pose was performed or not (this must be analyzed by the
+                hook).
+        """
+        pose = False
+        message = msgobj.message
+        message_start = message.lstrip()
+        if message_start.startswith((':', ';')):
+            pose = True
+            message = message[1:]
+            if not message.startswith((':', "'", ',')):
+                if not message.startswith(' '):
+                    message = ' ' + message
+        if pose:
+            return '%s%s' % (sender_string, message)
+        else:
+            return '%s says, "%s"' % (sender_string, message)
