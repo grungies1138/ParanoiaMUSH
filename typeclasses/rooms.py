@@ -29,7 +29,7 @@ class Room(DefaultRoom):
     def return_appearance(self, looker):
         message = []
         message.append("|w_|n" * 78)
-        message.append("|[002|w|u{}|n\n".ljust(78, '^').format(self.key).replace('^', "|[002|w_|n"))
+        message.append("|[002|w|u{}|n".ljust(78, '^').format(self.key).replace('^', "|[002|w_|n"))
         # message.append("|w-|n" * 78)
         message.append(self.db.desc)
         message.append("|{}_|n".format(clearance_color(CLEARANCE.get(self.db.clearance))) * 78)
