@@ -123,6 +123,8 @@ def exec_random(caller):
             if value == 0:
                 skills.append(skill)
 
+        print(str(skills))
+
         set_skill(caller, random.choice(skills))
 
     caller.db.eyes = random.choice(EYES.keys())
