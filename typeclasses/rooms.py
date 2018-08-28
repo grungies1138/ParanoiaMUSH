@@ -7,7 +7,7 @@ Rooms are simple containers that has no location of their own.
 
 from evennia import DefaultRoom
 from commands.library import clearance_color
-from evennia.utils import evtable
+from evennia.utils import evtable, utils, ansi
 from clones import Clone
 from typeclasses.objects import Object
 from world.static_data import CLEARANCE
@@ -29,8 +29,9 @@ class Room(DefaultRoom):
     def return_appearance(self, looker):
         message = []
         message.append("|w_|n" * 78)
-        #message.append("|[002|w|u{}|n".ljust(78, '^').format(self.key).replace('^', "|[002|w_|n"))
-        message.append("|[002|w|u{}|n".center(78, '^').format(self.key).replace('^', "|[002|w_|n"))
+        # message.append("|[002|w|u{}|n".ljust(78, '^').format(self.key).replace('^', "|[002|w_|n"))
+        name = ansi.ANSIString("|[002|w|u{}|n".format(self.key))
+        message.append(name.ljust(78, "|[002|w_|n"))
         # message.append("|w-|n" * 78)
         message.append(self.db.desc)
         message.append("|{}_|n".format(clearance_color(CLEARANCE.get(self.db.clearance))) * 78)

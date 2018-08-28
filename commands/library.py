@@ -44,3 +44,12 @@ def clearance_color(clearance):
         return "m"
     if clearance == "Ultraviolet":
         return "[W|X"
+
+def ansi_center(text, ansi, fill_char="-", fill_ansi="", width=78, align="c"):
+    result = ""
+    if align == "c":
+        result = text.center(width, fill_char).replace(text, ansi + text + "|n")
+        if fill_ansi:
+            result = result.replace(fill_char, fill_ansi + fill_char + "|n")
+
+    return result
