@@ -38,7 +38,7 @@ class ChargenCommand(default_cmds.MuxCommand):
                cmdset_mergetype="Replace",
                node_formatter=node_formatter,
                options_formatter=options_formatter,
-               cmd_on_exit=exit_message)
+               cmd_on_exit="look")
 
 
 def menu_start_node(caller):
