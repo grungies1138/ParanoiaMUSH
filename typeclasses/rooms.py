@@ -29,11 +29,10 @@ class Room(DefaultRoom):
     def return_appearance(self, looker):
         message = []
         message.append("|w_|n" * 78)
-        # message.append("|[002|w|u{}|n".ljust(78, '^').format(self.key).replace('^', "|[002|w_|n"))
         name = ansi.ANSIString("|[002|w|u{}|n".format(self.key))
         message.append(name.ljust(78, '^').replace('^', "|[002|w_|n"))
         # message.append("|w-|n" * 78)
-        message.append(self.db.desc)
+        message.append("\n" + self.db.desc)
         message.append("|{}_|n".format(clearance_color(CLEARANCE.get(self.db.clearance))) * 78)
 
         chars = self.list_characters()
