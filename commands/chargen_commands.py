@@ -115,6 +115,7 @@ def chargen_random(caller):
     return text, options
 
 def exec_random(caller):
+    reset_random(caller)
     for i in range(5):
         skills = []
         setattr(caller.ndb._menutree, 'next_skill_level', i + 1)
