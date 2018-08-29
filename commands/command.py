@@ -217,7 +217,8 @@ class WhoCommand(default_cmds.MuxCommand):
             else:
                 flag = " "
             table.add_row(flag + utils.crop(player.name), utils.time_format(idle, 0),
-                          utils.time_format(conn, 0), "|{}{}|n".format(clearance_color(CLEARANCE.get(clearance)), CLEARANCE.get(clearance)))
+                          utils.time_format(conn, 0), "|{}{}|n".format(clearance_color(CLEARANCE.get(clearance)),
+                                                                       CLEARANCE.get(clearance)))
 
         table.reformat_column(0, width=24)
         table.reformat_column(1, width=12)
