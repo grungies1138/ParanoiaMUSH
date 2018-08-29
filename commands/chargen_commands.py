@@ -228,7 +228,7 @@ def chargen_skills(caller):
         setattr(caller.ndb._menutree, 'next_skill_level', next_skill_level)
         for skill, value in caller.db.skills.iteritems():
             if value == 0:
-                options += ({"desc": skill, "exec": lambda caller: setattr(caller.ndb._menutree, "selected_skill", skill), "goto": "chargen_skills"},)
+                options += ({"desc": skill, "exec": _wrapper(caller, "selected_skill", skill), "goto": "chargen_skills"},)
     else:
         text += "All your skills have been set.  If you don't like your choices, you may reset them.  " \
                 "But this will reset all of your choices."
@@ -636,6 +636,9 @@ def calculate_mechanics(caller):
     mechanics = [caller.db.skills.get("operate"), caller.db.skills.get("engineer"), caller.db.skills.get("program"),
                  caller.db.skills.get("demolitions")]
     return max(mechanics)
+
+def _wrapper(caller, attr, value):
+    return lambda caller: setattr(caller.ndb._menutree, attr, value)
 
 def node_formatter(nodetext, optionstext, caller=None):
     separator1 = "|002_|n" * 78 + "\n\n"
