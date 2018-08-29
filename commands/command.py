@@ -7,7 +7,8 @@ Commands describe the input the account can do to the game.
 import time
 import datetime
 from random import randint
-from evennia import default_cmds
+from evennia import default_cmds, ObjectsDB
+from evennia.utils.evmenu import EvMenu
 from evennia.utils import evtable, utils, ansi
 from commands.library import clearance_color
 from world.static_data import HEALTH, CLEARANCE
@@ -291,3 +292,88 @@ class CheckCommand(default_cmds.MuxCommand):
                 else:
                     caller.location.msg_contents("|gDICE:|n Number of successes: {}".format(successes))
 
+class XPAwardCommand(default_cmds.MuxCommand):
+    """
+    Grants XP awards to a character.
+
+    Usage:
+        |w+award <name>=<amount>|n
+    """
+
+    key = "+award"
+    locks = "cmd:perm(Admin)"
+    help_category = "Admin"
+
+    def func(self):
+        if not self.args:
+            self.caller.msg("|rERROR:|n Invalid input.  Usage is |w+award <name>=<amount>|n  Please try again.")
+            return
+
+        if "=" not in self.args:
+            self.caller.msg("|rERROR:|n Invalid input.  Usage is |w+award <name>=<amount>|n  Please try again.")
+            return
+
+        if not self.lhs or not self.rhs:
+            self.caller.msg("|rERROR:|n Invalid input.  Usage is |w+award <name>=<amount>|n  Please try again.")
+            return
+
+        char, amount = self.lhs, self.rhs
+
+        if ObjectsDB.objects.filter(username=char).exists():
+            char = self.caller.search(char, global_search=True)
+            char.db.xp += amount
+            self.caller.msg("|bSYSTEM:|n {} XP points granted to {}".format(amount, char.key))
+
+
+class AdvanceCommand(default_cmds.MuxCommand):
+    """
+    A menu system for spending earned XP points.
+
+    Usage:
+        |w+advance|n
+    """
+
+    key = "+advance"
+    locks = "cmd:perm(Player)"
+    help_category = "General"
+
+    def func(self):
+        EvMenu(self.caller, "commands.command",
+               startnode="menu_start_node",
+               cmdset_mergetype="Replace",
+               node_formatter=node_formatter,
+               options_formatter=options_formatter,
+               cmd_on_exit="look")
+
+def menu_start_node(caller):
+    text = ""
+    options = ()
+    return text, options
+
+def node_formatter(nodetext, optionstext, caller=None):
+    separator1 = "|002_|n" * 78 + "\n\n"
+    separator2 = "\n" + "|002_|n" * 78 + "\n\nYou may type '|gq|n' or '|gquit|n' " \
+                                         "at any time to quit this application.\n" + "|002_|n" * 78 + "\n\n"
+    return "\n\n\n" + separator1 + nodetext + separator2 + optionstext
+
+def options_formatter(optionlist, caller=None):
+    options = []
+    for key, option in optionlist:
+        options.append("|w%s|n: %s" % (key, option))
+
+    if len(options) > 6:
+        if len(options) % 2 > 0:
+            colA = options[:len(options) / 2 + 1]
+            colB = options[len(options) / 2 + 1:]
+        else:
+            colA = options[:len(options) / 2]
+            colB = options[len(options) / 2:]
+        table = evtable.EvTable(table=[colA, colB], border=None)
+
+        table.reformat_column(0, width=39)
+        table.reformat_column(1, width=39)
+
+        return str(table) + "\n"
+
+    else:
+        return "\n".join(options)
