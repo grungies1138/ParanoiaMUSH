@@ -195,6 +195,9 @@ def chargen_custom(caller):
     return text, options
 
 def chargen_skills(caller):
+    if caller.ndb._menutree.selected_skill:
+        set_skill(caller, caller.ndb._menutree.selected_skill)
+
     text = "Skills are how well your clone can do... stuff.  While I would love it if all of the citizens of Alpha " \
            "Complex were trained experts in all fields of study, attempts to do so have resulted in undesirable " \
            "mutations.  And since mutants are traitors and traitors are caught, sterilized and destroyed, well, we " \
@@ -225,7 +228,7 @@ def chargen_skills(caller):
         setattr(caller.ndb._menutree, 'next_skill_level', next_skill_level)
         for skill, value in caller.db.skills.iteritems():
             if value == 0:
-                options += ({"key": skill, "desc": skill, "exec": set_skill, "goto": "chargen_skills"},)
+                options += ({"desc": skill, "exec": lambda caller: setattr(caller.ndb._menutree, "selected_skill", skill), "goto": "chargen_skills"},)
     else:
         text += "All your skills have been set.  If you don't like your choices, you may reset them.  " \
                 "But this will reset all of your choices."

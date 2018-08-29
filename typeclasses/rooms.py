@@ -31,7 +31,6 @@ class Room(DefaultRoom):
         message.append("|w_|n" * 78)
         name = ansi.ANSIString("|[002|w|u{}|n".format(self.key))
         message.append(name.ljust(78, '^').replace('^', "|[002|w_|n"))
-        # message.append("|w-|n" * 78)
         message.append("\n" + self.db.desc)
         message.append("|{}_|n".format(clearance_color(CLEARANCE.get(self.db.clearance))) * 78)
 

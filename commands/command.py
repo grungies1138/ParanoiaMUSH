@@ -8,7 +8,7 @@ import time
 import datetime
 from evennia import Command as BaseCommand
 from evennia import default_cmds
-from evennia.utils import evtable, utils
+from evennia.utils import evtable, utils, ansi
 from commands.library import clearance_color
 from world.static_data import HEALTH, CLEARANCE
 from django.conf import settings
@@ -225,8 +225,9 @@ class WhoCommand(default_cmds.MuxCommand):
         table.reformat_column(3, width=30)
 
         self.caller.msg("|w_|n" * 78)
-        self.caller.msg("|[002|w|u{}|n".center(78, '^').format(settings.SERVERNAME).replace('^', "|[002|w_|n"))
-        #self.caller.msg("|b-|n" * 78)
+        title = ansi.ANSIString("|[002|w|u{}|n".format(settings.SERVERNAME))
+        self.caller.msg(title.center(78, '^').replace("|[002|w_|n"))
+
         self.caller.msg(table)
         self.caller.msg("|w_|n" * 78)
         self.caller.msg("Total Connected: %s" % SESSIONS.account_count())
