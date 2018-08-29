@@ -15,7 +15,7 @@ own cmdsets by inheriting from them or directly from `evennia.CmdSet`.
 """
 
 from evennia import default_cmds
-from commands.command import SheetCommand, TimeCommand, OOCCommand, WhoCommand
+from commands.command import SheetCommand, TimeCommand, OOCCommand, WhoCommand, CheckCommand
 from commands.chargen_commands import ChargenCommand
 
 class SheetCmdSet(default_cmds.CharacterCmdSet):
@@ -53,6 +53,7 @@ class CharacterCmdSet(default_cmds.CharacterCmdSet):
         self.add(TimeCommand())
         self.add(OOCCommand())
         self.add(WhoCommand())
+        self.add(CheckCommand())
 
 
 

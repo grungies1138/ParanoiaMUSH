@@ -6,7 +6,7 @@ Commands describe the input the account can do to the game.
 """
 import time
 import datetime
-from evennia import Command as BaseCommand
+from random import randint
 from evennia import default_cmds
 from evennia.utils import evtable, utils, ansi
 from commands.library import clearance_color
@@ -239,3 +239,55 @@ class WhoCommand(default_cmds.MuxCommand):
         whotable.add_row("|y!|n - Administrators", "|g&|n - Storytellers", "|r$|n - Player Helpers")
         self.caller.msg(whotable)
         self.caller.msg("|w_|n" * 78 + "\n")
+
+class CheckCommand(default_cmds.MuxCommand):
+    """
+    Checks a skill and returns the number of successes and the result of the Computer Die.
+
+    Usage:
+
+        |w+check <skill> and <stat>|n
+
+        |yExample: |n +check guns and violence
+    """
+
+    key = "+check"
+    locks = "cmd:perm(Player)"
+    help_category = "General"
+
+    def func(self):
+        caller = self.caller
+        stats = caller.db.stats.keys()
+        skills = caller.db.skills.keys()
+        if " and " in self.args:
+            args = self.args.split(" and ")
+            args = [arg.strip() for arg in args]
+
+            if args[0] not in skills:
+                caller.msg("|rERROR:|n {} is not a valid skill.  Please select a valid skill and try again.".format(args[0]))
+                return
+            elif args[1] not in stats:
+                caller.msg("|rERROR:|n {} is not a valid stat.  Please select a valid stat and try again.".format(args[1]))
+                return
+            else:
+                selected_skill = caller.db.skills.get(args[0])
+                if selected_skill < 0:
+                    selected_skill = 0
+                selected_stat = caller.db.stats.get(args[1])
+                if selected_stat < 0:
+                    selected_stat = 0
+
+                successes = 0
+
+                for i in range(selected_stat + selected_skill):
+                    result = randint(1, 6)
+                    if result > 4:
+                        successes += 1
+
+                computer_die = randint(1, 6)
+
+                if computer_die == 6:
+                    caller.location.msg("|gDICE:|n You rolled {} successes.  |yCOMPUTER DIE SUCCESSFUL|n".format(successes))
+                else:
+                    caller.location.msg("|gDICE:|n You rolled {} successes.".format(successes))
+
