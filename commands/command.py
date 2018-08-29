@@ -7,7 +7,7 @@ Commands describe the input the account can do to the game.
 import time
 import datetime
 from random import randint
-from evennia import default_cmds, ObjectsDB
+from evennia import default_cmds, ObjectDB
 from evennia.utils.evmenu import EvMenu
 from evennia.utils import evtable, utils, ansi
 from commands.library import clearance_color
@@ -319,7 +319,7 @@ class XPAwardCommand(default_cmds.MuxCommand):
 
         char, amount = self.lhs, self.rhs
 
-        if ObjectsDB.objects.filter(username=char).exists():
+        if ObjectDB.objects.filter(username=char).exists():
             char = self.caller.search(char, global_search=True)
             char.db.xp += amount
             self.caller.msg("|bSYSTEM:|n {} XP points granted to {}".format(amount, char.key))
