@@ -62,8 +62,8 @@ def select_name(caller):
            "all of you and that's just too Orwellian, even for me.\n\nNames consist of up to four alpha characters " \
            "which is then followed by your clone number and you home sector (more on this later).  For example: a " \
            "clone chooses the name ALAN.  They are the third clone and they are from sector WTF-69.  So their " \
-           "fullname would be ALAN-3-WTF-69.  Understand?  No?  Great, let's get started.  Please enter the name you " \
-           "wish to choose."
+           "fullname would be ALAN-3-WTF-69.  In this case, just set your name to ALAN.  The rest will be done for " \
+           "you, citizen.  Understand?  No?  Great, let's get started.  Please enter the name you wish to choose."
     options = ({"key": "_default", "exec": set_name, "goto": "menu_start_node"},
                {"key": "back", "desc": "Go Back", "goto": "menu_start_node"})
     return text, options
@@ -333,7 +333,7 @@ def select_sector(caller):
            "need in one or several of the sectors.  This means you cna choose!  Simply type the designation for the " \
            "sector you wish to be from.\n\nWhat?  You don't know what sector to choose?  To be honest, it doesn't " \
            "really matter all that much.  Many citizens simply enter a sector at random.  To do that, just enter " \
-           "three characters, a dash and two numbers.  Like this: |wOMG-13|n or |wWTF-69|n"
+           "three characters, a dash and two numbers.  Like this: |wOMG-13|n or |wWTF-69|n\n\n"
 
     if caller.db.sector:
         text += "|wChosen Sector:|n {}".format(caller.db.sector)

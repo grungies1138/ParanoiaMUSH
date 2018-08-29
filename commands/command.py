@@ -226,7 +226,7 @@ class WhoCommand(default_cmds.MuxCommand):
 
         self.caller.msg("|w_|n" * 78)
         title = ansi.ANSIString("|[002|w|u{}|n".format(settings.SERVERNAME))
-        self.caller.msg(title.center(78, '^').replace("|[002|w_|n"))
+        self.caller.msg(title.center(78, '^').replace('^',"|[002|w_|n"))
 
         self.caller.msg(table)
         self.caller.msg("|w_|n" * 78)
