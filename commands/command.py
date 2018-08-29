@@ -318,7 +318,7 @@ class XPAwardCommand(default_cmds.MuxCommand):
             self.caller.msg("|rERROR:|n Invalid input.  Usage is |w+award <name>=<amount>|n  Please try again.")
             return
 
-        char, amount = self.lhs, self.rhs
+        char, amount = self.lhs, int(self.rhs)
 
         if Clone.objects.filter(db_key=char).exists():
             char = self.caller.search(char, global_search=True)
