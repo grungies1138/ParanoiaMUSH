@@ -287,7 +287,7 @@ class CheckCommand(default_cmds.MuxCommand):
                 computer_die = randint(1, 6)
 
                 if computer_die == 6:
-                    caller.location.msg("|gDICE:|n You rolled {} successes.  |yCOMPUTER DIE SUCCESSFUL|n".format(successes))
+                    caller.location.msg_contents("|gDICE:|n You rolled {} successes.  |yCOMPUTER DIE SUCCESSFUL|n".format(successes))
                 else:
-                    caller.location.msg("|gDICE:|n You rolled {} successes.".format(successes))
+                    caller.location.msg_contents("|gDICE:|n You rolled {} successes.".format(successes))
 
