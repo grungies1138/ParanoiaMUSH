@@ -195,8 +195,9 @@ def chargen_custom(caller):
     return text, options
 
 def chargen_skills(caller):
-    if caller.ndb._menutree.selected_skill:
-        set_skill(caller, caller.ndb._menutree.selected_skill)
+    if hasattr(caller.ndb._menutree, "selected_skill"):
+        if caller.ndb._menutree.selected_skill:
+            set_skill(caller, caller.ndb._menutree.selected_skill)
 
     text = "Skills are how well your clone can do... stuff.  While I would love it if all of the citizens of Alpha " \
            "Complex were trained experts in all fields of study, attempts to do so have resulted in undesirable " \
