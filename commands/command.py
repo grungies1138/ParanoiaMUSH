@@ -7,13 +7,14 @@ Commands describe the input the account can do to the game.
 import time
 import datetime
 from random import randint
-from evennia import default_cmds, ObjectDB
+from evennia import default_cmds
 from evennia.utils.evmenu import EvMenu
 from evennia.utils import evtable, utils, ansi
 from commands.library import clearance_color
 from world.static_data import HEALTH, CLEARANCE
 from django.conf import settings
 from evennia.server.sessionhandler import SESSIONS
+from typeclasses.clones import Clone
 
 class SheetCommand(default_cmds.MuxCommand):
     """
@@ -319,7 +320,7 @@ class XPAwardCommand(default_cmds.MuxCommand):
 
         char, amount = self.lhs, self.rhs
 
-        if ObjectDB.objects.filter(username=char).exists():
+        if Clone.objects.filter(key=char).exists():
             char = self.caller.search(char, global_search=True)
             char.db.xp += amount
             self.caller.msg("|bSYSTEM:|n {} XP points granted to {}".format(amount, char.key))
