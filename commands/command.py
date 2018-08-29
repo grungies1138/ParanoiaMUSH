@@ -324,6 +324,7 @@ class XPAwardCommand(default_cmds.MuxCommand):
             char = self.caller.search(char, global_search=True)
             char.db.xp += amount
             self.caller.msg("|bSYSTEM:|n {} XP points granted to {}".format(amount, char.key))
+            char.msg("|bSYSTEM:|n You have been granted {} XP points by {}".format(amount, self.caller.key))
 
 
 class AdvanceCommand(default_cmds.MuxCommand):
