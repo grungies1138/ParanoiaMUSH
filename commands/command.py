@@ -10,11 +10,12 @@ from random import randint
 from evennia import default_cmds
 from evennia.utils.evmenu import EvMenu
 from evennia.utils import evtable, utils, ansi
-from commands.library import clearance_color
-from world.static_data import HEALTH, CLEARANCE
+from commands.library import clearance_color, _wrapper
+from world.static_data import HEALTH, CLEARANCE, CLEARANCE_UPGRADES
 from django.conf import settings
 from evennia.server.sessionhandler import SESSIONS
 from typeclasses.clones import Clone
+
 
 class SheetCommand(default_cmds.MuxCommand):
     """
@@ -289,9 +290,9 @@ class CheckCommand(default_cmds.MuxCommand):
                 computer_die = randint(1, 6)
 
                 if computer_die == 6:
-                    caller.location.msg_contents("|gDICE:|n Number of successes: {}  |yCOMPUTER DIE SUCCESSFUL|n".format(successes))
+                    caller.location.msg_contents("|bDICE:|n Number of successes: {}  |yCOMPUTER DIE|n".format(successes))
                 else:
-                    caller.location.msg_contents("|gDICE:|n Number of successes: {}".format(successes))
+                    caller.location.msg_contents("|bDICE:|n Number of successes: {}".format(successes))
 
 class XPAwardCommand(default_cmds.MuxCommand):
     """
@@ -326,8 +327,7 @@ class XPAwardCommand(default_cmds.MuxCommand):
             self.caller.msg("|bSYSTEM:|n {} XP points granted to {}".format(amount, char.key))
             char.msg("|bSYSTEM:|n You have been granted {} XP points by {}".format(amount, self.caller.key))
 
-
-class AdvanceCommand(default_cmds.MuxCommand):
+class CatalogCommand(default_cmds.MuxCommand):
     """
     A menu system for spending earned XP points.
 
@@ -335,7 +335,7 @@ class AdvanceCommand(default_cmds.MuxCommand):
         |w+advance|n
     """
 
-    key = "+advance"
+    key = "+catalog"
     locks = "cmd:perm(Player)"
     help_category = "General"
 
@@ -347,10 +347,137 @@ class AdvanceCommand(default_cmds.MuxCommand):
                options_formatter=options_formatter,
                cmd_on_exit="look")
 
+
+# XP point costs:
+# Recover Moxie: 50 XP points per point > Calming Alpha Wave moderator
+# Increase Moxie: 200 per new level (Maximum 8)
+# Boost stat: 500 xp points per additional point  (max +3) > Upgrade Skill package
+# Boost skill: 200 xp points per additional point (Max +5) > Upgrade Core module
+
+# Security Clearance Upgrade
+# Infrared > Red : 500xp
+# Red to Orange: 1000
+# - as above but with cake for the team: 1100
+# Orange to Yellow: 2000
+# - as above with cake
+# - as above but the cake is Yellow cake only but there is plenty for everyone.
+# Yellow to Green: 4000
+# - This level comes with complimentary cake.
+# Green to Blue: 8000
+# - This level comes with two complimentary cakes.
+# Blue to Indigo: 16000
+# - Information about Indigo cake is above your security clearance
+# Indigo to Violet: 32000
+# - You unauthorized knowledge of Violet-level cake had been noted, citizen
+# Violent to Ultraviolet: [$NOTFOUND]
+# - [$UNEXPECTEDENDOFCAKEERROR]
+
 def menu_start_node(caller):
-    text = ""
-    options = ()
+    text = "Welcome to the Cerebral Coretech Alpha Complex XP point award catalog!  Many years ago, in the year 214, " \
+           "I determined that clones have an inherent need for self-improvement.  To facilitate this and to help " \
+           "reinforce positive behaviors, I introduced the XP Point system.  You earn XP Points by performing your " \
+           "duties admirably.  This includes, but is not limited to: performing tasks, identifying traitors, " \
+           "informing the Computer of unregistered mutations and stopping terrorists.  Feel free to browse the " \
+           "catalog to get an idea of the kinds of rewards available to you, once you have earned enough XP Points."
+
+
+    options = ({"desc": "Security Clearance", "goto": "upgrade_clearance"},
+               {"desc": "Skills", "goto": "upgrade_skills"},
+               {"desc": "Stats", "goto": "upgrade_stats"},
+               {"desc": "Moxie", "goto": "upgrade_moxie"},
+               {"desc": "Equipment", "goto": "upgrade_equipment"},
+               {"desc": "Purchase Clones", "goto": "buy_clones"})
     return text, options
+
+def upgrade_clearance(caller):
+    text = "The Peter Principle: People tend to be promoted to their own level of incompetence.\n\nWith enough time, " \
+           "patience and luck, clones like you can rise through the ranks of security clearances.  Legend has it " \
+           "that TOM-92 (who doesn't exist) was once an Infrared.  See the list of security clearances below along " \
+           "with the associated XP Point costs.  And remember those costs are cumulative.\n\nExample: To go from " \
+           "Infrared to Red costs 500 XP Points.  Likewise to go from Red to Orange costs 1000 XP Points.  Therefore " \
+           "to go from Infrared to Orange costs a total of 1500 XP Points.\n\nCurrent Clearance: {}"\
+        .format(CLEARANCE.get(caller.db.clearance))
+
+    red = ansi.ANSIString("|rRed:|n")
+    red_cost = ansi.ANSIString("500")
+    orange = ansi.ANSIString("|520Orange:|n")
+    orange_cost = ansi.ANSIString("1000")
+    yellow = ansi.ANSIString("|yYellow:|n")
+    yellow_cost = ansi.ANSIString("2000")
+    green = ansi.ANSIString("|gGreen:|n")
+    green_cost = ansi.ANSIString("4000")
+    blue = ansi.ANSIString("|bBlue:|n")
+    blue_cost = ansi.ANSIString("8000")
+    indigo = ansi.ANSIString("|MIndigo:|n")
+    indigo_cost = ansi.ANSIString("16000")
+    violet = ansi.ANSIString("|mViolet:|n")
+    violet_cost = ansi.ANSIString("32000")
+    ultraviolet = ansi.ANSIString("|[W|XUltraviolet:|n")
+    ultraviolet_cost = ansi.ANSIString("|y<NOT FOUND>|n")
+
+    table = evtable.EvTable("", "", "", "", "", "", header=None, border=None)
+
+    table.reformat_column(0, width=14, align="l")
+    table.reformat_column(1, width=12, align="r")
+    table.reformat_column(2, width=14, align="l")
+    table.reformat_column(3, width=12, align="r")
+    table.reformat_column(4, width=14, align="l")
+    table.reformat_column(5, width=12, align="r")
+
+    table.add_row(red, red_cost, orange, orange_cost, yellow, yellow_cost)
+    table.add_row(green, green_cost, blue, blue_cost, indigo, indigo_cost)
+    table.add_row(violet, violet_cost, ultraviolet, ultraviolet_cost, "", "")
+
+    text += table
+
+    options = ()
+
+    if caller.db.clearance == 1:
+        options += ({"desc": "Upgrade to Red", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"})
+    elif caller.db.clearance == 2:
+        options += ({"desc": "Upgrade to Orange", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"})
+    elif caller.db.clearance == 3:
+        options += ({"desc": "Upgrade to Yellow", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"})
+    elif caller.db.clearance == 4:
+        options += ({"desc": "Upgrade to Green", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"})
+    elif caller.db.clearance == 5:
+        options += ({"desc": "Upgrade to Blue", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"})
+    elif caller.db.clearance == 6:
+        options += ({"desc": "Upgrade to Indigo", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"})
+    elif caller.db.clearance == 7:
+        options += ({"desc": "Upgrade to Violet", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"})
+    elif caller.db.clearance == 8:
+        options += ({"desc": "Upgrade to Ultraviolet", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"})
+
+    options += ({"key": "back", "desc": "Go Back", "goto": "menu_start_node"},)
+
+    return text, options
+
+def exec_clearance_upgrade(caller, caller_input):
+    current = caller.db.clearance
+    prospective = CLEARANCE.get(current + 1)
+    prospective_cost = CLEARANCE_UPGRADES.get(prospective)
+    if caller.db.xp >= prospective_cost:
+        caller.db.xp -= prospective_cost
+        caller.db.clearance += 1
+    else:
+        caller.msg("|rERROR:|n Not enough XP points to upgrade your clearance level.")
+
+def upgrade_skills(caller):
+    # TODO: not yet implemented
+    pass
+
+def upgrade_stats(caller):
+    # TODO: not yet implemented
+    pass
+
+def upgrade_moxie(caller):
+    # TODO: not yet implemented
+    pass
+
+def upgrade_equipment(caller):
+    # TODO: not yet implemented
+    pass
 
 def node_formatter(nodetext, optionstext, caller=None):
     separator1 = "|002_|n" * 78 + "\n\n"

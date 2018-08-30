@@ -25,11 +25,12 @@ class Room(DefaultRoom):
     """
     def at_object_creation(self):
         self.db.clearance = 1
+        self.db.sector = "SOS-13"
 
     def return_appearance(self, looker):
         message = []
         message.append("|w_|n" * 78)
-        name = ansi.ANSIString("|[002|w|u{}|n".format(self.key))
+        name = ansi.ANSIString("|[002|w|u{}|n".format(self.key + " - " + self.db.sector))
         message.append(name.ljust(78, '^').replace('^', "|[002|w_|n"))
         message.append("\n" + self.db.desc)
         message.append("|{}_|n".format(clearance_color(CLEARANCE.get(self.db.clearance))) * 78)

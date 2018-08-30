@@ -43,3 +43,6 @@ def clearance_color(clearance):
         return "m"
     if clearance == "Ultraviolet":
         return "[W|X"
+
+def _wrapper(caller, attr, value):
+    return lambda caller: setattr(caller.ndb._menutree, attr, value)

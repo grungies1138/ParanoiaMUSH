@@ -69,7 +69,6 @@ def select_name(caller):
     return text, options
 
 def set_name(caller, caller_input):
-    # TODO: fix issue with error on not found name
     new_name = caller_input.strip().lower()
     existing = AccountDB.objects.filter(username=new_name).exists()
 
