@@ -433,21 +433,21 @@ def upgrade_clearance(caller):
     options = ()
 
     if caller.db.clearance == 1:
-        options += ({"desc": "Upgrade to Red", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"})
+        options += ({"desc": "Upgrade to Red", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"},)
     elif caller.db.clearance == 2:
-        options += ({"desc": "Upgrade to Orange", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"})
+        options += ({"desc": "Upgrade to Orange", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"},)
     elif caller.db.clearance == 3:
-        options += ({"desc": "Upgrade to Yellow", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"})
+        options += ({"desc": "Upgrade to Yellow", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"},)
     elif caller.db.clearance == 4:
-        options += ({"desc": "Upgrade to Green", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"})
+        options += ({"desc": "Upgrade to Green", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"},)
     elif caller.db.clearance == 5:
-        options += ({"desc": "Upgrade to Blue", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"})
+        options += ({"desc": "Upgrade to Blue", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"},)
     elif caller.db.clearance == 6:
-        options += ({"desc": "Upgrade to Indigo", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"})
+        options += ({"desc": "Upgrade to Indigo", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"},)
     elif caller.db.clearance == 7:
-        options += ({"desc": "Upgrade to Violet", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"})
+        options += ({"desc": "Upgrade to Violet", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"},)
     elif caller.db.clearance == 8:
-        options += ({"desc": "Upgrade to Ultraviolet", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"})
+        options += ({"desc": "Upgrade to Ultraviolet", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"},)
 
     options += ({"key": "back", "desc": "Go Back", "goto": "menu_start_node"},)
 
