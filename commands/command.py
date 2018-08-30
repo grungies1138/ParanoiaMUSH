@@ -395,7 +395,7 @@ def upgrade_clearance(caller):
            "that TOM-92 (who doesn't exist) was once an Infrared.  See the list of security clearances below along " \
            "with the associated XP Point costs.  And remember those costs are cumulative.\n\nExample: To go from " \
            "Infrared to Red costs 500 XP Points.  Likewise to go from Red to Orange costs 1000 XP Points.  Therefore " \
-           "to go from Infrared to Orange costs a total of 1500 XP Points.\n\nCurrent Clearance: {}"\
+           "to go from Infrared to Orange costs a total of 1500 XP Points.\n\n|wCurrent Clearance:|n {}"\
         .format(CLEARANCE.get(caller.db.clearance))
 
     red = ansi.ANSIString("|rRed:|n")
