@@ -14,8 +14,8 @@ PERSONALITY = {"loyal": "disloyal", "brave": "cowardly", "honest" : "dishonest",
 CLEARANCE = {1: "Infrared", 2: "Red", 3: "Orange", 4: "Yellow", 5: "Green", 6: "Blue", 7: "Indigo", 8: "Violet",
              9: "Ultraviolet"}
 
-CLEARANCE_UPGRADES = {"red": 500, "orange": 1000, "yellow": 2000, "green": 4000, "blue": 8000,
-                      "indigo": 16000, "violet": 32000, "ultraviolet": 64000}
+CLEARANCE_UPGRADES = {"Red": 500, "Orange": 1000, "Yellow": 2000, "Green": 4000, "Blue": 8000,
+                      "Indigo": 16000, "Violet": 32000, "Ultraviolet": 64000}
 
 MUTANT_POWERS = {"telepathy": {"action order": 7, "description": "Spend 1 Moxie to read one dominant thought or "
                                                                  "implant a simple suggestion in another clone's "
