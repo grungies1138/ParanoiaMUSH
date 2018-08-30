@@ -504,7 +504,7 @@ def upgrade_equipment(caller):
 
 def node_formatter(nodetext, optionstext, caller=None):
     separator1 = "|002_|n" * 78 + "\n\n"
-    separator2 = "\n" + "|002_|n" * 78 + "\n\nYou currently have |w{}|n XP Points".format(caller.db.xp) + "\n\nYou may type '|gq|n' or '|gquit|n' " \
+    separator2 = "\n" + "|002_|n" * 78 + "\n\nYou may type '|gq|n' or '|gquit|n' " \
                                          "at any time to quit this application.\n" + "|002_|n" * 78 + "\n\n"
     return "\n\n\n" + separator1 + nodetext + separator2 + optionstext
 
