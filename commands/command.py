@@ -275,7 +275,7 @@ class CheckCommand(default_cmds.MuxCommand):
         elif "-" in args[1]:
             neg_args = [arg.strip() for arg in args[1].split("-")]
             args[1] = neg_args[0]
-            neg_mod = int(neg_args[1])
+            neg_mod = int(neg_args[1]) * -1
 
         if args[0] not in skills:
             caller.msg("|rERROR:|n {} is not a valid skill.  Please select a valid skill and try again.".format(args[0]))
