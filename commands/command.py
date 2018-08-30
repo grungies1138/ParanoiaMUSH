@@ -428,7 +428,7 @@ def upgrade_clearance(caller):
     table.add_row(green, green_cost, blue, blue_cost, indigo, indigo_cost)
     table.add_row(violet, violet_cost, ultraviolet, ultraviolet_cost, "", "")
 
-    text += table
+    text += unicode(table)
 
     options = ()
 
