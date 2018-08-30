@@ -464,7 +464,7 @@ def exec_clearance_upgrade(caller, caller_input):
         caller.msg("|rERROR:|n Not enough XP points to upgrade your clearance level.")
 
 def upgrade_skills(caller):
-    if hasattr(caller.ndb._menutree.selected_skill):
+    if hasattr(caller.ndb._menutree, "selected_skill"):
         exec_upgrade_skill(caller, caller.ndb._menutree.selected_skill)
 
     text = "I know that there were limitations to your skill packages during the cloning process, but once you are " \
