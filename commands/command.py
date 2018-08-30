@@ -464,8 +464,31 @@ def exec_clearance_upgrade(caller, caller_input):
         caller.msg("|rERROR:|n Not enough XP points to upgrade your clearance level.")
 
 def upgrade_skills(caller):
-    # TODO: not yet implemented
-    pass
+    if hasattr(caller.ndb._menutree.selected_skill):
+        exec_upgrade_skill(caller, caller.ndb._menutree.selected_skill)
+
+    text = "I know that there were limitations to your skill packages during the cloning process, but once you are " \
+           "out, you can incrementally improve your various skills through a mix of virtual reality training, " \
+           "chemical injections, electroshock therapy, radioactive neural implantation and good, old fashioned " \
+           "practice.  There are limits, knowing too much is bad for you.  In fact, I'm not sure you have the " \
+           "clearance to have this conversation.  you shouldn't even be asking about all this.  |y<Personnel file " \
+           "updated>|n\n\n Anyway, any skills that you can't download upgrades for will not be listed as options.  " \
+           "Raising a skill 1 level costs 200 XP points.  Please select the skill you wish to upgrade."
+
+    options = ()
+
+    for skill, value in caller.db.skills.iteritems():
+        if value < 5:
+            options += ({"desc": skill, "exec": _wrapper(caller, "selected_skill", skill)},)
+    return text, options
+
+def exec_upgrade_skill(caller, caller_input):
+    skill = caller.ndb._menutree.selected_skill
+    if caller.db.xp >= 200:
+        caller.db.xp = caller.db.xp - 200
+        caller.db.skills[skill] += 1
+    else:
+        caller.msg("|rERROR:|n You do not have enough XP to raise that skill.")
 
 def upgrade_stats(caller):
     # TODO: not yet implemented
@@ -481,7 +504,7 @@ def upgrade_equipment(caller):
 
 def node_formatter(nodetext, optionstext, caller=None):
     separator1 = "|002_|n" * 78 + "\n\n"
-    separator2 = "\n" + "|002_|n" * 78 + "\n\nYou may type '|gq|n' or '|gquit|n' " \
+    separator2 = "\n" + "|002_|n" * 78 + "\n\nYou currently have |w{}|n XP Points".format(caller.db.xp) + "\n\nYou may type '|gq|n' or '|gquit|n' " \
                                          "at any time to quit this application.\n" + "|002_|n" * 78 + "\n\n"
     return "\n\n\n" + separator1 + nodetext + separator2 + optionstext
 
