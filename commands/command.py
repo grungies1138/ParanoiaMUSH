@@ -249,9 +249,9 @@ class CheckCommand(default_cmds.MuxCommand):
 
     Usage:
 
-        |w+check <skill> and <stat>|n
+        |w+check <skill>+<stat>[+ or - <mod>]
 
-        |yExample: |n +check guns and violence
+        |yExample: |n +check guns+violence or +check science+brains+2
     """
 
     key = "+check"
@@ -262,37 +262,51 @@ class CheckCommand(default_cmds.MuxCommand):
         caller = self.caller
         stats = caller.db.stats.keys()
         skills = caller.db.skills.keys()
-        if " and " in self.args:
-            args = self.args.split(" and ")
-            args = [arg.strip() for arg in args]
+        pos_mod = 0
+        neg_mod = 0
 
-            if args[0] not in skills:
-                caller.msg("|rERROR:|n {} is not a valid skill.  Please select a valid skill and try again.".format(args[0]))
-                return
-            elif args[1] not in stats:
-                caller.msg("|rERROR:|n {} is not a valid stat.  Please select a valid stat and try again.".format(args[1]))
-                return
+        if "+" not in self.args:
+            caller.msg("|rERROR:|n Invalid input.  |w+check <skill>+<stat>[+/- <mod>]|n")
+            return
+        args = [arg.strip() for arg in self.args.split("+")]
+
+        if len(args) > 2:
+            pos_mod = int(args[2])
+        elif "-" in args[1]:
+            neg_args = [arg.strip() for arg in args[1].split("-")]
+            args[1] = neg_args[0]
+            neg_mod = int(neg_args[1])
+
+        if args[0] not in skills:
+            caller.msg("|rERROR:|n {} is not a valid skill.  Please select a valid skill and try again.".format(args[0]))
+            return
+        elif args[1] not in stats:
+            caller.msg("|rERROR:|n {} is not a valid stat.  Please select a valid stat and try again.".format(args[1]))
+            return
+        else:
+            selected_skill = caller.db.skills.get(args[0])
+            if selected_skill < 0:
+                selected_skill = 0
+            selected_stat = caller.db.stats.get(args[1])
+            if selected_stat < 0:
+                selected_stat = 0
+
+            successes = 0
+            print("selected_stat: {}".format(selected_stat))
+            print("selected_skill: {}".format(selected_skill))
+            print("Positive Mod: {}".format(pos_mod))
+            print("Negative Mod: {}".format(neg_mod))
+            for i in range(selected_stat + selected_skill + pos_mod + neg_mod):
+                result = randint(1, 6)
+                if result > 4:
+                    successes += 1
+
+            computer_die = randint(1, 6)
+
+            if computer_die == 6:
+                caller.location.msg_contents("|bDICE:|n Number of successes: {}  |yCOMPUTER DIE|n".format(successes))
             else:
-                selected_skill = caller.db.skills.get(args[0])
-                if selected_skill < 0:
-                    selected_skill = 0
-                selected_stat = caller.db.stats.get(args[1])
-                if selected_stat < 0:
-                    selected_stat = 0
-
-                successes = 0
-
-                for i in range(selected_stat + selected_skill):
-                    result = randint(1, 6)
-                    if result > 4:
-                        successes += 1
-
-                computer_die = randint(1, 6)
-
-                if computer_die == 6:
-                    caller.location.msg_contents("|bDICE:|n Number of successes: {}  |yCOMPUTER DIE|n".format(successes))
-                else:
-                    caller.location.msg_contents("|bDICE:|n Number of successes: {}".format(successes))
+                caller.location.msg_contents("|bDICE:|n Number of successes: {}".format(successes))
 
 class XPAwardCommand(default_cmds.MuxCommand):
     """
