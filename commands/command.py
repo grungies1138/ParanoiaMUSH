@@ -413,16 +413,16 @@ def upgrade_clearance(caller):
     violet = ansi.ANSIString("|mViolet:|n")
     violet_cost = ansi.ANSIString("32000")
     ultraviolet = ansi.ANSIString("|[W|XUltraviolet:|n")
-    ultraviolet_cost = ansi.ANSIString("|y<NOT FOUND>|n")
+    ultraviolet_cost = ansi.ANSIString("|y<ERROR>|n")
 
     table = evtable.EvTable("", "", "", "", "", "", header=None, border=None)
 
-    table.reformat_column(0, width=12, align="l")
-    table.reformat_column(1, width=14, align="r")
-    table.reformat_column(2, width=12, align="l")
-    table.reformat_column(3, width=14, align="r")
-    table.reformat_column(4, width=12, align="l")
-    table.reformat_column(5, width=14, align="r")
+    table.reformat_column(0, width=16, align="l")
+    table.reformat_column(1, width=10, align="r")
+    table.reformat_column(2, width=16, align="l")
+    table.reformat_column(3, width=10, align="r")
+    table.reformat_column(4, width=16, align="l")
+    table.reformat_column(5, width=10, align="r")
 
     table.add_row(red, red_cost, orange, orange_cost, yellow, yellow_cost)
     table.add_row(green, green_cost, blue, blue_cost, indigo, indigo_cost)
