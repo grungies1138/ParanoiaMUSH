@@ -479,7 +479,7 @@ def upgrade_skills(caller):
 
     for skill, value in caller.db.skills.iteritems():
         if value < 5:
-            options += ({"desc": skill, "exec": _wrapper(caller, "selected_skill", skill)},)
+            options += ({"desc": skill, "exec": _wrapper(caller, "selected_skill", skill), "goto": "upgrade_skills"},)
     return text, options
 
 def exec_upgrade_skill(caller, caller_input):
