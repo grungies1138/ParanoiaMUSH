@@ -417,12 +417,12 @@ def upgrade_clearance(caller):
 
     table = evtable.EvTable("", "", "", "", "", "", header=None, border=None)
 
-    table.reformat_column(0, width=14, align="l")
-    table.reformat_column(1, width=12, align="r")
-    table.reformat_column(2, width=14, align="l")
-    table.reformat_column(3, width=12, align="r")
-    table.reformat_column(4, width=14, align="l")
-    table.reformat_column(5, width=12, align="r")
+    table.reformat_column(0, width=12, align="l")
+    table.reformat_column(1, width=14, align="r")
+    table.reformat_column(2, width=12, align="l")
+    table.reformat_column(3, width=14, align="r")
+    table.reformat_column(4, width=12, align="l")
+    table.reformat_column(5, width=14, align="r")
 
     table.add_row(red, red_cost, orange, orange_cost, yellow, yellow_cost)
     table.add_row(green, green_cost, blue, blue_cost, indigo, indigo_cost)
@@ -458,7 +458,7 @@ def exec_clearance_upgrade(caller, caller_input):
     prospective = CLEARANCE.get(current + 1)
     prospective_cost = CLEARANCE_UPGRADES.get(prospective)
     if caller.db.xp >= prospective_cost:
-        caller.db.xp -= prospective_cost
+        caller.db.xp = caller.db.xp - prospective_cost
         caller.db.clearance += 1
     else:
         caller.msg("|rERROR:|n Not enough XP points to upgrade your clearance level.")
