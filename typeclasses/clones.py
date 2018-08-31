@@ -39,7 +39,7 @@ class Clone(Character):
         message = []
 
         message.append("|w_|n" * 78)
-        title = ansi.ANSIString("|[002|w|u{}|n".format(self.key))
+        title = ansi.ANSIString("|[002|w|u{}|n".format(self.key + "-" + self.db.clone + "-" + self.db.sector))
         message.append(title.ljust(78, '^').replace('^', "|[002|w_|n"))
         message.append("{} has {} hair, {} eyes and {} skin.  They stand at {} tall and weighs {}.  "
                        "They wear a jumpsuit with a {} stripe.".format(self.key, HAIR.get(self.db.hair) or "no",
