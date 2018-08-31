@@ -5,7 +5,7 @@ from evennia import default_cmds
 from evennia.utils.evmenu import EvMenu
 from evennia.utils import evtable, utils, ansi, spawner
 from commands.library import clearance_color, IsInt, node_formatter, options_formatter
-from world.static_data import HEALTH, CLEARANCE
+from world.static_data import HEALTH, CLEARANCE, ACTIONS
 from django.conf import settings
 from evennia.server.sessionhandler import SESSIONS
 from typeclasses.clones import Clone
@@ -15,6 +15,13 @@ from commands.chargen_commands import reset_random
 class SheetCommand(default_cmds.MuxCommand):
     """
     Displays the Character sheet.
+
+    Usage:
+        |w+sheet|n - Normal Character sheet
+
+        |w+sheet/secret|n - Shows Mutant powers and Secret societies
+
+        +w+sheet/actions|n - Shows available actions.  Including Action Cards and Mutant powers.
     """
 
     key = "+sheet"
@@ -23,6 +30,8 @@ class SheetCommand(default_cmds.MuxCommand):
     help_category = "General"
 
     def func(self):
+        # TODO: Add functionality for admins to see character's sheet
+
         if not self.switches:
             message = []
             message.append("|w.---|n|yAlpha Complex Identity Form|n|w----------------------------------------------.|n")
@@ -56,7 +65,6 @@ class SheetCommand(default_cmds.MuxCommand):
             table3.reformat_column(1, width=48)
             message.append(unicode(table3) + "\n")
 
-
             table4 = evtable.EvTable("", "", "", "", "", "", "", "",  border=None)
             table4.reformat_column(0, width=16)
             table4.reformat_column(1, width=3, align="r")
@@ -73,9 +81,6 @@ class SheetCommand(default_cmds.MuxCommand):
                            "|wMechanics: |n", self.caller.db.stats.get("mechanics"))
             message.append("|[035|002 STATS >>>                                                                    " +
                            unicode(table4) + "\n")
-            # message.append(unicode(table4) + "\n")
-
-
 
             table5 = evtable.EvTable("", "", "", "", "", "", "", "",  border=None, header=False)
             table5.reformat_column(0, width=15)
@@ -132,8 +137,24 @@ class SheetCommand(default_cmds.MuxCommand):
             message.append("\n")
             message.append("*|w---------------------------------------------------" + "|500This form is MANDATORY|w---|n*")
             self.caller.msg("\n".join(message))
-        else:
-            self.caller.msg("This is with the {} switch".format(self.switches))
+        elif "actions" in self.switches:
+            message = []
+            message.append("|w.---|n|yAction Summary Form|n|w----------------------------------------------.|n")
+            action_table = evtable.EvTable("Action:", "Action Order:", "Reaction:", "Desc:", border=None)
+
+            action_table.reformat_column(0, width=17)
+            action_table.reformat_column(1, width=15)
+            action_table.reformat_column(2, width=11)
+            action_table.reformat_column(3, width=35)
+
+            for act in self.caller.db.action_cards:
+                action = ACTIONS.get(act)
+                action_table.add_row(act, action.get("action_order"), action.get("reaction"), action.get("desc"))
+
+            message.append(unicode(action_table))
+            message.append("")
+            self.caller.msg("\n".join(message))
+
 
 class TimeCommand(default_cmds.MuxCommand):
     """
