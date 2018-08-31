@@ -4,7 +4,7 @@ from random import randint
 from evennia import default_cmds
 from evennia.utils.evmenu import EvMenu
 from evennia.utils import evtable, utils, ansi, spawner
-from commands.library import clearance_color, IsInt, node_formatter, options_formatter
+from commands.library import clearance_color, IsInt, node_formatter, options_formatter, titlecase
 from world.static_data import HEALTH, CLEARANCE, ACTIONS, MUTANT_POWERS, SECRET_SOCIETIES
 from django.conf import settings
 from evennia.server.sessionhandler import SESSIONS
@@ -168,7 +168,7 @@ class SheetCommand(default_cmds.MuxCommand):
 
             for act in caller.db.action_cards:
                 action = ACTIONS.get(act)
-                action_table.add_row(act, action.get("action_order"), "Y" if action.get("reaction") == 1 else "N", action.get("desc"))
+                action_table.add_row(titlecase(act), action.get("action_order"), "Y" if action.get("reaction") == 1 else "N", action.get("desc"))
 
             message.append(unicode(action_table))
             message.append("\n|[035|002 MUTANT POWERS >>>                                                            ")
@@ -180,8 +180,8 @@ class SheetCommand(default_cmds.MuxCommand):
             mutant_table.reformat_column(2, width=43, valign="t")
 
             mutant = MUTANT_POWERS.get(caller.db.mutant_power)
-            mutant_table.add_row(caller.db.mutant_power, mutant.get("action order"), mutant.get("description"))
-
+            mutant_table.add_row(titlecase(caller.db.mutant_power), mutant.get("action order"), mutant.get("description"))
+            message.append("*" + "|w-|n" * 76 + "*")
             message.append(unicode(mutant_table) + "\n")
             self.caller.msg("\n".join(message))
         elif "secret" in self.switches:
@@ -195,9 +195,10 @@ class SheetCommand(default_cmds.MuxCommand):
             mutant_table.reformat_column(2, width=43, valign="t")
 
             mutant = MUTANT_POWERS.get(caller.db.mutant_power)
-            mutant_table.add_row(caller.db.mutant_power, mutant.get("action order"), mutant.get("description"))
+            mutant_table.add_row(titlecase(caller.db.mutant_power), mutant.get("action order"), mutant.get("description"))
 
             message.append(unicode(mutant_table) + "\n")
+            message.append("|[035|002 SECRET SOCIETIES >>>                                                          ")
 
             ss_table = evtable.EvTable("|wSociety:|n", "|wKeywords:|n", "|wBeliefs|n:", "|wGoals|n:", border=None)
 
@@ -208,9 +209,10 @@ class SheetCommand(default_cmds.MuxCommand):
 
             for soc in caller.db.secret_societies:
                 society = SECRET_SOCIETIES.get(soc)
-                ss_table.add_row(soc, ", ".join(society.get("keywords")), society.get("beliefs"), society.get("goals"))
+                ss_table.add_row(titlecase(soc), ", ".join(society.get("keywords")), society.get("beliefs"), society.get("goals"))
 
             message.append(unicode(ss_table))
+            message.append("*" + "|w-|n" * 76 + "*")
             self.caller.msg("\n".join(message))
 
 class TimeCommand(default_cmds.MuxCommand):
