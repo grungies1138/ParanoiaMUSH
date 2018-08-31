@@ -10,7 +10,7 @@ from random import randint
 from evennia import default_cmds
 from evennia.utils.evmenu import EvMenu
 from evennia.utils import evtable, utils, ansi
-from commands.library import clearance_color, _wrapper
+from commands.library import clearance_color, _wrapper, IsInt
 from world.static_data import HEALTH, CLEARANCE, CLEARANCE_UPGRADES
 from django.conf import settings
 from evennia.server.sessionhandler import SESSIONS
@@ -282,6 +282,9 @@ class CheckCommand(default_cmds.MuxCommand):
             return
         elif args[1] not in stats:
             caller.msg("|rERROR:|n {} is not a valid stat.  Please select a valid stat and try again.".format(args[1]))
+            return
+        elif not IsInt(pos_mod) or not IsInt(neg_mod):
+            caller.msg("|rERROR:|n Invalid modifier.  Check modifiers must be an integer.  Try again.")
             return
         else:
             selected_skill = caller.db.skills.get(args[0])

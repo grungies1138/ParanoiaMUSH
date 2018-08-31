@@ -46,3 +46,10 @@ def clearance_color(clearance):
 
 def _wrapper(caller, attr, value):
     return lambda caller: setattr(caller.ndb._menutree, attr, value)
+
+def IsInt(n):
+    try:
+        int(n)
+        return True
+    except ValueError:
+        return False
