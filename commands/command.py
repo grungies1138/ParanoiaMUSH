@@ -10,12 +10,12 @@ from random import randint
 from evennia import default_cmds
 from evennia.utils.evmenu import EvMenu
 from evennia.utils import evtable, utils, ansi, spawner
-from commands.library import clearance_color, _wrapper, IsInt, node_formatter, options_formatter
-from world.static_data import HEALTH, CLEARANCE, CLEARANCE_UPGRADES
+from commands.library import clearance_color, IsInt, node_formatter, options_formatter
+from world.static_data import HEALTH, CLEARANCE
 from django.conf import settings
 from evennia.server.sessionhandler import SESSIONS
 from typeclasses.clones import Clone
-from world.equipment_prototypes import EQUIPMENT
+from commands.chargen_commands import reset_random
 
 
 class SheetCommand(default_cmds.MuxCommand):
@@ -370,3 +370,35 @@ class CatalogCommand(default_cmds.MuxCommand):
                node_formatter=node_formatter,
                options_formatter=options_formatter,
                cmd_on_exit="look")
+
+class DieCommand(default_cmds.MuxCommand):
+    """
+    Increments your clone number and resets your health.  If you are out of clones, it will reset your character
+    sheet and teleport you to the Incubation Chamber to start a new character generation sequence.
+
+    Usage:
+        |w+die|n
+    """
+
+    key = "+die"
+    lock = "cmd:perm(Player)"
+    help_category = "General"
+
+    def func(self):
+        if not hasattr(self.caller.ndb.die):
+            self.caller.msg("|bSYSTEM:|n Are you absolutely sure you want to die?  Have you begged the GM and offered 'favors' or other bribes?  If you are sure, type |w+die|n again.")
+            self.caller.ndb.die = 1
+        else:
+            if self.caller.db.clone < self.caller.db.max_clones:
+                self.caller.msg("|bSYSTEM:|n Incrementing and dispatching clone.")
+                self.caller.db.clone += 1
+            else:
+                self.caller.msg("|bSYSTEM:|n You are dead bro.  Your usefulness is not over, however.  Your body will "
+                                "be recycled and reused in other ways.  Incidentally, try our new product at the mess "
+                                "hall, Beefy Cakes(tm)  Now made with real meat!")
+                reset_random(self.caller)
+                self.caller.move_to("Incubation Chamber")
+                self.caller.db.chargen_complete = 0
+                self.caller.db.max_clones = 6
+                self.caller.db.max_moxie = 6
+

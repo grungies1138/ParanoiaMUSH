@@ -9,6 +9,8 @@ from world.static_data import EYES, HAIR, SKIN, PERSONALITY, MUTANT_POWERS, SECR
 
 HELP = "Chargen"
 
+# TODO: Add aliases to Back menu options
+
 class ChargenCommand(default_cmds.MuxCommand):
     """
     Begins the Chargen process.

@@ -2,6 +2,8 @@ from world.equipment_prototypes import EQUIPMENT
 from commands.library import _wrapper
 from evennia.utils import evtable, utils, ansi, spawner
 
+# TODO: Add aliases to Back menu options
+
 def menu_start_node(caller):
     text = "Welcome to the Cerebral Coretech Alpha Complex XP point award catalog!  Many years ago, in the year 214, " \
            "I determined that clones have an inherent need for self-improvement.  To facilitate this and to help " \
