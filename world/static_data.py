@@ -1,3 +1,4 @@
+# coding=utf-8
 HEALTH = {0: "Unharmed", 1: "Hurt", 2: "Injured", 3: "Maimed", 4: "Dead"}
 
 EYES = {1: "blue", 2: "black", 3: "green", 4: "hazel", 5: "brown", 6: "yellow", 7: "white", 8: "red", 9: "purple"}
@@ -184,3 +185,305 @@ SECRET_SOCIETIES = {"anti-mutant group":
                                   "that your origin story comes soon.)  Recruit new members, particularly other "
                                   "mutants."}
                     }
+
+ACTIONS = {
+    "A gun in the right place": {
+        "desc": "You spot a ranged weapon useful to the action. Describe it; GM has veto over your description. The "
+            "weapon adds +1 dice so long as it’s useful and intact. If the GM is particularly pleased by your "
+            "description, it adds +2 dice this round and +1 dice thereafter.",
+        "action_order": 5,
+        "reaction": 0
+    },
+    "Adaptive Resources": {
+        "desc": "You improvise a melee weapon out of something mundane. Describe what you find; GM has veto over your "
+                "description. The weapon adds +1 dice so long as it’s useful and intact. If the GM is particularly "
+                "pleased by your description, it adds +2 dice this round and +1 dice thereafter.",
+        "action_order": 4,
+        "reaction": 1
+    },
+    "An unexpected Boon": {
+        "desc": "Play after a target has rolled but before the GM describes the outcome. Add 1 to the target’s score. "
+                "Describe something that helps them out. GM has veto over your description.",
+        "action_order": 0,
+        "reaction": 1
+    },
+    "Called shot to the groin": {
+        "desc": "The attack strikes your target in a very painful area but the effects aren’t permanent. Roll a die; "
+                "if the target is an NPC, they’re out of action for that many rounds. If they’re a PC, they’re out "
+                "of action for half that many rounds (rounding up).",
+        "action_order": 3,
+        "reaction": 1
+    },
+    "Collateral damage": {
+        "desc": "An object is damaged as a side-effect of the action. Try to persuade your GM what was damaged and "
+                "see if they listen to you. Good luck.",
+        "action_order": 0,
+        "reaction": 1
+    },
+    "Colossal Snafu": {
+        "desc": "EVERYTHING HAS GONE WRONG! GM, pull out the thumbscrews.",
+        "action_order": 0,
+        "reaction": 1
+    },
+    "Combines assault": {
+        "desc": "Pick another Troubleshooter. They can attack the same target as you immediately (and it doesn’t "
+                "count as taking their turn) at +1 or they can attack YOU immediately at +1. Their choice.",
+        "action_order": 5,
+        "reaction": 0
+    },
+    "Critical failure": {
+        "desc": "SOMETHING GOES VERY WRONG! GM, you determine how.",
+        "action_order": 0,
+        "reaction": 1
+    },
+    "Critical success": {
+        "desc": "SOMETHING GOES WAY BETTER THAN EXPECTED! GM, time to shine.",
+        "action_order": 0,
+        "reaction": 1
+    },
+    "Drop it": {
+        "desc": "Play after a target has rolled but before the GM describes the outcome. The target fumbles and drops "
+                "one piece of equipment they were holding in their hands. Try to persuade your GM what you want it "
+                "to be and see if they listen to you.",
+        "action_order": 0,
+        "reaction": 1
+    },
+    "Easy come, easy go": {
+        "desc": "Play on any face-up card on the table. That card is placed at the bottom of its respective deck; "
+                "whatever its in-game effects were, they no longer apply. Describe what happened to cause this turn "
+                "of events.",
+        "action_order": 3,
+        "reaction": 1
+    },
+    "Everything looks like a nail": {
+        "desc": "You spot a tool that’s useful to the action. Describe it; GM has veto over your description. The "
+                "tool adds +1 dice so long as it’s useful and intact. If the GM is particularly pleased by your "
+                "description, it adds +2 dice this round and +1 dice thereafter.",
+        "action_order": 4,
+        "reaction": 1
+    },
+    "Feint": {
+        "desc": "You spot a situation that you can exploit to confuse an enemy. Describe what it is, then roll "
+                "Chutzpah + Bluff to take advantage. If you succeed, describe the actions of that enemy. The GM has "
+                "veto over your description, so don’t go crazy.",
+        "action_order": 2,
+        "reaction": 1
+    },
+    "Flesh wound": {
+        "desc": "Play on a target just as you or another PC is about to roll to attack them. If the roll is "
+                "successful then the wound causes the target to lose a limb.",
+        "action_order": 0,
+        "reaction": 1
+    },
+    "Four's a crowd": {
+        "desc": "Describe a group of NPCs who are useful to the action OR detrimental to the action, your choice; GM "
+                "has veto over your description and controls the NPCs after this round ends.",
+        "action_order": 1,
+        "reaction": 1
+    },
+    "Function over form": {
+        "desc": "Invent a decorative terrain feature (a screen, banner, statue and so on) that’s useful to the "
+                "action; GM has veto over your creation. The feature adds +1 dice so long as the target uses it. If "
+                "the GM is particularly pleased by your description, it adds +2 dice this round and +1 dice thereafter.",
+        "action_order": 1,
+        "reaction": 1
+    },
+    "Great victory": {
+        "desc": "Everything goes right, above and beyond even the greatest expectations, for a few seconds at least. "
+                "GM describes how.",
+        "action_order": 0,
+        "reaction": 1
+    },
+    "I'm going first": {
+        "desc": "You act immediately, interrupting the target’s action. If they survive then they can resolve their "
+                "action after you’re finished.",
+        "action_order": 0,
+        "reaction": 1
+    },
+    "Improvised defenses": {
+        "desc": "You find a piece of armour or clothing that’s helpful to your current situation. Describe what you "
+                "find; GM has veto over your description. The item adds +1 dice so long as it’s useful and intact. "
+                "If the GM is particularly pleased by your description, it adds +2 dice this round and +1 dice "
+                "thereafter.",
+        "action_order": 3,
+        "reaction": 0
+    },
+    "Jam": {
+        "desc": "The target’s weapon jams. OR: The scene somehow now involves jam but the target’s weapon is "
+                "perfectly functional. Your choice.",
+        "action_order": 0,
+        "reaction": 1
+    },
+    "Ka-boom!": {
+        "desc": "Instead of hitting its target, a ranged attack (or another appropriate action if you think you can "
+                "get away with it) hits something nearby that blows up with a 3-metre blast radius. Describe what it "
+                "is. GM has veto over your description.",
+        "action_order": 3,
+        "reaction": 1
+    },
+    "Keep your head down": {
+        "desc": "You find a hiding spot; describe it. You can Dodge any attacks until the start of the next round "
+                "but you cannot do anything else till then.",
+        "action_order": 6,
+        "reaction": 0
+    },
+    "Lucky manual": {
+        "desc": "Play after an attack that causes damage; it now causes no damage and instead destroys a piece of "
+                "equipment carried by the target. The GM picks which.",
+        "action_order": 0,
+        "reaction": 1
+    },
+    "Man, am I pleased to see you": {
+        "desc": "Describe a male-identifying NPC who’s useful to the action OR detrimental to the action, your "
+                "choice; GM has veto over your description and controls the NPC after the end of the round. The NPC "
+                "gives +1/-1 dice so long as they’re useful/impeding. If the GM is particularly pleased by your "
+                "description, they give +2/2 dice this round and +1/-1 dice thereafter.",
+        "action_order": 3,
+        "reaction": 1
+    },
+    "Miss identified": {
+        "desc": "Describe a female-identifying NPC who’s useful to the action OR detrimental to the action, your "
+                "choice. GM has veto over your description and controls the NPC after the end of the round. The NPC "
+                "gives +1/-1 dice so long as they’re useful/impeding. If the GM is particularly pleased by your "
+                "description, they give +2/2 dice this round and +1/-1 dice thereafter.",
+        "action_order": 4,
+        "reaction": 1
+    },
+    "Mistaken identity": {
+        "desc": "As far as everyone (including the Computer) is concerned, the target didn’t perform that action; "
+                "someone else did. Try to persuade your GM who you want it to be and see if they listen to you.",
+        "action_order": 0,
+        "reaction": 1
+    },
+    "My lucky vent": {
+        "desc": "Describe a convenient terrain feature (a crane, vent, steam pipe and so on) that’s useful to the "
+                "action. GM has veto over your description. The feature adds +1 dice so long as the target uses it. "
+                "If the GM is particularly pleased by your description, it adds +2 dice this round and +1 dice "
+                "thereafter.",
+        "action_order": 3,
+        "reaction": 1
+    },
+    "Not so hot": {
+        "desc": "Play after a target has rolled but before the GM describes the outcome. Delete 1 success roll from "
+                "the target’s total. Describe something unexpected that hindered them. GM has veto over your "
+                "description.",
+        "action_order": 0,
+        "reaction": 1
+    },
+    "Opposite Day": {
+        "desc": "It’s not that everything goes wrong with the action, more that the exact opposite of what the "
+                "target wanted to happen happens instead. GM, get creative.",
+        "action_order": 4,
+        "reaction": 1
+    },
+    "Party trick": {
+        "desc": "You realise that this dangerous situation calls for an unusual application of your skills. Make an "
+                "attack but pick a non-standard Stat and Skill combination then persuade the GM why they’re "
+                "applicable in this particular situation (GM, be lenient). If they buy it, you get +2 successes. If "
+                "they don’t, -1 success.",
+        "action_order": 0,
+        "reaction": 1
+    },
+    "Risky trick": {
+        "desc": "Describe how the action becomes dangerous. You get +2 dice to any action but for every 1 rolled on a "
+                "non-Computer dice, take 1 severity of wound. So on 1, you’re Hurt. On 2, you’re Injured and so on.",
+        "action_order": 4,
+        "reaction": 1
+    },
+    "Safety first": {
+        "desc": "You notice a piece of safety equipment that’s useful to the action; GM has veto over your "
+                "description. The item adds +1 dice so long as it’s useful and intact. If the GM is particularly "
+                "pleased by your description, it adds +2 dice this round and +1 dice thereafter.",
+        "action_order": 3,
+        "reaction": 1
+    },
+    "Should have killed you": {
+        "desc": "Play on an attack that causes damage. Now it causes no damage and instead the attacker loses a "
+                "point of Moxie because they were convinced they’d hit and now they didn’t and they’re a bit freaked "
+                "out.",
+        "action_order": 0,
+        "reaction": 1
+    },
+    "Slightly worse than expected": {
+        "desc": "Play after someone has rolled but before the GM describes the outcome. Subtract 1 success from the "
+                "roll. Describe something that hindered them. GM has veto over your description.",
+        "action_order": 0,
+        "reaction": 1
+    },
+    "Snap decision": {
+        "desc": "Play this card at the start of the round to go first but deduct one dice from any roll you make this "
+                "round. If another player also plays ‘Snap Decision’ they cancel each other out and neither PC gets "
+                "an action this round.",
+        "action_order": 10,
+        "reaction": 0
+    },
+    "Sneak attack": {
+        "desc": "You spot an enemy who is unaware of your presence. Make an attack at +2 to your NODE but swap "
+                "Violence for Chutzpah, Stealth for Melee or both.",
+        "action_order": 3,
+        "reaction": 0
+    },
+    "Sudden death": {
+        "desc": "If the action you’re playing this card on causes damage to a living thing or a bot, it "
+                "automatically kills whatever got hit. Describe the death. GM has veto over your description.",
+        "action_order": 0,
+        "reaction": 1
+    },
+    "Suddenly, knives!": {
+        "desc": "You spot a hand-to-hand weapon useful to the action. Describe it; GM has veto over your description. "
+                "The weapon adds +1 dice so long as it’s useful and intact. If the GM is particularly pleased by your "
+                "description, it adds +2 dice this round and +1 dice thereafter.",
+        "action_order": 6,
+        "reaction": 1
+    },
+    "Surprise bot": {
+        "desc": "Describe a bot or AI who’s useful to the action OR detrimental to the action, your choice. GM has "
+                "veto over your description. The NPC gives +1/-1 dice so long as they’re useful/impeding. If the GM "
+                "is particularly pleased by your description, they give +2/-2 dice this round and +1/-1 dice "
+                "thereafter.",
+        "action_order": 4,
+        "reaction": 1
+    },
+    "Tactical assessment": {
+        "desc": "You realise something of vital importance. Say what it is, then make an appropriate Brains + a "
+                "relevant skill check. If you succeed, everyone you choose (including yourself) is at +1 dice next "
+                "turn so long as they heed your advice. If you fail, everyone (including yourself) is at -1 dice.",
+        "action_order": 2,
+        "reaction": 0
+    },
+    "Take your time": {
+        "desc": "Describe what you’re planning to do – you’ll take the rest of the round to prepare your action. It "
+                "happens last in the round but you get +2 dice to roll. If both Take Your Time cards are played in "
+                "the same round, they resolve simultaneously.",
+        "action_order": 10,
+        "reaction": 0
+    },
+    "Taxi!": {
+        "desc": "A vehicle appears that’s useful to the action. Describe it; GM has veto over your description. The "
+                "vehicle adds +1 dice to rolls so long as it’s useful and intact. If the GM is particularly pleased "
+                "by your description, it adds +2 dice this round and +1 dice thereafter.",
+        "action_order": 2,
+        "reaction": 1
+    },
+    "Up high": {
+        "desc": "Describe an elevated terrain feature (a lift, gantry, some stairs and so on) that’s useful to the "
+                "action. GM has veto over your description. The feature adds +1 dice so long as the target uses it. "
+                "If the GM is particularly pleased by your description, it adds +2 dice this round and +1 dice "
+                "thereafter.",
+        "action_order": 2,
+        "reaction": 1
+    },
+    "The wetter the better": {
+        "desc": "Describe a liquid that’s useful to the action OR detrimental to the action, your choice. GM has "
+                "veto over your description. The liquid gives +1/-1 dice if appropriate. If the GM is particularly "
+                "pleased by your description, it gives +2/-2 dice this round and +1/-1 dice thereafter.",
+        "action_order": 6,
+        "reaction": 1
+    },
+    "Wrong target": {
+        "desc": "The attack hits a different target from the one intended. Try to persuade your GM who you want it to "
+                "be and see if they listen to you.",
+        "action_order": 0,
+        "reaction": 1
+    }
+}
