@@ -399,7 +399,7 @@ class DieCommand(default_cmds.MuxCommand):
                                 "be recycled and reused in other ways.  Incidentally, try our new product at the mess "
                                 "hall, Beefy Cakes(tm)  Now made with real meat!")
                 reset_random(self.caller)
-                start = self.search("Incubation Chamber", global_search=True)
+                start = self.caller.search("Incubation Chamber", global_search=True)
                 self.caller.move_to(start)
                 self.caller.db.chargen_complete = 0
                 self.caller.db.max_clones = 6

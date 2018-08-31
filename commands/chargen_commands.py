@@ -156,6 +156,7 @@ def reset_random(caller):
                           "science": 0, "psychology": 0, "bureaucracy": 0, "alpha complex": 0,
                           "bluff": 0, "charm": 0, "intimidate": 0, "stealth": 0,
                           "operate": 0, "engineer": 0, "program": 0, "demolitions": 0}
+    caller.db.stats = {"violence": 0, "brains": 0, "chutzpah": 0, "mechanics": 0}
     caller.db.personality = []
 
 ########################################################################################################################
