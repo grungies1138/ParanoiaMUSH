@@ -192,7 +192,7 @@ def upgrade_equipment(caller):
     options = ()
 
     for name, dic in EQUIPMENT.iteritems():
-        options += ({"desc": "{} - |y{}|n".format(name, dic.get("cost")), "exec": _wrapper(caller, "selected_equipment", dic)},)
+        options += ({"desc": "{} - |y{}|n".format(name, dic.get("cost")), "exec": _wrapper(caller, "selected_equipment", dic), "goto": "upgrade_equipment"},)
 
     options += ({"key": "back", "desc": "Go Back", "goto": "menu_start_node"},)
     return text, options
