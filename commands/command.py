@@ -5,7 +5,7 @@ from evennia import default_cmds
 from evennia.utils.evmenu import EvMenu
 from evennia.utils import evtable, utils, ansi, spawner
 from commands.library import clearance_color, IsInt, node_formatter, options_formatter
-from world.static_data import HEALTH, CLEARANCE, ACTIONS
+from world.static_data import HEALTH, CLEARANCE, ACTIONS, MUTANT_POWERS
 from django.conf import settings
 from evennia.server.sessionhandler import SESSIONS
 from typeclasses.clones import Clone
@@ -140,19 +140,31 @@ class SheetCommand(default_cmds.MuxCommand):
         elif "actions" in self.switches:
             message = []
             message.append("|w.---|n|yAction Summary Form|n|w----------------------------------------------.|n")
-            action_table = evtable.EvTable("Action:", "Action Order:", "Reaction:", "Desc:", border=None)
+            message.append("|[035|002 ACTIONS >>>                                                                  ")
+            action_table = evtable.EvTable("|wAction:|n", "|wAction Order:|n", "|wReaction:|n", "|wDescription:|n", border=None)
 
-            action_table.reformat_column(0, width=17)
-            action_table.reformat_column(1, width=15)
-            action_table.reformat_column(2, width=11)
-            action_table.reformat_column(3, width=35)
+            action_table.reformat_column(0, width=17, valign="t")
+            action_table.reformat_column(1, width=15, valign="t")
+            action_table.reformat_column(2, width=11, valign="t")
+            action_table.reformat_column(3, width=35, valign="t")
 
             for act in self.caller.db.action_cards:
                 action = ACTIONS.get(act)
-                action_table.add_row(act, action.get("action_order"), action.get("reaction"), action.get("desc"))
+                action_table.add_row(act, action.get("action_order"), "Y" if action.get("reaction") == 1 else "N", action.get("desc"))
 
             message.append(unicode(action_table))
-            message.append("")
+            message.append("|[035|002 MUTANT POWERS >>>                                                            ")
+
+            mutant_table = evtable.EvTable("|wPower:|n", "|wAction Order:|n", "|wDescription:|n", border=None)
+
+            mutant_table.reformat_column(0, width=20, valign="t")
+            mutant_table.reformat_column(1, width=15, valign="t")
+            mutant_table.reformat_column(2, width=43, valign="t")
+
+            mutant = MUTANT_POWERS.get(self.caller.db.mutant_power)
+            mutant_table.add_row(self.caller.db.mutant_power, mutant.get("action order"), mutant.get("description"))
+
+            message.append(unicode(mutant_table) + "\n")
             self.caller.msg("\n".join(message))
 
 
