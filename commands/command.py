@@ -385,10 +385,11 @@ class DieCommand(default_cmds.MuxCommand):
     help_category = "General"
 
     def func(self):
-        if not hasattr(self.caller.ndb, "die"):
+        if not hasattr(self.caller.db, "die"):
             self.caller.msg("|bSYSTEM:|n Are you absolutely sure you want to die?  Have you begged the GM and offered 'favors' or other bribes?  If you are sure, type |w+die|n again.")
-            self.caller.ndb.die = 1
+            self.caller.db.die = 1
         else:
+            del self.caller.db.die
             if self.caller.db.clone < self.caller.db.max_clones:
                 self.caller.msg("|bSYSTEM:|n Incrementing and dispatching clone.")
                 self.caller.db.clone += 1
