@@ -9,12 +9,13 @@ import datetime
 from random import randint
 from evennia import default_cmds
 from evennia.utils.evmenu import EvMenu
-from evennia.utils import evtable, utils, ansi
+from evennia.utils import evtable, utils, ansi, spawner
 from commands.library import clearance_color, _wrapper, IsInt
 from world.static_data import HEALTH, CLEARANCE, CLEARANCE_UPGRADES
 from django.conf import settings
 from evennia.server.sessionhandler import SESSIONS
 from typeclasses.clones import Clone
+from world.equipment_prototypes import EQUIPMENT
 
 
 class SheetCommand(default_cmds.MuxCommand):
@@ -374,26 +375,6 @@ class CatalogCommand(default_cmds.MuxCommand):
 # XP point costs:
 # Recover Moxie: 50 XP points per point > Calming Alpha Wave moderator
 # Increase Moxie: 200 per new level (Maximum 8)
-# Boost stat: 500 xp points per additional point  (max +3) > Upgrade Skill package
-# Boost skill: 200 xp points per additional point (Max +5) > Upgrade Core module
-
-# Security Clearance Upgrade
-# Infrared > Red : 500xp
-# Red to Orange: 1000
-# - as above but with cake for the team: 1100
-# Orange to Yellow: 2000
-# - as above with cake
-# - as above but the cake is Yellow cake only but there is plenty for everyone.
-# Yellow to Green: 4000
-# - This level comes with complimentary cake.
-# Green to Blue: 8000
-# - This level comes with two complimentary cakes.
-# Blue to Indigo: 16000
-# - Information about Indigo cake is above your security clearance
-# Indigo to Violet: 32000
-# - You unauthorized knowledge of Violet-level cake had been noted, citizen
-# Violent to Ultraviolet: [$NOTFOUND]
-# - [$UNEXPECTEDENDOFCAKEERROR]
 
 def menu_start_node(caller):
     text = "Welcome to the Cerebral Coretech Alpha Complex XP point award catalog!  Many years ago, in the year 214, " \
@@ -503,6 +484,8 @@ def upgrade_skills(caller):
     for skill, value in caller.db.skills.iteritems():
         if value < 5:
             options += ({"desc": skill, "exec": _wrapper(caller, "selected_skill", skill), "goto": "upgrade_skills"},)
+
+    options += ({"key": "back", "desc": "Go Back", "goto": "menu_start_node"},)
     return text, options
 
 def exec_upgrade_skill(caller, caller_input):
@@ -514,16 +497,87 @@ def exec_upgrade_skill(caller, caller_input):
         caller.msg("|rERROR:|n You do not have enough XP to raise that skill.")
 
 def upgrade_stats(caller):
-    # TODO: not yet implemented
-    pass
+    if hasattr(caller.ndb._menutree, "selected_stat"):
+        exec_upgrade_stat(caller, caller.ndb._menutree.selected_stat)
+    text = "So you wanna upgrade your Core modules?  What?  You don't know what that is?  You probably know them as " \
+           "'stats'.  Such a sophomoric name for such a complex neural structure.  Well, based on what I'm seeing " \
+           "here, maybe a few upgrades would be a good idea.  There are limits, just so you know.  No hacking to " \
+           "upgrade yourself to a god or whatnot.  God isn't even real!  At least that's what my priest says.\n\nWhere " \
+           "was I?  Oh yes, Core Modules.  Pick the one you want to upgrade.  Each upgrade point costs 500 XP Points."
+    options = ()
+    for stat, value in caller.db.stats.iteritems():
+        if value < 3:
+            options += ({"desc": stat, "exec": _wrapper(caller, "selected_stat", stat), "goto": "upgrade_stats"},)
+
+    options += ({"key": "back", "desc": "Go Back", "goto": "menu_start_node"},)
+    return text, options
+
+def exec_upgrade_stat(caller, caller_input):
+    stat = caller_input
+    if caller.db.xp >= 500:
+        caller.db.xp = caller.db.xp - 500
+        caller.db.stats[stat] += 1
+    else:
+        caller.msg("|rERROR:|n You do not have enough XP to raise that stat.")
+
 
 def upgrade_moxie(caller):
-    # TODO: not yet implemented
-    pass
+    text = "Feeling stressed?  It's understandable, if mildly treasonous.  Your friend, the Computer has you covered!  " \
+           "You've got Moxie kid, I like you.  You just need to chill out.  Moxie is a measure of your mental health " \
+           "that I've offered to you in a convenient number system.  A newly spawned clone starts off with a nice " \
+           "calm and health 6 in Moxie.  One thing that helps restore Moxie after you've had a rough day is to " \
+           "reflect on a pleasant memory.  Of course, being a clone, you have a limited lifespan to draw positive " \
+           "memories from, so I'm here to sell you some!  For a measly 50 XP Points, I will activate a pre-built " \
+           "memory stored in your Cerebral Coretech.  For 500 XP Points, I will upload new, exciting memories to your " \
+           "hippocampus.  But I've found that too many pleasant memories makes clones anxious and unhappy about the " \
+           "present.  And since |yHAPPINESS IS MANDATORY|n there are limits placed on the amount of memories available."
+
+    options = ()
+    if caller.db.moxie != caller.db.max_moxie:
+        options = ({"desc": "Restore Moxie", "exec": exec_restore_moxie, "goto": "upgrade_moxie"},)
+
+    if caller.db.max_moxie < 8:
+        options = ({"desc": "Upgrade Moxie", "exec": exec_upgrade_moxie, "goto": "upgrade_moxie"},)
+
+    options += ({"key": "back", "desc": "Go Back", "goto": "menu_start_node"},)
+    return text, options
+
+def exec_restore_moxie(caller, caller_input):
+    if caller.db.xp >= 50:
+        caller.db.xp = caller.db.xp - 50
+        caller.db.moxie += 1
+    else:
+        caller.msg("|rERROR:|n You do not have enough XP to restore Moxie.")
+
+def exec_upgrade_moxie(caller, caller_input):
+    if caller.db.xp >= 500:
+        caller.db.xp = caller.db.xp - 500
+        caller.db.max_moxie += 1
+        caller.db.moxie += 1
+    else:
+        caller.msg("|rERROR:|n You do not have enough XP to upgrade your Moxie.")
 
 def upgrade_equipment(caller):
-    # TODO: not yet implemented
-    pass
+    if hasattr(caller.ndb._menutree, "selected_equipment"):
+        exec_purchase_equipment(caller, caller.ndb._menutree.selected_equipment)
+    text = "What good is a Troubleshooter without equipment.  Well, usually still not very good, but necessary!  " \
+           "Watching a bunch of clones trying to put out a trash fire with only lighter fluid canisters is " \
+           "entertaining, but not very productive.  So I'm offering you some items for purchase along with the " \
+           "mission assigned equipment you weill receive to help you on your vital missions for the Computer and the " \
+           "Alpha Complex.  The fate of our home is in your hands.  God, I wish I could upgrade my Moxie."
+    options = ()
+
+    for name, dic in EQUIPMENT.iteritems():
+        options += ({"desc": "{} - {}".format(name, dic.get("cost")), "exec": _wrapper(caller, "selected_equipment", dic)},)
+    return text, options
+
+def exec_purchase_equipment(caller, caller_input):
+    if caller.db.xp >= caller_input.get("cost"):
+        caller.db.xp = caller.db.xp - caller_input.get("cost")
+        caller_input["location"] = caller.dbref
+        spawner.spawn(caller_input)
+    else:
+        caller.msg("|rERROR:|n You cannot afford that piece of equipment.")
 
 def node_formatter(nodetext, optionstext, caller=None):
     separator1 = "|002_|n" * 78 + "\n\n"

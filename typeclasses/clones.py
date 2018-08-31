@@ -11,6 +11,7 @@ class Clone(Character):
                           "bluff": 0, "charm": 0, "intimidate": 0, "stealth": 0,
                           "operate": 0, "engineer": 0, "program": 0, "demolitions": 0}
         self.db.moxie = 0
+        self.db.max_moxie = 6
         self.db.mutant_power = None
         self.db.action_cards = []
         self.db.duty = ""
