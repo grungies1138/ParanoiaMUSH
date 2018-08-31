@@ -1,6 +1,7 @@
 import re
 from evennia.utils import evtable
 
+
 HEAD_CHAR = "|015-|n"
 SUB_HEAD_CHAR = "-"
 MAX_WIDTH = 78
