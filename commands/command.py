@@ -5,7 +5,7 @@ from evennia import default_cmds
 from evennia.utils.evmenu import EvMenu
 from evennia.utils import evtable, utils, ansi, spawner
 from commands.library import clearance_color, IsInt, node_formatter, options_formatter
-from world.static_data import HEALTH, CLEARANCE, ACTIONS, MUTANT_POWERS
+from world.static_data import HEALTH, CLEARANCE, ACTIONS, MUTANT_POWERS, SECRET_SOCIETIES
 from django.conf import settings
 from evennia.server.sessionhandler import SESSIONS
 from typeclasses.clones import Clone
@@ -183,6 +183,34 @@ class SheetCommand(default_cmds.MuxCommand):
             mutant_table.add_row(caller.db.mutant_power, mutant.get("action order"), mutant.get("description"))
 
             message.append(unicode(mutant_table) + "\n")
+            self.caller.msg("\n".join(message))
+        elif "secret" in self.switches:
+            message = []
+            message.append("|w.---|n|ySecret Information Form|n|w--------------------------------------------------.|n")
+            message.append("|[035|002 MUTANT POWERS >>>                                                             ")
+            mutant_table = evtable.EvTable("|wPower:|n", "|wAction Order:|n", "|wDescription:|n", border=None)
+
+            mutant_table.reformat_column(0, width=20, valign="t")
+            mutant_table.reformat_column(1, width=15, valign="t")
+            mutant_table.reformat_column(2, width=43, valign="t")
+
+            mutant = MUTANT_POWERS.get(caller.db.mutant_power)
+            mutant_table.add_row(caller.db.mutant_power, mutant.get("action order"), mutant.get("description"))
+
+            message.append(unicode(mutant_table) + "\n")
+
+            ss_table = evtable.EvTable("|wSociety:|n", "|wKeywords:|n", "|wBeliefs|n:", "|wGoals|n:", border=None)
+
+            ss_table.reformat_column(0, width=15, valign="t")
+            ss_table.reformat_column(1, width=13, valign="t")
+            ss_table.reformat_column(2, width=25, valign="t")
+            ss_table.reformat_column(3, width=25, valign="t")
+
+            for soc in caller.db.secret_societies:
+                society = SECRET_SOCIETIES.get(soc)
+                ss_table.add_row(soc, ", ".join(society.get("keywords")), society.get("beliefs"), society.get("goals"))
+
+            message.append(unicode(ss_table))
             self.caller.msg("\n".join(message))
 
 class TimeCommand(default_cmds.MuxCommand):
