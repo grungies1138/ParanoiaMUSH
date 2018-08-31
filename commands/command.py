@@ -42,7 +42,6 @@ class SheetCommand(default_cmds.MuxCommand):
             if self.caller.locks.check_lockstring(self.caller, "dummy:perm(Admin)"):
                 if Clone.objects.filter(db_key__iexact=self.args).exists():
                     caller = self.caller.search(self.args)
-                    self.caller.msg("test")
                 else:
                     self.caller.msg("|rERROR:|n Invalid player name.  Try again.")
                     return
@@ -51,140 +50,140 @@ class SheetCommand(default_cmds.MuxCommand):
                 return
         else:
             caller = self.caller
-            if not self.switches:
-                message = []
-                message.append("|w.---|n|yAlpha Complex Identity Form|n|w----------------------------------------------.|n")
-                message.append("|[002|w/// PART ONE    |n|[005 |wCORE INFORMATION >>>                                         |n")
+        if not self.switches:
+            message = []
+            message.append("|w.---|n|yAlpha Complex Identity Form|n|w----------------------------------------------.|n")
+            message.append("|[002|w/// PART ONE    |n|[005 |wCORE INFORMATION >>>                                         |n")
 
-                name = "|wName: |n{}-{}-{}".format(caller.key, caller.db.clone, caller.db.sector)
-                clearance = "|wSecurity Clearance: |n{}".format(CLEARANCE.get(caller.db.clearance))
-                sector = "|wHome Sector: |n{}".format(caller.db.sector or "")
-                clone = "|wClone #: |n{} / {}".format(caller.db.clone, caller.db.max_clones)
-                gender = "|wGender: |n{}".format(caller.db.gender)
-                personality = "|wPersonality: |n{}".format(", ".join(caller.db.personality or []))
+            name = "|wName: |n{}-{}-{}".format(caller.key, caller.db.clone, caller.db.sector)
+            clearance = "|wSecurity Clearance: |n{}".format(CLEARANCE.get(caller.db.clearance))
+            sector = "|wHome Sector: |n{}".format(caller.db.sector or "")
+            clone = "|wClone #: |n{} / {}".format(caller.db.clone, caller.db.max_clones)
+            gender = "|wGender: |n{}".format(caller.db.gender)
+            personality = "|wPersonality: |n{}".format(", ".join(caller.db.personality or []))
 
-                table1 = evtable.EvTable(name, clearance, border=None)
-                table1.reformat_column(0, width=30)
-                table1.reformat_column(1, width=48)
-                message.append(unicode(table1))
+            table1 = evtable.EvTable(name, clearance, border=None)
+            table1.reformat_column(0, width=30)
+            table1.reformat_column(1, width=48)
+            message.append(unicode(table1))
 
-                table2 = evtable.EvTable(sector, clone, gender, border=None)
-                table2.reformat_column(0, width=30)
-                table2.reformat_column(1, width=18)
-                table2.reformat_column(2, width=30)
-                message.append(unicode(table2))
-                message.append(" " + personality + "\n")
+            table2 = evtable.EvTable(sector, clone, gender, border=None)
+            table2.reformat_column(0, width=30)
+            table2.reformat_column(1, width=18)
+            table2.reformat_column(2, width=30)
+            message.append(unicode(table2))
+            message.append(" " + personality + "\n")
 
-                message.append("|[002|w/// PART TWO    |n|[005 |wDEVELOPMENT >>>                                              |n")
+            message.append("|[002|w/// PART TWO    |n|[005 |wDEVELOPMENT >>>                                              |n")
 
-                treason = "|wTreason: |n{}".format("*" * (caller.db.treason or 0))
-                xp = "|wXP Points: |n{}".format(caller.db.xp or 0)
-                table3 = evtable.EvTable(treason, xp, border=None)
-                table3.reformat_column(0, width=30)
-                table3.reformat_column(1, width=48)
-                message.append(unicode(table3) + "\n")
+            treason = "|wTreason: |n{}".format("*" * (caller.db.treason or 0))
+            xp = "|wXP Points: |n{}".format(caller.db.xp or 0)
+            table3 = evtable.EvTable(treason, xp, border=None)
+            table3.reformat_column(0, width=30)
+            table3.reformat_column(1, width=48)
+            message.append(unicode(table3) + "\n")
 
-                table4 = evtable.EvTable("", "", "", "", "", "", "", "",  border=None)
-                table4.reformat_column(0, width=16)
-                table4.reformat_column(1, width=3, align="r")
-                table4.reformat_column(2, width=16)
-                table4.reformat_column(3, width=3, align="r")
-                table4.reformat_column(4, width=16)
-                table4.reformat_column(5, width=3, align="r")
-                table4.reformat_column(6, width=16)
-                table4.reformat_column(7, width=3, align="r")
+            table4 = evtable.EvTable("", "", "", "", "", "", "", "",  border=None)
+            table4.reformat_column(0, width=16)
+            table4.reformat_column(1, width=3, align="r")
+            table4.reformat_column(2, width=16)
+            table4.reformat_column(3, width=3, align="r")
+            table4.reformat_column(4, width=16)
+            table4.reformat_column(5, width=3, align="r")
+            table4.reformat_column(6, width=16)
+            table4.reformat_column(7, width=3, align="r")
 
-                table4.add_row("|wViolence: |n", caller.db.stats.get("violence"),
-                               "|wBrains: |n", caller.db.stats.get("brains"),
-                               "|wChutzpah: |n", caller.db.stats.get("chutzpah"),
-                               "|wMechanics: |n", caller.db.stats.get("mechanics"))
-                message.append("|[035|002 STATS >>>                                                                    " +
-                               unicode(table4) + "\n")
+            table4.add_row("|wViolence: |n", caller.db.stats.get("violence"),
+                           "|wBrains: |n", caller.db.stats.get("brains"),
+                           "|wChutzpah: |n", caller.db.stats.get("chutzpah"),
+                           "|wMechanics: |n", caller.db.stats.get("mechanics"))
+            message.append("|[035|002 STATS >>>                                                                    " +
+                           unicode(table4) + "\n")
 
-                table5 = evtable.EvTable("", "", "", "", "", "", "", "",  border=None, header=False)
-                table5.reformat_column(0, width=15)
-                table5.reformat_column(1, width=4, align="r")
-                table5.reformat_column(2, width=16)
-                table5.reformat_column(3, width=4, align="r")
-                table5.reformat_column(4, width=15)
-                table5.reformat_column(5, width=4, align="r")
-                table5.reformat_column(6, width=15)
-                table5.reformat_column(7, width=4, align="r")
+            table5 = evtable.EvTable("", "", "", "", "", "", "", "",  border=None, header=False)
+            table5.reformat_column(0, width=15)
+            table5.reformat_column(1, width=4, align="r")
+            table5.reformat_column(2, width=16)
+            table5.reformat_column(3, width=4, align="r")
+            table5.reformat_column(4, width=15)
+            table5.reformat_column(5, width=4, align="r")
+            table5.reformat_column(6, width=15)
+            table5.reformat_column(7, width=4, align="r")
 
-                table5.add_row("|wAthletics: |n", caller.db.skills.get("athletics"),
-                               "|wScience: |n", caller.db.skills.get("science"),
-                               "|wBluff: |n", caller.db.skills.get("bluff"),
-                               "|wOperate: |n", caller.db.skills.get("operate"))
+            table5.add_row("|wAthletics: |n", caller.db.skills.get("athletics"),
+                           "|wScience: |n", caller.db.skills.get("science"),
+                           "|wBluff: |n", caller.db.skills.get("bluff"),
+                           "|wOperate: |n", caller.db.skills.get("operate"))
 
-                table5.add_row("|wGuns: |n", caller.db.skills.get("guns"),
-                               "|wPsychology: |n", caller.db.skills.get("psychology"),
-                               "|wCharm: |n", caller.db.skills.get("charm"),
-                               "|wEngineer: |n", caller.db.skills.get("engineer"))
+            table5.add_row("|wGuns: |n", caller.db.skills.get("guns"),
+                           "|wPsychology: |n", caller.db.skills.get("psychology"),
+                           "|wCharm: |n", caller.db.skills.get("charm"),
+                           "|wEngineer: |n", caller.db.skills.get("engineer"))
 
-                table5.add_row("|wMelee: |n", caller.db.skills.get("melee"),
-                               "|wBureaucracy: |n", caller.db.skills.get("bureaucracy"),
-                               "|wIntimidate: |n", caller.db.skills.get("intimidate"),
-                               "|wProgram: |n", caller.db.skills.get("program"))
+            table5.add_row("|wMelee: |n", caller.db.skills.get("melee"),
+                           "|wBureaucracy: |n", caller.db.skills.get("bureaucracy"),
+                           "|wIntimidate: |n", caller.db.skills.get("intimidate"),
+                           "|wProgram: |n", caller.db.skills.get("program"))
 
-                table5.add_row("|wThrow: |n", caller.db.skills.get("throw"),
-                               "|wAlpha Complex: |n", caller.db.skills.get("alpha complex"),
-                               "|wStealth: |n", caller.db.skills.get("stealth"),
-                               "|wDemolitions: |n", caller.db.skills.get("demolitions"))
-                message.append(
-                    "|[002|w/// PART THREE  |n|[005 |wSKILLS >>>                                                   |n" +
-                    unicode(table5) + "\n")
-                # message.append(unicode(table5) + "\n")
+            table5.add_row("|wThrow: |n", caller.db.skills.get("throw"),
+                           "|wAlpha Complex: |n", caller.db.skills.get("alpha complex"),
+                           "|wStealth: |n", caller.db.skills.get("stealth"),
+                           "|wDemolitions: |n", caller.db.skills.get("demolitions"))
+            message.append(
+                "|[002|w/// PART THREE  |n|[005 |wSKILLS >>>                                                   |n" +
+                unicode(table5) + "\n")
+            # message.append(unicode(table5) + "\n")
 
-                message.append(
-                    "|[002|w/// PART FOUR   |n|[005 |wWELLBEING >>>                                                |n")
+            message.append(
+                "|[002|w/// PART FOUR   |n|[005 |wWELLBEING >>>                                                |n")
 
-                moxie = "|wMoxie: |n{} / {}".format(caller.db.moxie, caller.db.max_moxie)
-                health = "|wHealth: |n{}".format(HEALTH.get(caller.db.wounds))
+            moxie = "|wMoxie: |n{} / {}".format(caller.db.moxie, caller.db.max_moxie)
+            health = "|wHealth: |n{}".format(HEALTH.get(caller.db.wounds))
 
-                table9 = evtable.EvTable(moxie, health, border=None)
-                table9.reformat_column(0, width=28)
-                table9.reformat_column(1, width=50)
-                message.append(unicode(table9) + "\n")
+            table9 = evtable.EvTable(moxie, health, border=None)
+            table9.reformat_column(0, width=28)
+            table9.reformat_column(1, width=50)
+            message.append(unicode(table9) + "\n")
 
-                message.append(
-                    "|[002|w/// PART FIVE   |n|[005 |wEQUIPMENT >>>                                                |n")
+            message.append(
+                "|[002|w/// PART FIVE   |n|[005 |wEQUIPMENT >>>                                                |n")
 
-                equipment = [eq for eq in caller.contents]
-                for eq in equipment:
-                    message.append(eq.key)
+            equipment = [eq for eq in caller.contents]
+            for eq in equipment:
+                message.append(eq.key)
 
-                message.append("\n")
-                message.append("*|w---------------------------------------------------" + "|500This form is MANDATORY|w---|n*")
-                self.caller.msg("\n".join(message))
-            elif "actions" in self.switches:
-                message = []
-                message.append("|w.---|n|yAction Summary Form|n|w------------------------------------------------------.|n")
-                message.append("|[035|002 ACTIONS >>>                                                                  ")
-                action_table = evtable.EvTable("|wAction:|n", "|wAction Order:|n", "|wReaction:|n", "|wDescription:|n", border=None)
+            message.append("\n")
+            message.append("*|w---------------------------------------------------" + "|500This form is MANDATORY|w---|n*")
+            self.caller.msg("\n".join(message))
+        elif "actions" in self.switches:
+            message = []
+            message.append("|w.---|n|yAction Summary Form|n|w------------------------------------------------------.|n")
+            message.append("|[035|002 ACTIONS >>>                                                                  ")
+            action_table = evtable.EvTable("|wAction:|n", "|wAction Order:|n", "|wReaction:|n", "|wDescription:|n", border=None)
 
-                action_table.reformat_column(0, width=17, valign="t")
-                action_table.reformat_column(1, width=15, valign="t")
-                action_table.reformat_column(2, width=11, valign="t")
-                action_table.reformat_column(3, width=35, valign="t")
+            action_table.reformat_column(0, width=17, valign="t")
+            action_table.reformat_column(1, width=15, valign="t")
+            action_table.reformat_column(2, width=11, valign="t")
+            action_table.reformat_column(3, width=35, valign="t")
 
-                for act in caller.db.action_cards:
-                    action = ACTIONS.get(act)
-                    action_table.add_row(act, action.get("action_order"), "Y" if action.get("reaction") == 1 else "N", action.get("desc"))
+            for act in caller.db.action_cards:
+                action = ACTIONS.get(act)
+                action_table.add_row(act, action.get("action_order"), "Y" if action.get("reaction") == 1 else "N", action.get("desc"))
 
-                message.append(unicode(action_table))
-                message.append("\n|[035|002 MUTANT POWERS >>>                                                            ")
+            message.append(unicode(action_table))
+            message.append("\n|[035|002 MUTANT POWERS >>>                                                            ")
 
-                mutant_table = evtable.EvTable("|wPower:|n", "|wAction Order:|n", "|wDescription:|n", border=None)
+            mutant_table = evtable.EvTable("|wPower:|n", "|wAction Order:|n", "|wDescription:|n", border=None)
 
-                mutant_table.reformat_column(0, width=20, valign="t")
-                mutant_table.reformat_column(1, width=15, valign="t")
-                mutant_table.reformat_column(2, width=43, valign="t")
+            mutant_table.reformat_column(0, width=20, valign="t")
+            mutant_table.reformat_column(1, width=15, valign="t")
+            mutant_table.reformat_column(2, width=43, valign="t")
 
-                mutant = MUTANT_POWERS.get(caller.db.mutant_power)
-                mutant_table.add_row(caller.db.mutant_power, mutant.get("action order"), mutant.get("description"))
+            mutant = MUTANT_POWERS.get(caller.db.mutant_power)
+            mutant_table.add_row(caller.db.mutant_power, mutant.get("action order"), mutant.get("description"))
 
-                message.append(unicode(mutant_table) + "\n")
-                self.caller.msg("\n".join(message))
+            message.append(unicode(mutant_table) + "\n")
+            self.caller.msg("\n".join(message))
 
 class TimeCommand(default_cmds.MuxCommand):
     """
