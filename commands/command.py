@@ -385,7 +385,7 @@ class DieCommand(default_cmds.MuxCommand):
     help_category = "General"
 
     def func(self):
-        if not hasattr(self.caller.ndb.die):
+        if not hasattr(self.caller.ndb, "die"):
             self.caller.msg("|bSYSTEM:|n Are you absolutely sure you want to die?  Have you begged the GM and offered 'favors' or other bribes?  If you are sure, type |w+die|n again.")
             self.caller.ndb.die = 1
         else:
