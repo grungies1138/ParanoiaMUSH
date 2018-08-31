@@ -271,20 +271,26 @@ class CheckCommand(default_cmds.MuxCommand):
         args = [arg.strip() for arg in self.args.split("+")]
 
         if len(args) > 2:
-            pos_mod = int(args[2])
+            if not IsInt(args[2]):
+                caller.msg("|rERROR:|n Invalid modifier.  Check modifiers must be an integer.  Try again.")
+                return
+            else:
+                pos_mod = int(args[2])
         elif "-" in args[1]:
             neg_args = [arg.strip() for arg in args[1].split("-")]
+
             args[1] = neg_args[0]
-            neg_mod = int(neg_args[1]) * -1
+            if not IsInt(neg_args[1]):
+                caller.msg("|rERROR:|n Invalid modifier.  Check modifiers must be an integer.  Try again.")
+                return
+            else:
+                neg_mod = int(neg_args[1]) * -1
 
         if args[0] not in skills:
             caller.msg("|rERROR:|n {} is not a valid skill.  Please select a valid skill and try again.".format(args[0]))
             return
         elif args[1] not in stats:
             caller.msg("|rERROR:|n {} is not a valid stat.  Please select a valid stat and try again.".format(args[1]))
-            return
-        elif not IsInt(pos_mod) or not IsInt(neg_mod):
-            caller.msg("|rERROR:|n Invalid modifier.  Check modifiers must be an integer.  Try again.")
             return
         else:
             selected_skill = caller.db.skills.get(args[0])
