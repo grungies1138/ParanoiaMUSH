@@ -42,6 +42,7 @@ class SheetCommand(default_cmds.MuxCommand):
             if self.caller.locks.check_lockstring(self.caller, "dummy:perm(Admin)"):
                 if Clone.objects.filter(db_key__iexact=self.args).exists():
                     caller = self.caller.search(self.args)
+                    self.caller.msg("test")
                 else:
                     self.caller.msg("|rERROR:|n Invalid player name.  Try again.")
                     return
