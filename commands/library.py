@@ -1,4 +1,5 @@
 import re
+from evennia.utils import evtable
 
 HEAD_CHAR = "|015-|n"
 SUB_HEAD_CHAR = "-"
@@ -53,3 +54,31 @@ def IsInt(n):
         return True
     except ValueError:
         return False
+
+def node_formatter(nodetext, optionstext, caller=None):
+    separator1 = "|002_|n" * 78 + "\n\n"
+    separator2 = "\n" + "|002_|n" * 78 + "\n\nYou may type '|gq|n' or '|gquit|n' " \
+                                         "at any time to quit this application.\n" + "|002_|n" * 78 + "\n\n"
+    return "\n\n\n" + separator1 + nodetext + separator2 + optionstext
+
+def options_formatter(optionlist, caller=None):
+    options = []
+    for key, option in optionlist:
+        options.append("|w%s|n: %s" % (key, option))
+
+    if len(options) > 6:
+        if len(options) % 2 > 0:
+            colA = options[:len(options) / 2 + 1]
+            colB = options[len(options) / 2 + 1:]
+        else:
+            colA = options[:len(options) / 2]
+            colB = options[len(options) / 2:]
+        table = evtable.EvTable(table=[colA, colB], border=None)
+
+        table.reformat_column(0, width=39)
+        table.reformat_column(1, width=39)
+
+        return str(table) + "\n"
+
+    else:
+        return "\n".join(options)
