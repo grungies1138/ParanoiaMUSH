@@ -53,4 +53,8 @@ class Clone(Character):
         for eq in equipment:
             message.append(eq.key)
 
-        return "\n".join(message)
+        message2 = []
+        for line in message:
+            message2.append(unicode(line))
+
+        return "\n".join(message2)
