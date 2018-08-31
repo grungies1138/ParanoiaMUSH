@@ -40,8 +40,10 @@ class Clone(Character):
 
         message.append("|w_|n" * 78)
         title = ansi.ANSIString("|[002|w|u{}-{}-{}|n".format(self.key, self.db.clone, self.db.sector))
+        looker.msg(title)
         message.append(title.ljust(78, '^').replace('^', "|[002|w_|n"))
-        message.append("{} has {} hair, {} eyes and {} skin.  They stand at {} tall and weighs {}.  "
+        looker.msg(title)
+        message.append("\n{} has {} hair, {} eyes and {} skin.  They stand at {} tall and weighs {}.  "
                        "They wear a jumpsuit with a {} stripe.".format(self.key, HAIR.get(self.db.hair) or "no",
                         EYES.get(self.db.eyes) or "nondescript", SKIN.get(self.db.skin) or "pale", self.db.height
                         or "indeterminate", self.db.weight or "indeterminate", CLEARANCE.get(self.db.clearance)))

@@ -72,7 +72,6 @@ GUEST_ENABLED = True
 GUEST_LIST = ["Clone" + str(s + 1) for s in range(9)]
 
 
-
 ######################################################################
 # Settings given in secret_settings.py override those in this file.
 ######################################################################
