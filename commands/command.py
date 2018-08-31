@@ -345,7 +345,7 @@ class XPAwardCommand(default_cmds.MuxCommand):
 
         char, amount = self.lhs, int(self.rhs)
 
-        if Clone.objects.filter(db_key=char).exists():
+        if Clone.objects.filter(db_key__iexact=char).exists():
             char = self.caller.search(char, global_search=True)
             char.db.xp += amount
             self.caller.msg("|bSYSTEM:|n {} XP points granted to {}".format(amount, char.key))
