@@ -1,5 +1,5 @@
 from characters import Character
-from commands.library import header
+from commands.library import header, clearance_color
 from world.static_data import EYES, HAIR, CLEARANCE, SKIN
 
 class Clone(Character):
@@ -36,14 +36,18 @@ class Clone(Character):
         equipment = [eq for eq in self.contents if eq != looker and eq.access(looker, "view")]
 
         message = []
+
+        message.append("|w_|n" * 78)
+        title = ansi.ANSIString("|[002|w|u{}|n".format(self.key))
+        message.append(title.ljust(78, '^').replace('^', "|[002|w_|n"))
         message.append(header(self.key))
         message.append("{} has {} hair, {} eyes and {} skin.  They stand at {} height and weight {} pounds.  "
                        "They wear a jumpsuit with a {} stripe.".format(self.key, HAIR.get(self.db.hair) or "no",
                         EYES.get(self.db.eyes) or "nondescript", SKIN.get(self.db.skin) or "pale", self.db.height
                         or "indeterminate", self.db.weight or "indeterminate", CLEARANCE.get(self.db.clearance)))
-        message.append(header())
+        message.append("|{}_|n".format(clearance_color(CLEARANCE.get(self.db.clearance))) * 78)
         if equipment:
-            message.append("Equipment:")
+            message.append("|wEquipment:|n")
         for eq in equipment:
             message.append(eq.key)
 
