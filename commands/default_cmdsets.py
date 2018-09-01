@@ -16,7 +16,7 @@ own cmdsets by inheriting from them or directly from `evennia.CmdSet`.
 
 from evennia import default_cmds
 from commands.command import SheetCommand, TimeCommand, OOCCommand, WhoCommand, CheckCommand, CatalogCommand,\
-    XPAwardCommand, DieCommand
+    XPAwardCommand, DieCommand, PlayActionCommand
 from commands.chargen_commands import ChargenCommand
 
 class SheetCmdSet(default_cmds.CharacterCmdSet):
@@ -58,6 +58,7 @@ class CharacterCmdSet(default_cmds.CharacterCmdSet):
         self.add(CatalogCommand())
         self.add(XPAwardCommand())
         self.add(DieCommand())
+        self.add(PlayActionCommand())
 
 
 class AccountCmdSet(default_cmds.AccountCmdSet):
