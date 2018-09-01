@@ -30,7 +30,7 @@ def equipment_actions(caller):
     return text, options
 
 def action_card_actions(caller):
-    if hasattr(caller.ndb._menutree, "selection_action"):
+    if hasattr(caller.ndb._menutree, "selected_action"):
         selected_action = caller.ndb._menutree.selected_action
         action = ACTIONS.get(selected_action)
         caller.location.msg_contents(
