@@ -81,7 +81,7 @@ def upgrade_clearance(caller):
     elif caller.db.clearance == 8:
         options += ({"desc": "Upgrade to Ultraviolet", "exec": exec_clearance_upgrade, "goto": "upgrade_clearance"},)
 
-    options += ({"key": "back", "desc": "Go Back", "goto": "menu_start_node"},)
+    options += ({"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"},)
 
     return text, options
 
@@ -113,7 +113,7 @@ def upgrade_skills(caller):
         if value < 5:
             options += ({"desc": skill, "exec": _wrapper(caller, "selected_skill", skill), "goto": "upgrade_skills"},)
 
-    options += ({"key": "back", "desc": "Go Back", "goto": "menu_start_node"},)
+    options += ({"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"},)
     return text, options
 
 def exec_upgrade_skill(caller, caller_input):
@@ -137,7 +137,7 @@ def upgrade_stats(caller):
         if value < 3:
             options += ({"desc": stat, "exec": _wrapper(caller, "selected_stat", stat), "goto": "upgrade_stats"},)
 
-    options += ({"key": "back", "desc": "Go Back", "goto": "menu_start_node"},)
+    options += ({"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"},)
     return text, options
 
 def exec_upgrade_stat(caller, caller_input):
@@ -166,7 +166,7 @@ def upgrade_moxie(caller):
     if caller.db.max_moxie < 8:
         options = ({"desc": "Upgrade Moxie", "exec": exec_upgrade_moxie, "goto": "upgrade_moxie"},)
 
-    options += ({"key": "back", "desc": "Go Back", "goto": "menu_start_node"},)
+    options += ({"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"},)
     return text, options
 
 def exec_restore_moxie(caller, caller_input):
@@ -197,7 +197,7 @@ def upgrade_equipment(caller):
     for name, dic in EQUIPMENT.iteritems():
         options += ({"desc": "{} - |y{}|n".format(name, dic.get("cost")), "exec": _wrapper(caller, "selected_equipment", dic), "goto": "upgrade_equipment"},)
 
-    options += ({"key": "back", "desc": "Go Back", "goto": "menu_start_node"},)
+    options += ({"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"},)
     return text, options
 
 def exec_purchase_equipment(caller, caller_input):
@@ -213,7 +213,7 @@ def purchase_clones(caller):
            "not right either.  One moment.\n\n|yLanguage Diagnostic...|n\n|yIdiom not found.|n\n\nHmm, well let's " \
            "keep this simple.  You want to live longer?  Spend XP Points and buy more clones.  They cost 1000 XP Points."
     options = ({"desc": "Purchase Clone", "exec": exec_purchase_clone, "goto": "purchase_clones"},
-               {"key": "back", "desc": "Go Back", "goto": "menu_start_node"})
+               {"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"})
     return text, options
 
 def exec_purchase_clone(caller, caller_input):

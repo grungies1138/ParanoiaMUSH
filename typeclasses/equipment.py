@@ -6,6 +6,8 @@ class Equipment(Object):
         self.db.cost = 0
         self.db.action_order = ()
         self.db.size = ""
+        self.db.level = 0
+        self.db.uses = -1
 
     def return_appearance(self, looker):
         message = []
@@ -13,6 +15,9 @@ class Equipment(Object):
         name = ansi.ANSIString("|[002|w|u{}|n".format(self.key))
         message.append(name.ljust(78, '^').replace('^', "|[002|w_|n"))
         message.append("|wSize:|n {}".format(self.db.size))
+        message.append("|wLevel:|n {}".format(self.db.level))
+        if self.db.uses > -1:
+            message.append("|wUses Remaining:|n {}".format(self.db.uses))
         message.append("|wAction Order:|n {} +{}".format(self.db.action_order[0], self.db.action_order[1]))
         message.append(self.db.desc)
         message.append("|w_|n" * 78)
@@ -22,3 +27,6 @@ class Equipment(Object):
             message2.append(unicode(line))
 
         return "\n".join(message2)
+
+    def __str__(self):
+        return "Name: {} - Action Order: {}\nDesc: {}".format(self.key, self.db.action_order, self.db.desc)

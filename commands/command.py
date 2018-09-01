@@ -180,7 +180,7 @@ class SheetCommand(default_cmds.MuxCommand):
             mutant_table.reformat_column(2, width=43, valign="t")
 
             mutant = MUTANT_POWERS.get(caller.db.mutant_power)
-            mutant_table.add_row(titlecase(caller.db.mutant_power), mutant.get("action order"), mutant.get("description"))
+            mutant_table.add_row(titlecase(caller.db.mutant_power), mutant.get("action_order"), mutant.get("description"))
             message.append("*" + "|w-|n" * 76 + "*")
             message.append(unicode(mutant_table) + "\n")
             self.caller.msg("\n".join(message))
@@ -195,7 +195,7 @@ class SheetCommand(default_cmds.MuxCommand):
             mutant_table.reformat_column(2, width=43, valign="t")
 
             mutant = MUTANT_POWERS.get(caller.db.mutant_power)
-            mutant_table.add_row(titlecase(caller.db.mutant_power), mutant.get("action order"), mutant.get("description"))
+            mutant_table.add_row(titlecase(caller.db.mutant_power), mutant.get("action_order"), mutant.get("description"))
 
             message.append(unicode(mutant_table) + "\n")
             message.append("|[035|002 SECRET SOCIETIES >>>                                                          ")
@@ -483,5 +483,23 @@ class DieCommand(default_cmds.MuxCommand):
                 self.caller.db.max_moxie = 6
 
 class PlayActionCommand(default_cmds.MuxCommand):
-    # TODO: Implement
-    pass
+    """
+    Menu to allow a player to select the action they want to take.  This includes Action Cards, Mutant Powers and Equipment.
+
+    Usage:
+        |w+actions|n
+
+        |YAlso see: |n|yhelp Combat|n
+    """
+
+    key = "+actions"
+    locks = "cmd:perm(Player)"
+    help_category = "Combat"
+
+    def func(self):
+        EvMenu(self.caller, "commands.action_menu",
+               startnode="menu_start_node",
+               cmdset_mergetype="Replace",
+               node_formatter=node_formatter,
+               options_formatter=options_formatter,
+               cmd_on_exit="look")

@@ -1,3 +1,4 @@
+from random import randint
 EQUIPMENT = {
 "GRENADES": {
     "key": "Grenades x3",
@@ -6,7 +7,9 @@ EQUIPMENT = {
     "action_order": ("violence", 3),
     "size": "small",
     "cost": 50,
-    "typeclass": "typeclasses.equipment.Equipment"
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 2,
+    "uses": 3
 },
 "MINIGUN": {
     "key": "The Minigun",
@@ -15,7 +18,9 @@ EQUIPMENT = {
     "action_order": ("violence", 1),
     "size": "large",
     "cost": 400,
-    "typeclass": "typeclasses.equipment.Equipment"
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 3,
+    "uses": lambda:randint(1, 6)
 },
 "SNIPER": {
     "key": "Sniper Rifle",
@@ -24,7 +29,8 @@ EQUIPMENT = {
     "action_order": ("violence", 4),
     "size": "medium",
     "cost": 300,
-    "typeclass": "typeclasses.equipment.Equipment"
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 2
 },
 "MULTI_ADAPTER": {
     "key": "Multi-Adapter",
@@ -33,7 +39,9 @@ EQUIPMENT = {
     "action_order": ("mechanics", 0),
     "size": "small",
     "cost": 25,
-    "typeclass": "typeclasses.equipment.Equipment"
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 1,
+    "uses": -1
 },
 "GAUSS_ROCKET_LAUNCHER": {
     "key": "Gauss Rocket Launcher",
@@ -42,7 +50,9 @@ EQUIPMENT = {
     "action_order": ("violence", 0),
     "size": "large",
     "cost": 650,
-    "typeclass": "typeclasses.equipment.Equipment"
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 3,
+    "uses": 3
 },
 "GRAPPLE_GUN": {
     "key": "Grapple Gun",
@@ -52,7 +62,9 @@ EQUIPMENT = {
     "action_order": ("mechanics", 2),
     "size": "medium",
     "cost": 100,
-    "typeclass": "typeclasses.equipment.Equipment"
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 2,
+    "uses": -1
 },
 "BODY_ARMOR": {
     "key": "Body Armor",
@@ -61,7 +73,9 @@ EQUIPMENT = {
     "action_order": ("athletics", -2),
     "size": "large",
     "cost": 750,
-    "typeclass": "typeclasses.equipment.Equipment"
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 2,
+    "uses": -1
 },
 "MEDKIT": {
     "key": "Medkit x3",
@@ -71,7 +85,9 @@ EQUIPMENT = {
     "action_order": ("brains", 2),
     "size": "small",
     "cost": 50,
-    "typeclass": "typeclasses.equipment.Equipment"
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 1,
+    "uses": 3
 },
 "ELECTRO_KNUCLES": {
     "key": "Electro-Knuckles",
@@ -80,7 +96,9 @@ EQUIPMENT = {
     "action_order": ("violence", 3),
     "size": "small",
     "cost": 250,
-    "typeclass": "typeclasses.equipment.Equipment"
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 1,
+    "uses": 4
 },
 "SEDATIVES": {
     "key": "Sedatives x3",
@@ -89,7 +107,9 @@ EQUIPMENT = {
     "action_order": ("brains", 1),
     "size": "small",
     "cost": 100,
-    "typeclass": "typeclasses.equipment.Equipment"
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 1,
+    "uses": 3
 },
 "DATA_BOMB": {
     "key": "Data Bomb",
@@ -99,7 +119,9 @@ EQUIPMENT = {
     "action_order": ("mechanics", 2),
     "size": "medium",
     "cost": 1250,
-    "typeclass": "typeclasses.equipment.Equipment"
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 3,
+    "uses": 1
 },
 "TAXI_POD": {
     "key": "Taxi-Pod",
@@ -108,7 +130,9 @@ EQUIPMENT = {
     "action_order": ("mechanics", 2),
     "size": "oversize",
     "cost": 2000,
-    "typeclass": "typeclasses.equipment.Equipment"
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 2,
+    "uses": -1
 },
 "MEGAPHONE": {
     "key": "Megaphone",
@@ -116,7 +140,9 @@ EQUIPMENT = {
     "action_order": ("chutzpah", 3),
     "size": "medium",
     "cost": 35,
-    "typeclass": "typeclasses.equipment.Equipment"
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 1,
+    "uses": -1
 },
 "NEEDLER": {
     "key": "Needler",
@@ -125,7 +151,9 @@ EQUIPMENT = {
     "action_order": ("violence", 4),
     "size": "medium",
     "cost": 125,
-    "typeclass": "typeclasses.equipment.Equipment"
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 1,
+    "uses": 5
 },
 "FRICTION_ENHANCER": {
     "key": "Friction Enhancer",
@@ -137,7 +165,9 @@ EQUIPMENT = {
     "action_order": ("brains", 4),
     "size": "large",
     "cost": 1000,
-    "typeclass": "typeclasses.equipment.Equipment"
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 4,
+    "uses": -1
 },
 "LASER_TRIPWIRE": {
     "key": "Laser Tripwire",
@@ -148,7 +178,9 @@ EQUIPMENT = {
     "action_order": ("mechanics", 1),
     "size": "medium",
     "cost": 200,
-    "typeclass": "typeclasses.equipment.Equipment"
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 3,
+    "uses": 1
 },
 "FOAM_GRENADE": {
     "key": "Foam Grenades x3",
@@ -159,7 +191,9 @@ EQUIPMENT = {
     "action_order": ("violence", 2),
     "size": "small",
     "cost": 75,
-    "typeclass": "typeclasses.equipment.Equipment"
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 2,
+    "uses": 3
 },
 "KAT_COMPANION_BOT": {
     "key": "K@ Companion Bot",
@@ -171,7 +205,9 @@ EQUIPMENT = {
     "action_order": ("mechanics", 5),
     "size": "medium",
     "cost": 500,
-    "typeclass": "typeclasses.equipment.Equipment"
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 3,
+    "uses": -1
 },
 "HYGIENE_O_MATIC_9000": {
     "key": "Hygiene-o-matic 9000",
@@ -183,7 +219,9 @@ EQUIPMENT = {
     "action_order": ("mechanics", 2),
     "size": "large",
     "cost": 250,
-    "typeclass": "typeclasses.equipment.Equipment"
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 3,
+    "uses": -1
 },
 "UBT_HYPERSENSE_DEVICE": {
     "key": "U.B.T. Hypersense Device",
@@ -194,7 +232,9 @@ EQUIPMENT = {
     "action_order": ("brains", 4),
     "size": "small",
     "cost": 450,
-    "typeclass": "typeclasses.equipment.Equipment"
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 2,
+    "uses": -1
 },
 "CASEY_BS_BOMBABOOTS": {
     "key": "Casey-B's Bombaboots",
@@ -206,7 +246,9 @@ EQUIPMENT = {
     "action_order": ("violence", 5),
     "size": "medium",
     "cost": 300,
-    "typeclass": "typeclasses.equipment.Equipment"
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 3,
+    "uses": -1
 },
 "FAKE_MUSTACHE": {
     "key": "Fake Moustache",
@@ -218,6 +260,19 @@ EQUIPMENT = {
     "action_order": ("chutzpah", 4),
     "size": "small",
     "cost": 150,
-    "typeclass": "typeclasses.equipment.Equipment"
-}
+    "typeclass": "typeclasses.equipment.Equipment",
+    "level": 1,
+    "uses": -1
+},
+    "LASER_PISTOL": {
+        "key": "Laser pistol",
+        "desc": "Standard equipment for a Troubleshooter.  I mean, it's the 'shoot' part, right?  RIGHT?  Anyway, "
+                "point the noisy end away from you.",
+        "action_order": ("violence", 1),
+        "size": "medium",
+        "cost": 0,
+        "typeclass": "typeclasses.equipment.Equipment",
+        "level": 1,
+        "uses": 20
+    }
 }

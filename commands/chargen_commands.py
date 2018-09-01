@@ -4,8 +4,9 @@ import random
 import string
 from evennia import default_cmds, utils, AccountDB
 from evennia.utils.evmenu import EvMenu
-from evennia.utils import evtable
+from evennia.utils import evtable, spawner
 from world.static_data import EYES, HAIR, SKIN, PERSONALITY, MUTANT_POWERS, SECRET_SOCIETIES, ACTIONS
+from world.equipment_prototypes import EQUIPMENT
 
 HELP = "Chargen"
 
@@ -605,12 +606,15 @@ def finalize_finish(caller, caller_input):
     # Flip one personality trait
     selected_trait = random.choice(caller.db.personality)
     selected_index = caller.db.personality.index(selected_trait)
-    for i in range(3):
+    for i in range(4):
         caller.db.action_cards.append(random.choice(ACTIONS.keys()))
     caller.db.personality[selected_index] = PERSONALITY.get(selected_trait)
     caller.db.chargen_complete = 1
     caller.db.clone = 1
     caller.db.xp = 200
+    pistol = EQUIPMENT.get("LASER_PISTOL")
+    pistol["location"] = caller.dbref
+    spawner.spawn(pistol)
 
 def exit(caller):
     text = "Clone configuration complete.  Prepare for final growth stage.  This will hurt.  A lot.  Enjoy!"
