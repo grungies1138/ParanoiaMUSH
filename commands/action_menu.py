@@ -35,7 +35,7 @@ def action_card_actions(caller):
         action = ACTIONS.get(selected_action)
         caller.location.msg_contents(
             "|gSYSTEM:|n {}'s action: Action: {} - Action Order: {} - Reaction: ()\nDescription: {}".format(caller.key,
-                selected_action, action.db.action_order, action.db.reaction, action.db.desc))
+                selected_action, action.get("action_order"), action.get("reaction"), action.get("desc")))
         caller.db.action_cards.remove(selected_action)
         return "", ()
     text = "The journey of a thousand miles begins with two in the bush.  Wise words.  Very wise words.  Actions are " \
