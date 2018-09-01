@@ -16,7 +16,7 @@ def equipment_actions(caller):
         caller.location.msg_contents(eq)
         if eq.db.uses > 0:
             eq.db.uses = eq.db.uses - 1
-        return
+        return "", ()
     text = "You are only as effective as how well you maintain your equipment.  These items are reusable and " \
            "persistent, but have to be refilled or recharged from time to time.  Any items that are out of uses will " \
            "not be shown here, even if they are in your inventory."
@@ -37,7 +37,7 @@ def action_card_actions(caller):
             "|gSYSTEM:|n {}'s action: Action: {} - Action Order: {} - Reaction: ()\nDescription: {}".format(caller.key,
                 selected_action, action.db.action_order, action.db.reaction, action.db.desc))
         caller.db.action_cards.remove(selected_action)
-        return
+        return "", ()
     text = "The journey of a thousand miles begins with two in the bush.  Wise words.  Very wise words.  Actions are " \
            "things that you can do.  Once they are used, they are lose and you must purchase more.  Use them wisely." \
            "\n\nType |w+sheet/actions|n for more details."
@@ -61,7 +61,7 @@ def mutant_power_actions(caller):
         if caller.db.moxie == 1:
             caller.location.msg_contents("|gSYSTEM:|n {} completely LOSES IT! "
                                          "Consult the GM to determine the results.".format(caller.key))
-
+        return "", ()
     text = "Treason huh?  Hey we've all done it.  You can't help how you were incubated.  It's just part of who you " \
            "are.  And who you are is a mutant.  A dirty, filthy mutant.  Well, might as well have some fun with it.  " \
            "Using your mutant powers costs 1 Moxie.  Remember, if your Moxie drops to 1, you will absolutely LOSE IT." \
