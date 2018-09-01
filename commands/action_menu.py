@@ -34,7 +34,7 @@ def action_card_actions(caller):
         selected_action = caller.ndb._menutree.selected_action
         action = ACTIONS.get(selected_action)
         caller.location.msg_contents(
-            "|gSYSTEM:|n {}'s action: Action: {} - Action Order: {} - Reaction: ()\nDescription: {}".format(caller.key,
+            "|gSYSTEM:|n {}'s action: {}\nAction Order: {}\nReaction: {}\nDescription: {}".format(caller.key,
                 selected_action, action.get("action_order"), action.get("reaction"), action.get("desc")))
         caller.db.action_cards.remove(selected_action)
         return "", ()
