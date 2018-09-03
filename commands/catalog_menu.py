@@ -20,7 +20,7 @@ def menu_start_node(caller):
                {"desc": "Stats", "goto": "upgrade_stats"},
                {"desc": "Moxie", "goto": "upgrade_moxie"},
                {"desc": "Equipment", "goto": "upgrade_equipment"},
-               {"desc": "Purchase Clones", "goto": "buy_clones"},
+               {"desc": "Purchase Clones", "goto": "purchase_clones"},
                {"desc": "Action Cards", "goto": "buy_actions"})
     return text, options
 
