@@ -171,7 +171,7 @@ class SheetCommand(default_cmds.MuxCommand):
                 action_table.add_row(titlecase(act), action.get("action_order"), "Y" if action.get("reaction") == 1 else "N", action.get("desc"))
 
             message.append(unicode(action_table))
-            message.append("\n|[035|002 MUTANT POWERS >>>                                                            ")
+            message.append("\n|[035|002 MUTANT POWERS >>>                                                            |n")
 
             mutant_table = evtable.EvTable("|wPower:|n", "|wAction Order:|n", "|wDescription:|n", border=None)
 

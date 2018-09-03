@@ -38,7 +38,7 @@ MUTANT_POWERS = {"telepathy": {"action_order": 7, "description": "Spend 1 Moxie 
                                                                    "temperature somewhere within your line of sight "
                                                                    "and create small patches of ice, slow down people "
                                                                    "or machiones and so on.  It's difficult to encase "
-                                                                   "something in oce or lower the temperature enough "
+                                                                   "something in ice or lower the temperature enough "
                                                                    "to do serious harm to people but you can do it at "
                                                                    "a pinch."},
                  "electroshock": {"action_order": 8, "description": "Spend 1 Moxie to deliver a crackling burst of "

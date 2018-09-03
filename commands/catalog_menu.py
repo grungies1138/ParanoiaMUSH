@@ -1,6 +1,8 @@
+from random import choice
 from world.equipment_prototypes import EQUIPMENT
 from commands.library import _wrapper
 from evennia.utils import evtable, utils, ansi, spawner
+from world.static_data import ACTIONS
 
 # TODO: Add aliases to Back menu options
 
@@ -18,8 +20,25 @@ def menu_start_node(caller):
                {"desc": "Stats", "goto": "upgrade_stats"},
                {"desc": "Moxie", "goto": "upgrade_moxie"},
                {"desc": "Equipment", "goto": "upgrade_equipment"},
-               {"desc": "Purchase Clones", "goto": "buy_clones"})
+               {"desc": "Purchase Clones", "goto": "buy_clones"},
+               {"desc": "Action Cards", "goto": "buy_actions"})
     return text, options
+
+def buy_actions(caller):
+    text = "Actions are used in combat to help determine what you do and in what order.  They are not required but " \
+           "they are, mostly, helpful.  You can purchase one, at random, for 50xp.  Again, these are chosen at " \
+           "random, you take what you get and you like it or you go to bed with no Reconstituted Clone Chow(tm).  Now " \
+           "in Blue!"
+    options = ({"desc": "Buy Action Card", "exec": exec_buy_action, "goto": "buy_actions"},
+               {"key": ["back", "b"], "desc": "Go Back", "goto": "menu_start_node"})
+    return text, options
+
+def exec_buy_action(caller):
+    if caller.db.xp >= 50:
+        caller.db.action_cards.append(choice(ACTIONS.keys()))
+        caller.db.xp = caller.db.xp - 50
+    else:
+        caller.msg("|rERROR:|n You do not have enough XP to buy an action card.")
 
 def upgrade_clearance(caller):
     text = "The Peter Principle: People tend to be promoted to their own level of incompetence.\n\nWith enough time, " \
