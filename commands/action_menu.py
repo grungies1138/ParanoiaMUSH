@@ -34,8 +34,8 @@ def action_card_actions(caller):
         selected_action = caller.ndb._menutree.selected_action
         action = ACTIONS.get(selected_action)
         caller.location.msg_contents(
-            "|gSYSTEM:|n {}'s action: {}\nAction Order: {}\nReaction: {}\nDescription: {}".format(caller.key,
-                selected_action, action.get("action_order"), action.get("reaction"), action.get("desc")))
+            "|gSYSTEM:|n {}'s action: {} Order: {} {}".format(caller.key,
+                selected_action, action.get("action_order"), "(" + action.get("reaction") + ")" if action.get("reaction") ==1 else ""))
         caller.db.action_cards.remove(selected_action)
         return "", ()
     text = "The journey of a thousand miles begins with two in the bush.  Wise words.  Very wise words.  Actions are " \
