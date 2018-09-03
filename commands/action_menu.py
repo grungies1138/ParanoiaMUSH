@@ -67,7 +67,6 @@ def mutant_power_actions(caller):
            "Using your mutant powers costs 1 Moxie.  Remember, if your Moxie drops to 1, you will absolutely LOSE IT." \
            "\n\n|wPower:|n {}\n|wAction Order:|n {}\n|wDescription:|n {}".\
         format(power_name, power.get("action_order"), power.get("description"))
-    options = ({"desc": "Activate", "exec": _wrapper(caller, "activate_power", 1), "goto": "mutant_power_actions"})
-
-    options += ({"key": ["back", "b"], "desc": "Go Back", "goto": "menu_start_node"},)
+    options = ({"desc": "Activate", "exec": _wrapper(caller, "activate_power", 1), "goto": "mutant_power_actions"},
+               {"key": ["back", "b"], "desc": "Go Back", "goto": "menu_start_node"})
     return text, options
