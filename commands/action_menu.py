@@ -35,7 +35,7 @@ def action_card_actions(caller):
         action = ACTIONS.get(selected_action)
         caller.location.msg_contents(
             "|gSYSTEM:|n {}'s action: {} Order: {} {}".format(caller.key,
-                selected_action, action.get("action_order"), "(" + str(action.get("reaction")) + ")" if action.get("reaction") ==1 else ""))
+                selected_action, action.get("action_order"), "(reaction)" if action.get("reaction") ==1 else ""))
         caller.db.action_cards.remove(selected_action)
         return "", ()
     text = "The journey of a thousand miles begins with two in the bush.  Wise words.  Very wise words.  Actions are " \
@@ -55,8 +55,8 @@ def mutant_power_actions(caller):
     power = MUTANT_POWERS.get(power_name)
     if hasattr(caller.ndb._menutree, "activate_power"):
         caller.location.msg_contents(
-            "|gSYSTEM:|n {} activate their mutant power: {} - Action Order: {}\nDescription: {}".
-                format(caller.key, titlecase(power_name), power.get("action_order"), power.get("description")))
+            "|gSYSTEM:|n {} activate their mutant power: {} Order: {}".
+                format(caller.key, titlecase(power_name), power.get("action_order")))
         caller.db.moxie = caller.db.moxie - 1
         if caller.db.moxie == 1:
             caller.location.msg_contents("|gSYSTEM:|n {} completely LOSES IT! "
