@@ -94,7 +94,7 @@ def chargen_random(caller):
                {"key": "back", "desc": "Go Back", "goto": "menu_start_node", "exec": reset_random})
 
     if caller.db.eyes > 0:
-        text += "|wEyes:|n {}".format(EYES.get(caller.db.eyes))
+        text += "\n|wEyes:|n {}".format(EYES.get(caller.db.eyes))
 
         text += "\n|wHair:|n {}".format(HAIR.get(caller.db.hair))
 
@@ -110,7 +110,8 @@ def chargen_random(caller):
 
         text += "\n|wHome Sector:|n {}".format(caller.db.sector)
 
-        text += "\n\nIf you are satisfied with the configuration, type |wfinalize|n to complete your setup."
+        if caller.db.eyes > 0:
+            text += "\n\nIf you are satisfied with the configuration, type |wfinalize|n to complete your setup."
 
         options += ({"key": "finalize", "desc": "Finalize Configuration", "goto": "finalize_chargen"},)
 
