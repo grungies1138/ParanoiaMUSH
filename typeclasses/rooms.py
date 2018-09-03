@@ -45,7 +45,8 @@ class Room(DefaultRoom):
         if self.exits:
             for exit in self.exits:
                 if exit.access(looker, "view"):
-                    exits.append("|w<|n|b%s|n|w>|n - %s" % (exit.key, exit.destination))
+                    exits.append("|w<|n|{}{}|n|w>|n - {}".format(clearance_color(exit.destination.db.clearance), exit.key, exit.destination))
+                    # exits.append("|w<|n|b%s|n|w>|n - %s" % (exit.key, exit.destination))
 
         table = evtable.EvTable("|wCharacters and Objects:|n", "|wExits:|n", table=[chars + colored_objects, exits],
                                 border=None)
