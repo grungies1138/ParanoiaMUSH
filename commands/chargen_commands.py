@@ -334,7 +334,7 @@ def chargen_personal(caller):
 def select_sector(caller):
     text = "Alpha Complex is a large a diverse structure.  There are many sections of the superstructure and, " \
            "seemingly, no end.  Sectors are home!  Usually, because you are here means that there is a population " \
-           "need in one or several of the sectors.  This means you cna choose!  Simply type the designation for the " \
+           "need in one or several of the sectors.  This means you can choose!  Simply type the designation for the " \
            "sector you wish to be from.\n\nWhat?  You don't know what sector to choose?  To be honest, it doesn't " \
            "really matter all that much.  Many citizens simply enter a sector at random.  To do that, just enter " \
            "three characters, a dash and two numbers.  Like this: |wOMG-13|n or |wWTF-69|n\n\n"
