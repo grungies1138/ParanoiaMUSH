@@ -452,7 +452,7 @@ def select_weight(caller):
     text = "Please enter the weight you wish to be.  You may select a number of pounds or kilograms. " \
            "\n\n|wExample:|n if you wish to be 112 pounds, enter: |y112lbs|n or for being 67 kilograms, enter:" \
            " |y67kgs|n\n\n|rNOTE:|n Selecting a weight to small or too large can result in undesirable mutations.  " \
-           "Therefore, the following limitations are in effect:\n\n|wMetric:|n 45kgs - 100kgs\n|wImperial:|n 100lbs - " \
+           "Therefore, the following limitations are in effect:\n\n|wMetric:|n 45kg - 100kg\n|wImperial:|n 100lbs - " \
            "220lbs"
 
     options = ({"key": "_default", "exec": set_weight, "goto": "chargen_personal"},)
@@ -462,12 +462,12 @@ def select_weight(caller):
 
 def set_weight(caller, caller_input):
     weight = caller_input.strip().lower()
-    regex = re.compile(r'^(?P<number>\d{2,3})(?P<string>kgs|lbs)$')
+    regex = re.compile(r'^(?P<number>\d{2,3})(?P<string>kg|lbs)$')
     match = regex.match(weight)
     if match:
         number, measure = int(match.group('number')), match.group('string')
 
-        if measure and measure == "kgs":
+        if measure and measure == "kg":
             if number < 45 or number > 100:
                 caller.msg("|rERROR:|n That weight is not within the specified parameter limits.  Please try again.")
             else:

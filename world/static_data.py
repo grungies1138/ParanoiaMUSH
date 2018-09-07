@@ -226,7 +226,7 @@ ACTIONS = {
         "reaction": 1
     },
     "Combines assault": {
-        "desc": "Pick another Troubleshooter. They can attack the same target as you immediately (and it doesn’t "
+        "desc": "Pick another Troubleshooter. They can attack the same target as you immediately (and it doesnt "
                 "count as taking their turn) at +1 or they can attack YOU immediately at +1. Their choice.",
         "action_order": 5,
         "reaction": 0

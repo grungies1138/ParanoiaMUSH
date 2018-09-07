@@ -503,3 +503,12 @@ class PlayActionCommand(default_cmds.MuxCommand):
                node_formatter=node_formatter,
                options_formatter=options_formatter,
                cmd_on_exit="look")
+
+class SpendMoxieCommand(default_cmds.MuxCommand):
+    """
+    Reduces the number of Moxie by one.  Usually used in association with using Mutant Powers, adding dice to a
+    roll and other uses as determined by the GM or Storyteller.
+
+    Usage:
+        |w+spend Moxie|n
+    """
