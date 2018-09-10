@@ -78,7 +78,7 @@ GUEST_LIST = ["Clone" + str(s + 1) for s in range(9)]
 GAME_INDEX_LISTING = {
     'game_status': 'beta',
     # Optional, comment out or remove if N/A
-    'game_website': 'http://paranoia.pennmush.org',
+    'game_website': 'http://paranoia.pennmush.org:4001',
     'short_description': 'Based on the Table Top Roleplaying Game Paranoia.',
     # Optional but highly recommended. Markdown is supported.
     'long_description': ("Greetings Citizens, I am the Computer. I am your friend. Alpha Complex needs Troubleshooters. "
@@ -94,7 +94,7 @@ GAME_INDEX_LISTING = {
     'telnet_hostname': 'paranoia.pennmush.org',
     'telnet_port': 4000,
     # At minimum, specify this or the telnet_* options. Both is fine, too.
-    'web_client_url': 'http://paranoia.pennmush.com/webclient',
+    'web_client_url': 'http://paranoia.pennmush.com:4001/webclient',
 }
 
 ######################################################################
