@@ -76,7 +76,7 @@ GUEST_LIST = ["Clone" + str(s + 1) for s in range(9)]
 ######################################################################
 
 GAME_INDEX_LISTING = {
-    'game_status': 'open beta',
+    'game_status': 'beta',
     # Optional, comment out or remove if N/A
     'game_website': 'http://paranoia.pennmush.org',
     'short_description': 'Based on the Table Top Roleplaying Game Paranoia.',
