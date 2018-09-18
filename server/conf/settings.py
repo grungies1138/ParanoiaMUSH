@@ -69,7 +69,7 @@ BASE_GUEST_TYPECLASS = "typeclasses.accounts.Guest"
 # Guest Configuration
 ######################################################################
 GUEST_ENABLED = True
-GUEST_LIST = ["Clone" + str(s + 1) for s in range(9)]
+GUEST_LIST = ["Clone1", "Clone2", "Clone3", "Clone4", "Clone5"]
 
 ######################################################################
 # Game Index Config
