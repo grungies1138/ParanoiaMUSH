@@ -63,7 +63,7 @@ AMP_PORT = 4006
 ######################################################################
 
 BASE_CHARACTER_TYPECLASS = "typeclasses.clones.Clone"
-
+BASE_GUEST_TYPECLASS = "typeclasses.accounts.Guest"
 
 ######################################################################
 # Guest Configuration

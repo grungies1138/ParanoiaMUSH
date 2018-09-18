@@ -2,7 +2,7 @@ from random import choice
 from world.equipment_prototypes import EQUIPMENT
 from commands.library import _wrapper
 from evennia.utils import evtable, utils, ansi, spawner
-from world.static_data import ACTIONS, CLEARANCE
+from world.static_data import ACTIONS, CLEARANCE, CLEARANCE_UPGRADES
 
 # TODO: Add aliases to Back menu options
 
