@@ -70,6 +70,7 @@ BASE_GUEST_TYPECLASS = "typeclasses.accounts.Guest"
 ######################################################################
 GUEST_ENABLED = True
 GUEST_LIST = ["Clone1", "Clone2", "Clone3", "Clone4", "Clone5"]
+PERMISSION_GUEST_DEFAULT = "Guest"
 
 ######################################################################
 # Game Index Config
