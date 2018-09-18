@@ -33,7 +33,7 @@ class SheetCommand(default_cmds.MuxCommand):
 
     key = "+sheet"
     aliases = ["sheet"]
-    lock = "cmd:perm(Player)"
+    locks = "cmd:perm(Player)"
     help_category = "General"
 
     def func(self):
@@ -221,7 +221,7 @@ class TimeCommand(default_cmds.MuxCommand):
     """
     key = "+time"
     aliases = ["time"]
-    lock = "cmd:perm(Player)"
+    locks = "cmd:perm(Player)"
     help_category = "General"
 
     def func(self):
@@ -244,7 +244,7 @@ class OOCCommand(default_cmds.MuxCommand):
 
     key = "ooc"
     aliases = []
-    lock = "cmd:all()"
+    locks = "cmd:all()"
     help_category = "General"
 
     def func(self):
@@ -458,7 +458,7 @@ class DieCommand(default_cmds.MuxCommand):
     """
 
     key = "+die"
-    lock = "cmd:perm(Player)"
+    locks = "cmd:perm(Player)"
     help_category = "General"
 
     def func(self):
