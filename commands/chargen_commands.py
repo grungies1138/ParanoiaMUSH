@@ -4,7 +4,8 @@ import random
 import string
 from evennia import default_cmds, utils, AccountDB
 from evennia.utils.evmenu import EvMenu
-from evennia.utils import evtable, spawner
+from evennia.utils import evtable
+from evennia.prototypes import spawner
 from world.static_data import EYES, HAIR, SKIN, PERSONALITY, MUTANT_POWERS, SECRET_SOCIETIES, ACTIONS
 from world.equipment_prototypes import EQUIPMENT
 
