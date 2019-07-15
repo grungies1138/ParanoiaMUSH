@@ -3,6 +3,7 @@ from commands.library import header, clearance_color
 from world.static_data import EYES, HAIR, CLEARANCE, SKIN
 from evennia.utils import ansi
 
+
 class Clone(Character):
     def at_object_creation(self):
         super().at_object_creation()

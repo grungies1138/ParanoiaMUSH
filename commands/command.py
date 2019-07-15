@@ -81,7 +81,8 @@ class SheetCommand(default_cmds.MuxCommand):
             table3 = evtable.EvTable(treason, xp, border=None)
             table3.reformat_column(0, width=30)
             table3.reformat_column(1, width=48)
-            message.append(table3 + "\n")
+            message.append(table3)
+            message.append("\n")
 
             table4 = evtable.EvTable("", "", "", "", "", "", "", "",  border=None)
             table4.reformat_column(0, width=16)
@@ -98,7 +99,8 @@ class SheetCommand(default_cmds.MuxCommand):
                            "|wChutzpah: |n", caller.db.stats.get("chutzpah"),
                            "|wMechanics: |n", caller.db.stats.get("mechanics"))
             message.append("|[035|002 STATS >>>                                                                    " +
-                           table4 + "\n")
+                           table4)
+            message.append("\n")
 
             table5 = evtable.EvTable("", "", "", "", "", "", "", "",  border=None, header=False)
             table5.reformat_column(0, width=15)
@@ -131,7 +133,8 @@ class SheetCommand(default_cmds.MuxCommand):
                            "|wDemolitions: |n", caller.db.skills.get("demolitions"))
             message.append(
                 "|[002|w/// PART THREE  |n|[005 |wSKILLS >>>                                                   |n" +
-                table5 + "\n")
+                table5)
+            message.append("\n")
             # message.append(unicode(table5) + "\n")
 
             message.append(
@@ -143,7 +146,8 @@ class SheetCommand(default_cmds.MuxCommand):
             table9 = evtable.EvTable(moxie, health, border=None)
             table9.reformat_column(0, width=28)
             table9.reformat_column(1, width=50)
-            message.append(table9 + "\n")
+            message.append(table9)
+            message.append("\n")
 
             message.append(
                 "|[002|w/// PART FIVE   |n|[005 |wEQUIPMENT >>>                                                |n")
@@ -154,7 +158,7 @@ class SheetCommand(default_cmds.MuxCommand):
 
             message.append("\n")
             message.append("*|w---------------------------------------------------" + "|500This form is MANDATORY|w---|n*")
-            self.caller.msg("\n".join(message))
+            self.caller.msg("\n".join(str(m) for m in message))
         elif "actions" in self.switches:
             message = []
             message.append("|w.---|n|yAction Summary Form|n|w------------------------------------------------------.|n")
