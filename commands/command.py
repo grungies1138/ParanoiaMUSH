@@ -65,6 +65,7 @@ class SheetCommand(default_cmds.MuxCommand):
             table1 = evtable.EvTable(name, clearance, border=None)
             table1.reformat_column(0, width=30)
             table1.reformat_column(1, width=48)
+            message.append("\n")
             message.append(table1)
 
             table2 = evtable.EvTable(sector, clone, gender, border=None)
@@ -81,6 +82,7 @@ class SheetCommand(default_cmds.MuxCommand):
             table3 = evtable.EvTable(treason, xp, border=None)
             table3.reformat_column(0, width=30)
             table3.reformat_column(1, width=48)
+            message.append("\n")
             message.append(table3)
             message.append("\n")
 
@@ -146,6 +148,7 @@ class SheetCommand(default_cmds.MuxCommand):
             table9 = evtable.EvTable(moxie, health, border=None)
             table9.reformat_column(0, width=28)
             table9.reformat_column(1, width=50)
+            message.append("\n")
             message.append(table9)
             message.append("\n")
 
@@ -153,6 +156,7 @@ class SheetCommand(default_cmds.MuxCommand):
                 "|[002|w/// PART FIVE   |n|[005 |wEQUIPMENT >>>                                                |n")
 
             equipment = [eq for eq in caller.contents]
+            message.append("\n")
             for eq in equipment:
                 message.append(eq.key)
 
