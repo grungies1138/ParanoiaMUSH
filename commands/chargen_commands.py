@@ -13,6 +13,7 @@ HELP = "Chargen"
 
 # TODO: Add aliases to Back menu options
 
+
 class ChargenCommand(default_cmds.MuxCommand):
     """
     Begins the Chargen process.
@@ -60,6 +61,7 @@ def menu_start_node(caller):
 
     return text, options
 
+
 def select_name(caller):
     text = "First things first, citizen!  You need to pick your name.  A name is your personal designation.  It's how " \
            "your friends know who they are talking about behind your back.  Without it, I would be forced to number " \
@@ -71,6 +73,7 @@ def select_name(caller):
     options = ({"key": "_default", "exec": set_name, "goto": "menu_start_node"},
                {"key": "back", "desc": "Go Back", "goto": "menu_start_node"})
     return text, options
+
 
 def set_name(caller, caller_input):
     new_name = caller_input.strip().lower()
@@ -118,6 +121,7 @@ def chargen_random(caller):
 
     return text, options
 
+
 def exec_random(caller):
     reset_random(caller)
     for i in range(5):
@@ -147,6 +151,7 @@ def exec_random(caller):
         else:
             continue
 
+
 def reset_random(caller):
     caller.db.eyes = 0
     caller.db.hair = 0
@@ -162,16 +167,19 @@ def reset_random(caller):
     caller.db.stats = {"violence": 0, "brains": 0, "chutzpah": 0, "mechanics": 0}
     caller.db.personality = []
 
+
 ########################################################################################################################
 # CUSTOMIZE
 ########################################################################################################################
 def chargen_custom_landing(caller):
     text = "You've selected: |yRANDOMIZE|n.\n\nInitiating randomization...\n\n|rError:|n Randomization algorithm " \
-           "fault detected.  Defaulting to customization mode."
+           "fault detected.  Defaulting to customization mode.\n\nI mean... I totally meant to do that.  Disregard " \
+           "and prepare to customize!"
 
     options = ({"desc": "Continue", "goto": "chargen_custom"},)
 
     return text, options
+
 
 def chargen_custom(caller):
     text = "Welcome to the Customization and Configuration Portal.  Here you will create your clone's individual " \
@@ -198,6 +206,7 @@ def chargen_custom(caller):
         options += ({"desc": "Finalize", "goto": "finalize_chargen"},)
 
     return text, options
+
 
 def chargen_skills(caller):
     if hasattr(caller.ndb._menutree, "selected_skill"):
@@ -244,9 +253,11 @@ def chargen_skills(caller):
 
     return text, options
 
+
 def reset_skills(caller):
     for skill in caller.db.skills:
         caller.db.skills[skill] = 0
+
 
 def set_skill(caller, caller_input):
     selected_skill = caller_input.strip().lower()
@@ -258,10 +269,8 @@ def set_skill(caller, caller_input):
 
     caller.db.skills[random.choice(list(skills))] = next_skill_level * -1
 
+
 def chargen_personal(caller):
-    # text = "These are the personal customization options and your current configuration.  To choose a custom setting, " \
-    #        "or to change a setting once it is set, simply select the option below to be taken to the customization " \
-    #        "screen."
     text = "These are the personal customization options and your current configuration.  To choose a custom setting, " \
            "or to change a setting once it is set, simply select the option below to be taken to the customization " \
            "screen.\n\n"
@@ -332,6 +341,7 @@ def chargen_personal(caller):
 
     return text, options
 
+
 def select_sector(caller):
     text = "Alpha Complex is a large a diverse structure.  There are many sections of the superstructure and, " \
            "seemingly, no end.  Sectors are home!  Usually, because you are here means that there is a population " \
@@ -348,6 +358,7 @@ def select_sector(caller):
 
     return text, options
 
+
 def set_sector(caller, caller_input):
     sec = caller_input.strip().upper()
     regex = re.compile(r'^(?P<sector>[A-Z]{3}-\d{1,2})$')
@@ -357,6 +368,7 @@ def set_sector(caller, caller_input):
         caller.db.sector = match.group("sector")
     else:
         caller.msg("|rERROR:|n Invalid input.  Try again.")
+
 
 def select_gender(caller):
     text = "Hello citizen.  I, your friend the Computer, can help you select a gender.  Gender has been deemed too " \
@@ -372,8 +384,10 @@ def select_gender(caller):
 
     return text, options
 
+
 def set_gender(caller, caller_input):
     caller.db.gender = caller_input.strip().lower()
+
 
 def select_personality(caller):
     text = ""
@@ -401,6 +415,7 @@ def select_personality(caller):
 
     return text, options
 
+
 def remove_personality(caller):
     text = "Please select the personality trait you wish to remove from your clone."
 
@@ -412,6 +427,7 @@ def remove_personality(caller):
 
     return text, options
 
+
 def del_personality(caller, caller_input):
     per = caller_input.strip().lower()
 
@@ -419,6 +435,7 @@ def del_personality(caller, caller_input):
         caller.msg("|rERROR:|n Invalid input.  Try again.")
     else:
         caller.db.personality.remove(per)
+
 
 def set_personality(caller, caller_input):
     per = caller_input.strip().lower()
@@ -428,6 +445,7 @@ def set_personality(caller, caller_input):
         caller.msg("|rERROR:|n You have already selected that trait.  Please choose another.")
     else:
         caller.db.personality.append(per)
+
 
 def select_skin(caller):
     text = "Humans are a tapestry of colors and shades of many varieties.  To offer you the optimal skin color " \
@@ -442,12 +460,14 @@ def select_skin(caller):
 
     return text, options
 
+
 def set_skin(caller, caller_input):
     skin = int(caller_input.strip())
     if skin in SKIN:
         caller.db.skin = skin
     else:
         caller.msg("|rERROR:|n Invalid input.  Try again.")
+
 
 def select_weight(caller):
     text = "Please enter the weight you wish to be.  You may select a number of pounds or kilograms. " \
@@ -460,6 +480,7 @@ def select_weight(caller):
     options += ({"key": "back", "desc": "Back", "goto": "chargen_personal"},)
 
     return text, options
+
 
 def set_weight(caller, caller_input):
     weight = caller_input.strip().lower()
@@ -482,6 +503,7 @@ def set_weight(caller, caller_input):
     else:
         caller.msg("|rERROR:|n Invalid input.  Try again.")
 
+
 def select_height(caller):
     text = "Please enter the height you wish to be.  You may select a number of inches or centimeters." \
            "\n\n\t|wExample:|n if you wish to be 1.5 meters tall, enter: |y150cm|n or for being 5'8\" enter: |y68in|n" \
@@ -492,6 +514,7 @@ def select_height(caller):
     options += ({"key": "back", "desc": "Back", "goto": "chargen_personal"},)
 
     return text, options
+
 
 def set_height(caller, caller_input):
     height = caller_input.strip().lower()
@@ -514,6 +537,7 @@ def set_height(caller, caller_input):
     else:
         caller.msg("|rERROR:|n Invalid input.  Try again.")
 
+
 def select_hair(caller):
     text = "Please select from one of the following options for hair color and style.\n\n"
 
@@ -525,12 +549,14 @@ def select_hair(caller):
 
     return text, options
 
+
 def set_hair(caller, caller_input):
     hair = int(caller_input.strip())
     if hair in HAIR:
         caller.db.hair = hair
     else:
         caller.msg("|rERROR:|n Invalid input.  Try again.")
+
 
 def select_eyes(caller):
     text = "Please select from one of the following choices for eye color.\n\n"
@@ -545,6 +571,7 @@ def select_eyes(caller):
 
     return text, options
 
+
 def set_eyes(caller, caller_input):
     eyes_input = int(caller_input.strip())
 
@@ -552,6 +579,7 @@ def set_eyes(caller, caller_input):
         caller.db.eyes = eyes_input
     else:
         caller.msg("|rERROR:|n Invalid input.  Try again.")
+
 
 def finalize_chargen(caller):
     text = "So you want to finish your clone?  Well, not is a good time to review things.  make sure to type " \
@@ -563,6 +591,7 @@ def finalize_chargen(caller):
                {"key": "back", "desc": "Go Back", "goto": "chargen_custom"})
 
     return text, options
+
 
 def finalize_finish(caller, caller_input):
     violence = calculate_violence(caller)
@@ -618,6 +647,7 @@ def finalize_finish(caller, caller_input):
     pistol["location"] = caller.dbref
     spawner.spawn(pistol)
 
+
 def exit(caller):
     text = "Clone configuration complete.  Prepare for final growth stage.  This will hurt.  A lot.  Enjoy!"
 
@@ -634,29 +664,35 @@ def calculate_violence(caller):
                      caller.db.skills.get("throw")]
     return max(violence)
 
+
 def calculate_brains(caller):
     brains = [caller.db.skills.get("science"), caller.db.skills.get("psychology"), caller.db.skills.get("bureaucracy"),
               caller.db.skills.get("alpha complex")]
     return max(brains)
+
 
 def calculate_chutzpah(caller):
     chutzpah = [caller.db.skills.get("bluff"), caller.db.skills.get("charm"), caller.db.skills.get("intimidate"),
                 caller.db.skills.get("stealth")]
     return max(chutzpah)
 
+
 def calculate_mechanics(caller):
     mechanics = [caller.db.skills.get("operate"), caller.db.skills.get("engineer"), caller.db.skills.get("program"),
                  caller.db.skills.get("demolitions")]
     return max(mechanics)
 
+
 def _wrapper(caller, attr, value):
     return lambda caller: setattr(caller.ndb._menutree, attr, value)
+
 
 def node_formatter(nodetext, optionstext, caller=None):
     separator1 = "|002_|n" * 78 + "\n\n"
     separator2 = "\n" + "|002_|n" * 78 + "\n\nYou may type '|gq|n' or '|gquit|n' " \
                                          "at any time to quit this application.\n" + "|002_|n" * 78 + "\n\n"
     return "\n\n\n" + separator1 + nodetext + separator2 + optionstext
+
 
 def options_formatter(optionlist, caller=None):
     options = []
@@ -679,6 +715,7 @@ def options_formatter(optionlist, caller=None):
 
     else:
         return "\n".join(options)
+
 
 def exit_message(caller, menu):
     caller.msg("Exiting Clone Setup.  Goodbye.")
