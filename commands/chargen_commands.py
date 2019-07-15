@@ -135,9 +135,9 @@ def exec_random(caller):
 
         set_skill(caller, random.choice(skills))
 
-    caller.db.eyes = random.choice(EYES.keys())
-    caller.db.hair = random.choice(HAIR.keys())
-    caller.db.skin = random.choice(SKIN.keys())
+    caller.db.eyes = random.choice(tuple(EYES.keys()))
+    caller.db.hair = random.choice(tuple(HAIR.keys()))
+    caller.db.skin = random.choice(tuple(SKIN.keys()))
     caller.db.height = "{}cm".format(random.randint(135, 210))
     caller.db.weight = "{}kgs".format(random.randint(45, 90))
     caller.db.gender = random.choice(["male", "female"])
