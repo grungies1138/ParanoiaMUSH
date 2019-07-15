@@ -8,7 +8,7 @@ Rooms are simple containers that has no location of their own.
 from evennia import DefaultRoom
 from commands.library import clearance_color
 from evennia.utils import evtable, utils, ansi
-from clones import Clone
+from typeclasses.clones import Clone
 from typeclasses.objects import Object
 from world.static_data import CLEARANCE
 

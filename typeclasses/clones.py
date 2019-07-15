@@ -1,4 +1,4 @@
-from characters import Character
+from typeclasses.characters import Character
 from commands.library import header, clearance_color
 from world.static_data import EYES, HAIR, CLEARANCE, SKIN
 from evennia.utils import ansi
