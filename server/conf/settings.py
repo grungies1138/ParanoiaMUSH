@@ -62,7 +62,7 @@ AMP_PORT = 4006
 # Default Typeclasses
 ######################################################################
 
-BASE_CHARACTER_TYPECLASS = "typeclasses.clones.Clone"
+# BASE_CHARACTER_TYPECLASS = "typeclasses.clones.Clone"
 BASE_GUEST_TYPECLASS = "typeclasses.accounts.Guest"
 
 ######################################################################
@@ -76,27 +76,27 @@ PERMISSION_GUEST_DEFAULT = "Guest"
 # Game Index Config
 ######################################################################
 
-GAME_INDEX_LISTING = {
-    'game_status': 'beta',
-    # Optional, comment out or remove if N/A
-    'game_website': 'http://paranoia.pennmush.org:4001',
-    'short_description': 'Based on the Table Top Roleplaying Game Paranoia.',
-    # Optional but highly recommended. Markdown is supported.
-    'long_description': ("Greetings Citizens, I am the Computer. I am your friend. Alpha Complex needs Troubleshooters. "
-                         "So it's time for me to incubate some new clones to help test some of my new systems. "
-                         "Please proceed to the Clone Assignment Request Department for your clone acquisition and "
-                         "assignment needs.Paranoia is a Comedy Horror Table Top game set in the far future where "
-                         "humans have been sequestered to an underground (maybe) base called Alpha Complex. It is "
-                         "run by the Computer. Humans are now all clones and are created to help troubleshoot "
-                         "issues that the Computer reports. Please come and help me beta test my new game!"
-    ),
-    'listing_contact': 'grungies1138@gmail.com',
-    # At minimum, specify this or the web_client_url options. Both is fine, too.
-    'telnet_hostname': 'paranoia.pennmush.org',
-    'telnet_port': 4000,
-    # At minimum, specify this or the telnet_* options. Both is fine, too.
-    'web_client_url': 'http://paranoia.pennmush.com:4001/webclient',
-}
+# GAME_INDEX_LISTING = {
+#     'game_status': 'beta',
+#     # Optional, comment out or remove if N/A
+#     'game_website': 'http://paranoia.pennmush.org:4001',
+#     'short_description': 'Based on the Table Top Roleplaying Game Paranoia.',
+#     # Optional but highly recommended. Markdown is supported.
+#     'long_description': ("Greetings Citizens, I am the Computer. I am your friend. Alpha Complex needs Troubleshooters. "
+#                          "So it's time for me to incubate some new clones to help test some of my new systems. "
+#                          "Please proceed to the Clone Assignment Request Department for your clone acquisition and "
+#                          "assignment needs.Paranoia is a Comedy Horror Table Top game set in the far future where "
+#                          "humans have been sequestered to an underground (maybe) base called Alpha Complex. It is "
+#                          "run by the Computer. Humans are now all clones and are created to help troubleshoot "
+#                          "issues that the Computer reports. Please come and help me beta test my new game!"
+#     ),
+#     'listing_contact': 'grungies1138@gmail.com',
+#     # At minimum, specify this or the web_client_url options. Both is fine, too.
+#     'telnet_hostname': 'paranoia.pennmush.org',
+#     'telnet_port': 4000,
+#     # At minimum, specify this or the telnet_* options. Both is fine, too.
+#     'web_client_url': 'http://paranoia.pennmush.com:4001/webclient',
+# }
 
 ######################################################################
 # Settings given in secret_settings.py override those in this file.
