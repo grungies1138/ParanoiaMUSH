@@ -60,7 +60,7 @@ class Room(DefaultRoom):
         for line in message:
             message2.append(line)
 
-        return "\n".join(message2)
+        return "\n".join(str(message2))
 
     def list_characters(self):
         return sorted([char for char in self.contents if char.is_typeclass(Clone, exact=False)])
