@@ -53,6 +53,6 @@ class Clone(Character):
 
         message2 = []
         for line in message:
-            message2.append(unicode(line))
+            message2.append(line)
 
         return "\n".join(message2)

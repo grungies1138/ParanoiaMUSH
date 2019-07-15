@@ -65,13 +65,13 @@ class SheetCommand(default_cmds.MuxCommand):
             table1 = evtable.EvTable(name, clearance, border=None)
             table1.reformat_column(0, width=30)
             table1.reformat_column(1, width=48)
-            message.append(unicode(table1))
+            message.append(table1)
 
             table2 = evtable.EvTable(sector, clone, gender, border=None)
             table2.reformat_column(0, width=30)
             table2.reformat_column(1, width=18)
             table2.reformat_column(2, width=30)
-            message.append(unicode(table2))
+            message.append(table2)
             message.append(" " + personality + "\n")
 
             message.append("|[002|w/// PART TWO    |n|[005 |wDEVELOPMENT >>>                                              |n")
@@ -81,7 +81,7 @@ class SheetCommand(default_cmds.MuxCommand):
             table3 = evtable.EvTable(treason, xp, border=None)
             table3.reformat_column(0, width=30)
             table3.reformat_column(1, width=48)
-            message.append(unicode(table3) + "\n")
+            message.append(table3 + "\n")
 
             table4 = evtable.EvTable("", "", "", "", "", "", "", "",  border=None)
             table4.reformat_column(0, width=16)
@@ -98,7 +98,7 @@ class SheetCommand(default_cmds.MuxCommand):
                            "|wChutzpah: |n", caller.db.stats.get("chutzpah"),
                            "|wMechanics: |n", caller.db.stats.get("mechanics"))
             message.append("|[035|002 STATS >>>                                                                    " +
-                           unicode(table4) + "\n")
+                           table4 + "\n")
 
             table5 = evtable.EvTable("", "", "", "", "", "", "", "",  border=None, header=False)
             table5.reformat_column(0, width=15)
@@ -131,7 +131,7 @@ class SheetCommand(default_cmds.MuxCommand):
                            "|wDemolitions: |n", caller.db.skills.get("demolitions"))
             message.append(
                 "|[002|w/// PART THREE  |n|[005 |wSKILLS >>>                                                   |n" +
-                unicode(table5) + "\n")
+                table5 + "\n")
             # message.append(unicode(table5) + "\n")
 
             message.append(
@@ -143,7 +143,7 @@ class SheetCommand(default_cmds.MuxCommand):
             table9 = evtable.EvTable(moxie, health, border=None)
             table9.reformat_column(0, width=28)
             table9.reformat_column(1, width=50)
-            message.append(unicode(table9) + "\n")
+            message.append(table9 + "\n")
 
             message.append(
                 "|[002|w/// PART FIVE   |n|[005 |wEQUIPMENT >>>                                                |n")
@@ -170,7 +170,7 @@ class SheetCommand(default_cmds.MuxCommand):
                 action = ACTIONS.get(act)
                 action_table.add_row(titlecase(act), action.get("action_order"), "Y" if action.get("reaction") == 1 else "N", action.get("desc"))
 
-            message.append(unicode(action_table))
+            message.append(action_table)
             message.append("\n|[035|002 MUTANT POWERS >>>                                                            |n")
 
             mutant_table = evtable.EvTable("|wPower:|n", "|wAction Order:|n", "|wDescription:|n", border=None)
@@ -182,7 +182,7 @@ class SheetCommand(default_cmds.MuxCommand):
             mutant = MUTANT_POWERS.get(caller.db.mutant_power)
             mutant_table.add_row(titlecase(caller.db.mutant_power), mutant.get("action_order"), mutant.get("description"))
             message.append("*" + "|w-|n" * 76 + "*")
-            message.append(unicode(mutant_table) + "\n")
+            message.append(mutant_table + "\n")
             self.caller.msg("\n".join(message))
         elif "secret" in self.switches:
             message = []
@@ -197,7 +197,7 @@ class SheetCommand(default_cmds.MuxCommand):
             mutant = MUTANT_POWERS.get(caller.db.mutant_power)
             mutant_table.add_row(titlecase(caller.db.mutant_power), mutant.get("action_order"), mutant.get("description"))
 
-            message.append(unicode(mutant_table) + "\n")
+            message.append(mutant_table + "\n")
             message.append("|[035|002 SECRET SOCIETIES >>>                                                          ")
 
             ss_table = evtable.EvTable("|wSociety:|n", "|wKeywords:|n", "|wBeliefs|n:", "|wGoals|n:", border=None)
@@ -211,7 +211,7 @@ class SheetCommand(default_cmds.MuxCommand):
                 society = SECRET_SOCIETIES.get(soc)
                 ss_table.add_row(titlecase(soc), ", ".join(society.get("keywords")), society.get("beliefs"), society.get("goals"))
 
-            message.append(unicode(ss_table))
+            message.append(ss_table)
             message.append("*" + "|w-|n" * 76 + "*")
             self.caller.msg("\n".join(message))
 
