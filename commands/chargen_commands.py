@@ -241,7 +241,7 @@ def chargen_skills(caller):
                 "don't see a skill listed below, that means it's been selected for the negative modifier.  Type " \
                 "|w+sheet|n at any time to review your skill layout.".format(next_skill_level)
         setattr(caller.ndb._menutree, 'next_skill_level', next_skill_level)
-        for skill, value in caller.db.skills.iteritems():
+        for skill, value in caller.db.skills.items():
             if value == 0:
                 options += ({"desc": skill, "exec": _wrapper(caller, "selected_skill", skill), "goto": "chargen_skills"},)
     else:
@@ -265,7 +265,7 @@ def set_skill(caller, caller_input):
 
     caller.db.skills[selected_skill] = next_skill_level
 
-    skills = {key for (key, value) in caller.db.skills.iteritems() if value == 0}
+    skills = {key for (key, value) in caller.db.skills.items() if value == 0}
 
     caller.db.skills[random.choice(list(skills))] = next_skill_level * -1
 
