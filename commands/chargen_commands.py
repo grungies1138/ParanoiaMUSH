@@ -619,8 +619,8 @@ def finalize_finish(caller, caller_input):
     else:
         caller.db.stats["mechanics"] = 0
 
-    new_stats = {key: value for key, value in zip(caller.db.stats.keys(), random.sample(caller.db.stats.values(),
-                                                                                        len(caller.db.stats.values())))}
+    new_stats = {key: value for key, value in zip(caller.db.stats.keys(), random.sample(tuple(caller.db.stats.values()),
+                                                                                        len(tuple(caller.db.stats.values()))))}
     caller.db.stats = new_stats
 
     # Set starting moxie level
