@@ -144,7 +144,7 @@ def exec_random(caller):
     caller.db.sector = "{}{}{}-{}".format(random.choice(string.ascii_uppercase), random.choice(string.ascii_uppercase),
                                           random.choice(string.ascii_uppercase), random.randint(1, 99))
     while len(caller.db.personality) < 3:
-        per = random.choice(PERSONALITY.keys())
+        per = random.choice(tuple(PERSONALITY.keys()))
 
         if per not in caller.db.personality:
             caller.db.personality.append(per)
