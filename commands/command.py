@@ -21,7 +21,7 @@ class SheetCommand(default_cmds.MuxCommand):
 
         |w+sheet/secret|n - Shows Mutant powers and Secret societies
 
-        +w+sheet/actions|n - Shows available actions.  Including Action Cards and Mutant powers.
+        |w+sheet/actions|n - Shows available actions.  Including Action Cards and Mutant powers.
 
     Admin Only:
         All versions of |w+sheet|n listed above with a name at the end.

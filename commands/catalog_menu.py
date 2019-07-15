@@ -14,7 +14,6 @@ def menu_start_node(caller):
            "informing the Computer of unregistered mutations and stopping terrorists.  Feel free to browse the " \
            "catalog to get an idea of the kinds of rewards available to you, once you have earned enough XP Points."
 
-
     options = ({"desc": "Security Clearance", "goto": "upgrade_clearance"},
                {"desc": "Skills", "goto": "upgrade_skills"},
                {"desc": "Stats", "goto": "upgrade_stats"},
@@ -228,8 +227,8 @@ def exec_purchase_equipment(caller, caller_input):
         caller.msg("|rERROR:|n You cannot afford that piece of equipment.")
 
 def purchase_clones(caller):
-    text = "Reward is its own reward.  Wait, that doesn't sound right.  Waiting comes to those who wait.  No, that's " \
-           "not right either.  One moment.\n\n|yLanguage Diagnostic...|n\n|yIdiom not found.|n\n\nHmm, well let's " \
+    text = "\"Reward is its own reward.\"  \nWait, that doesn't sound right.  \"Waiting comes to those who wait.\"  \nNo, that's " \
+           "not right either.  One moment...\n\n|yLanguage Diagnostic...|n\n|y<Idiom not found.>|n\n\nHmm, well then let's " \
            "keep this simple.  You want to live longer?  Spend XP Points and buy more clones.  They cost 1000 XP Points."
     options = ({"desc": "Purchase Clone", "exec": exec_purchase_clone, "goto": "purchase_clones"},
                {"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"})
