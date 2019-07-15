@@ -31,6 +31,7 @@ class Clone(Character):
         self.db.max_clones = 6
         self.db.chargen_complete = 0
         self.cmdset.add("commands.default_cmdsets.SheetCmdSet", permanent=True)
+        self.cmdset.add("commands.default_cmdsets.ChargenCmdSet", permanent=True)
 
     def return_appearance(self, looker):
         if not looker:
