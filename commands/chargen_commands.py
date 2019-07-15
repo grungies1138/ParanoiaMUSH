@@ -127,7 +127,7 @@ def exec_random(caller):
     for i in range(5):
         skills = []
         setattr(caller.ndb._menutree, 'next_skill_level', i + 1)
-        for skill, value in caller.db.skills.iter():
+        for skill, value in caller.db.skills.items():
             if value == 0:
                 skills.append(skill)
 
