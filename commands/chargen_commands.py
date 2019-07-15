@@ -638,7 +638,7 @@ def finalize_finish(caller, caller_input):
     selected_trait = random.choice(caller.db.personality)
     selected_index = caller.db.personality.index(selected_trait)
     for i in range(4):
-        caller.db.action_cards.append(random.choice(ACTIONS.keys()))
+        caller.db.action_cards.append(random.choice(tuple(ACTIONS.keys())))
     caller.db.personality[selected_index] = PERSONALITY.get(selected_trait)
     caller.db.chargen_complete = 1
     caller.db.clone = 1
