@@ -98,8 +98,9 @@ class SheetCommand(default_cmds.MuxCommand):
                            "|wBrains: |n", caller.db.stats.get("brains"),
                            "|wChutzpah: |n", caller.db.stats.get("chutzpah"),
                            "|wMechanics: |n", caller.db.stats.get("mechanics"))
-            message.append("|[035|002 STATS >>>                                                                    ")
-            message.append(table4)
+            message.append("|[035|002 STATS >>>                                                                    " +
+                           str(table4))
+            #message.append(table4)
             message.append("\n")
 
             table5 = evtable.EvTable("", "", "", "", "", "", "", "",  border=None, header=False)
