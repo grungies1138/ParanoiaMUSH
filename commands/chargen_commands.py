@@ -400,7 +400,7 @@ def select_personality(caller):
            "of personality you wish to have! After all, a positive outlook help improve happiness for you and your " \
                 "fellow citizens.  And |rHappiness is mandatory|n.\n\nPlease select one of the following traits.\n\n"
 
-        text += ", ".join(PERSONALITY.iterkeys())
+        text += ", ".join(PERSONALITY.keys())
 
     text += "\n\n|wCurrent selected traits:|n {}".format(", ".join(caller.db.personality))
 
