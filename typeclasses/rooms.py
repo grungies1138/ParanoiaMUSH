@@ -58,7 +58,7 @@ class Room(DefaultRoom):
 
         message2 = []
         for line in message:
-            message2.append(unicode(line))
+            message2.append(str(line))
 
         return "\n".join(message2)
 
