@@ -701,8 +701,8 @@ def options_formatter(optionlist, caller=None):
 
     if len(options) > 6:
         if len(options) % 2 > 0:
-            colA = options[:len(options) / 2 + 1]
-            colB = options[len(options) / 2 + 1:]
+            colA = options[:len(options) // 2 + 1]
+            colB = options[len(options) // 2 + 1:]
         else:
             colA = options[:len(options) // 2]
             colB = options[len(options) // 2:]
