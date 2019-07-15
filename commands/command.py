@@ -100,7 +100,6 @@ class SheetCommand(default_cmds.MuxCommand):
                            "|wMechanics: |n", caller.db.stats.get("mechanics"))
             message.append("|[035|002 STATS >>>                                                                    " +
                            str(table4))
-            #message.append(table4)
             message.append("\n")
 
             table5 = evtable.EvTable("", "", "", "", "", "", "", "",  border=None, header=False)
@@ -133,8 +132,8 @@ class SheetCommand(default_cmds.MuxCommand):
                            "|wStealth: |n", caller.db.skills.get("stealth"),
                            "|wDemolitions: |n", caller.db.skills.get("demolitions"))
             message.append(
-                "|[002|w/// PART THREE  |n|[005 |wSKILLS >>>                                                   |n")
-            message.append(table5)
+                "|[002|w/// PART THREE  |n|[005 |wSKILLS >>>                                                   |n" +
+                str(table5))
             message.append("\n")
             # message.append(unicode(table5) + "\n")
 
