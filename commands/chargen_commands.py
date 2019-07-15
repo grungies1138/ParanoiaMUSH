@@ -628,11 +628,11 @@ def finalize_finish(caller, caller_input):
 
     # Set random mutant power
 
-    caller.db.mutant_power = random.choice(MUTANT_POWERS.keys())
+    caller.db.mutant_power = random.choice(tuple(MUTANT_POWERS.keys()))
 
     # set random secret society membership
     caller.db.secret_societies = []
-    caller.db.secret_societies.append(random.choice(SECRET_SOCIETIES.keys()))
+    caller.db.secret_societies.append(random.choice(tuple(SECRET_SOCIETIES.keys())))
 
     # Flip one personality trait
     selected_trait = random.choice(caller.db.personality)
