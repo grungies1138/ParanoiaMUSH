@@ -137,7 +137,7 @@ def exec_random(caller):
     caller.db.weight = "{}kgs".format(random.randint(45, 90))
     caller.db.gender = random.choice(["male", "female"])
     caller.db.sector = "{}{}{}-{}".format(random.choice(string.ascii_uppercase), random.choice(string.ascii_uppercase),
-                                          random.choice(string.ascii_uppercase), random.randint(01, 99))
+                                          random.choice(string.ascii_uppercase), random.randint(1, 99))
     while len(caller.db.personality) < 3:
         per = random.choice(PERSONALITY.keys())
 
