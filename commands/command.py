@@ -158,7 +158,10 @@ class SheetCommand(default_cmds.MuxCommand):
 
             message.append("\n")
             message.append("*|w---------------------------------------------------" + "|500This form is MANDATORY|w---|n*")
-            self.caller.msg("\n".join(str(m) for m in message))
+            message2 = []
+            for line in message:
+                message2.append(line)
+            self.caller.msg("\n".join(str(m) for m in message2))
         elif "actions" in self.switches:
             message = []
             message.append("|w.---|n|yAction Summary Form|n|w------------------------------------------------------.|n")
