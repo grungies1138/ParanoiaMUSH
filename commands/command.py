@@ -3,7 +3,7 @@ import datetime
 from random import randint
 from evennia import default_cmds
 from evennia.utils.evmenu import EvMenu
-from evennia.utils import evtable, utils, ansi, spawner
+from evennia.utils import evtable, utils, ansi
 from commands.library import clearance_color, IsInt, node_formatter, options_formatter, titlecase
 from world.static_data import HEALTH, CLEARANCE, ACTIONS, MUTANT_POWERS, SECRET_SOCIETIES
 from django.conf import settings
