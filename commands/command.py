@@ -404,7 +404,7 @@ class CheckCommand(default_cmds.MuxCommand):
             dice = []
             for i in range(selected_stat + selected_skill + pos_mod + neg_mod):
                 result = randint(1, 6)
-                dice.append(result)
+                dice.append(str(result))
                 if result > 4:
                     successes += 1
 
