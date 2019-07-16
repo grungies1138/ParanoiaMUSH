@@ -2,7 +2,7 @@ from random import choice
 from world.equipment_prototypes import EQUIPMENT
 from commands.library import _wrapper
 from evennia.utils import evtable, utils, ansi
-from evennia.prototype import spawner
+from evennia.prototypes import spawner
 from world.static_data import ACTIONS, CLEARANCE, CLEARANCE_UPGRADES
 
 
