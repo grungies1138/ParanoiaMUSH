@@ -414,7 +414,7 @@ class CheckCommand(default_cmds.MuxCommand):
                 caller.location.msg_contents("|bDICE:|n [{}] Number of successes: {}  |yCOMPUTER DIE|n"
                                              .format(", ".join(dice), successes))
             else:
-                caller.location.msg_contents("|bDICE:|n [{}]Number of successes: {}".format(", ".join(dice), successes))
+                caller.location.msg_contents("|bDICE:|n [{}] Number of successes: {}".format(", ".join(dice), successes))
 
 
 class XPAwardCommand(default_cmds.MuxCommand):
