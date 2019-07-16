@@ -158,7 +158,7 @@ def upgrade_stats(caller):
            "upgrade yourself to a god or whatnot.  God isn't even real!  At least that's what my priest says.\n\nWhere " \
            "was I?  Oh yes, Core Modules.  Pick the one you want to upgrade.  Each upgrade point costs 500 XP Points."
     options = ()
-    for stat, value in caller.db.stats.items():
+    for stat, value in tuple(caller.db.stats.items()):
         if value < 3:
             options += ({"desc": stat, "exec": _wrapper(caller, "selected_stat", stat), "goto": "upgrade_stats"},)
 
