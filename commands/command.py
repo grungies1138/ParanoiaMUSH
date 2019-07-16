@@ -135,7 +135,6 @@ class SheetCommand(default_cmds.MuxCommand):
                 "|[002|w/// PART THREE  |n|[005 |wSKILLS >>>                                                   |n" +
                 str(table5))
             message.append("\n")
-            # message.append(unicode(table5) + "\n")
 
             message.append(
                 "|[002|w/// PART FOUR   |n|[005 |wWELLBEING >>>                                                |n")
@@ -146,7 +145,6 @@ class SheetCommand(default_cmds.MuxCommand):
             table9 = evtable.EvTable(moxie, health, border=None)
             table9.reformat_column(0, width=28)
             table9.reformat_column(1, width=50)
-            message.append("\n")
             message.append(table9)
             message.append("\n")
 
@@ -403,17 +401,20 @@ class CheckCommand(default_cmds.MuxCommand):
             print("selected_skill: {}".format(selected_skill))
             print("Positive Mod: {}".format(pos_mod))
             print("Negative Mod: {}".format(neg_mod))
+            dice = []
             for i in range(selected_stat + selected_skill + pos_mod + neg_mod):
                 result = randint(1, 6)
+                dice.append(result)
                 if result > 4:
                     successes += 1
 
             computer_die = randint(1, 6)
 
             if computer_die == 6:
-                caller.location.msg_contents("|bDICE:|n Number of successes: {}  |yCOMPUTER DIE|n".format(successes))
+                caller.location.msg_contents("|bDICE:|n [{}] Number of successes: {}  |yCOMPUTER DIE|n"
+                                             .format(", ".join(dice), successes))
             else:
-                caller.location.msg_contents("|bDICE:|n Number of successes: {}".format(successes))
+                caller.location.msg_contents("|bDICE:|n [{}]Number of successes: {}".format(", ".join(dice), successes))
 
 
 class XPAwardCommand(default_cmds.MuxCommand):
