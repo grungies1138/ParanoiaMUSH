@@ -459,7 +459,8 @@ class CatalogCommand(default_cmds.MuxCommand):
                startnode="menu_start_node",
                cmdset_mergetype="Replace",
                node_formatter=node_formatter,
-               options_formatter=options_formatter)
+               options_formatter=options_formatter,
+               cmd_on_exit="look")
 
 
 class DieCommand(default_cmds.MuxCommand):
@@ -499,7 +500,8 @@ class DieCommand(default_cmds.MuxCommand):
 
 class PlayActionCommand(default_cmds.MuxCommand):
     """
-    Menu to allow a player to select the action they want to take.  This includes Action Cards, Mutant Powers and Equipment.
+    Menu to allow a player to select the action they want to take.  This includes Action Cards, Mutant Powers and
+    Equipment.
 
     Usage:
         |w+actions|n
