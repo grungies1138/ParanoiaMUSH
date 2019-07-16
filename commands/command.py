@@ -460,7 +460,6 @@ class CatalogCommand(default_cmds.MuxCommand):
     help_category = "General"
 
     def func(self):
-        #import commands.catalog_menu
         EvMenu(self.caller, "commands.catalog_menu",
                startnode="menu_start_node",
                cmdset_mergetype="Replace",

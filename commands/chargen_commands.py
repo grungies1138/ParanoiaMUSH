@@ -40,7 +40,7 @@ class ChargenCommand(default_cmds.MuxCommand):
     def call_menu(self, caller):
         EvMenu(self.caller, "commands.chargen_commands",
                startnode="menu_start_node",
-               cmdset_mergetype="Replace",
+               cmdset_mergetype="Merge",
                node_formatter=node_formatter,
                options_formatter=options_formatter,
                cmd_on_exit="look")
