@@ -412,9 +412,9 @@ class CheckCommand(default_cmds.MuxCommand):
 
             if computer_die == 6:
                 caller.location.msg_contents("|bDICE:|n [{}] Number of successes: {}  |yCOMPUTER DIE|n"
-                                             .format(", ".join(dice), successes))
+                                             .format(", ".join(sorted(dice)), successes))
             else:
-                caller.location.msg_contents("|bDICE:|n [{}] Number of successes: {}".format(", ".join(dice), successes))
+                caller.location.msg_contents("|bDICE:|n [{}] Number of successes: {}".format(", ".join(sorted(dice)), successes))
 
 
 class XPAwardCommand(default_cmds.MuxCommand):
