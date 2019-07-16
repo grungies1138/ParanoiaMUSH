@@ -190,8 +190,12 @@ class SheetCommand(default_cmds.MuxCommand):
             mutant = MUTANT_POWERS.get(caller.db.mutant_power)
             mutant_table.add_row(titlecase(caller.db.mutant_power), mutant.get("action_order"), mutant.get("description"))
             message.append("*" + "|w-|n" * 76 + "*")
-            message.append(mutant_table + "\n")
-            self.caller.msg("\n".join(message))
+            message.append(mutant_table)
+            message.append("\n")
+            message2 = []
+            for line in message:
+                message2.append(line)
+            self.caller.msg("\n".join(str(m) for m in message2))
         elif "secret" in self.switches:
             message = []
             message.append("|w.---|n|ySecret Information Form|n|w--------------------------------------------------.|n")
@@ -205,7 +209,8 @@ class SheetCommand(default_cmds.MuxCommand):
             mutant = MUTANT_POWERS.get(caller.db.mutant_power)
             mutant_table.add_row(titlecase(caller.db.mutant_power), mutant.get("action_order"), mutant.get("description"))
 
-            message.append(mutant_table + "\n")
+            message.append(mutant_table)
+            message.append("\n")
             message.append("|[035|002 SECRET SOCIETIES >>>                                                          ")
 
             ss_table = evtable.EvTable("|wSociety:|n", "|wKeywords:|n", "|wBeliefs|n:", "|wGoals|n:", border=None)
@@ -221,7 +226,10 @@ class SheetCommand(default_cmds.MuxCommand):
 
             message.append(ss_table)
             message.append("*" + "|w-|n" * 76 + "*")
-            self.caller.msg("\n".join(message))
+            message2 = []
+            for line in message:
+                message2.append(line)
+            self.caller.msg("\n".join(str(m) for m in message2))
 
 
 class TimeCommand(default_cmds.MuxCommand):
