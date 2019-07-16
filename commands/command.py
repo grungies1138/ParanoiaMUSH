@@ -397,10 +397,6 @@ class CheckCommand(default_cmds.MuxCommand):
                 selected_stat = 0
 
             successes = 0
-            print("selected_stat: {}".format(selected_stat))
-            print("selected_skill: {}".format(selected_skill))
-            print("Positive Mod: {}".format(pos_mod))
-            print("Negative Mod: {}".format(neg_mod))
             dice = []
             for i in range(selected_stat + selected_skill + pos_mod + neg_mod):
                 result = randint(1, 6)
