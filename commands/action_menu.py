@@ -1,6 +1,7 @@
 from commands.library import _wrapper, titlecase
 from world.static_data import ACTIONS, MUTANT_POWERS
 
+
 def menu_start_node(caller):
     text = "There comes a time in every clone's life when they wanna do that thing that only comes natural.  Murder.  " \
            "Or whatever it is you kids call it these days.  Anyway, there are several types of actions you can take.  " \
@@ -9,6 +10,7 @@ def menu_start_node(caller):
                {"desc": "Actions", "goto": "action_card_actions"},
                {"desc": "Mutant Powers", "goto": "mutant_power_actions"})
     return text, options
+
 
 def equipment_actions(caller):
     if hasattr(caller.ndb._menutree, "selected_item"):
@@ -28,6 +30,7 @@ def equipment_actions(caller):
 
     options += ({"key": ["back", "b"], "desc": "Go Back", "goto": "menu_start_node"},)
     return text, options
+
 
 def action_card_actions(caller):
     if hasattr(caller.ndb._menutree, "selected_action"):
@@ -49,6 +52,7 @@ def action_card_actions(caller):
 
     options += ({"key": ["back", "b"], "desc": "Go Back", "goto": "menu_start_node"},)
     return text, options
+
 
 def mutant_power_actions(caller):
     power_name = caller.db.mutant_power

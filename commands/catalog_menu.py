@@ -7,8 +7,9 @@ from world.static_data import ACTIONS, CLEARANCE, CLEARANCE_UPGRADES
 
 # TODO: Add aliases to Back menu options
 
+
 def menu_start_node(caller):
-    text = "Welcome to the Cerebral Coretech Alpha Complex XP point award catalog!  Many years ago, in the year 214, " \
+    text = "Welcome to the Cerebral Coretech Alpha Complex XP point award catalog!  Long ago, in the year 214, " \
            "I determined that clones have an inherent need for self-improvement.  To facilitate this and to help " \
            "reinforce positive behaviors, I introduced the XP Point system.  You earn XP Points by performing your " \
            "duties admirably.  This includes, but is not limited to: performing tasks, identifying traitors, " \
@@ -37,7 +38,7 @@ def buy_actions(caller):
 
 def exec_buy_action(caller):
     if caller.db.xp >= 50:
-        caller.db.action_cards.append(choice(ACTIONS.keys()))
+        caller.db.action_cards.append(choice(tuple(ACTIONS.keys())))
         caller.db.xp = caller.db.xp - 50
     else:
         caller.msg("|rERROR:|n You do not have enough XP to buy an action card.")
@@ -133,7 +134,7 @@ def upgrade_skills(caller):
 
     options = ()
 
-    for skill, value in caller.db.skills.iteritems():
+    for skill, value in caller.db.skills.items():
         if value < 5:
             options += ({"desc": skill, "exec": _wrapper(caller, "selected_skill", skill), "goto": "upgrade_skills"},)
 
@@ -159,7 +160,7 @@ def upgrade_stats(caller):
            "upgrade yourself to a god or whatnot.  God isn't even real!  At least that's what my priest says.\n\nWhere " \
            "was I?  Oh yes, Core Modules.  Pick the one you want to upgrade.  Each upgrade point costs 500 XP Points."
     options = ()
-    for stat, value in caller.db.stats.iteritems():
+    for stat, value in caller.db.stats.items():
         if value < 3:
             options += ({"desc": stat, "exec": _wrapper(caller, "selected_stat", stat), "goto": "upgrade_stats"},)
 
@@ -225,7 +226,7 @@ def upgrade_equipment(caller):
            "Alpha Complex.  The fate of our home is in your hands.  God, I wish I could upgrade my Moxie."
     options = ()
 
-    for name, dic in EQUIPMENT.iteritems():
+    for name, dic in EQUIPMENT.items():
         options += ({"desc": "{} - |y{}|n".format(name, dic.get("cost")), "exec": _wrapper(caller, "selected_equipment", dic), "goto": "upgrade_equipment"},)
 
     options += ({"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"},)

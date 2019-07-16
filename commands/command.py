@@ -459,8 +459,7 @@ class CatalogCommand(default_cmds.MuxCommand):
                startnode="menu_start_node",
                cmdset_mergetype="Replace",
                node_formatter=node_formatter,
-               options_formatter=options_formatter,
-               cmd_on_exit="look")
+               options_formatter=options_formatter)
 
 
 class DieCommand(default_cmds.MuxCommand):
