@@ -63,7 +63,7 @@ class Room(DefaultRoom):
         return "\n".join(str(m) for m in message2)
 
     def list_characters(self):
-        return sorted([char for char in self.contents if char.is_typeclass(Clone, exact=False)])
+        return sorted([char for char in self.contents if char.is_typeclass(Clone, exact=True)])
 
     def list_non_characters(self):
         return list(Object.objects.filter_family(db_location=self))

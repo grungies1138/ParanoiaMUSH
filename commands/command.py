@@ -223,6 +223,7 @@ class SheetCommand(default_cmds.MuxCommand):
             message.append("*" + "|w-|n" * 76 + "*")
             self.caller.msg("\n".join(message))
 
+
 class TimeCommand(default_cmds.MuxCommand):
     """
     Displays the IC date and time.
@@ -242,6 +243,7 @@ class TimeCommand(default_cmds.MuxCommand):
         self.caller.msg("|wDeath of famous programmer ANI-12-FTT-2:|n November 5, 214")
         self.caller.msg("|wIntroduction of Dazzling Blue Raspberry PoppyFizz soda:|n January 2, 214")
         self.caller.msg("|w100th anniversary of Dazzling Blue Raspberry PoppyFizz soda:|n January 2, 214")
+
 
 class OOCCommand(default_cmds.MuxCommand):
     """
@@ -271,6 +273,7 @@ class OOCCommand(default_cmds.MuxCommand):
             self.caller.location.msg_contents("%s %s%s" % (prefix, self.caller.name, speech_text))
         else:
             self.caller.location.msg_contents("%s %s says, \"%s\"" % (prefix, self.caller.name, speech))
+
 
 class WhoCommand(default_cmds.MuxCommand):
     """
@@ -328,6 +331,7 @@ class WhoCommand(default_cmds.MuxCommand):
         whotable.add_row("|y!|n - Administrators", "|g&|n - Storytellers", "|r$|n - Player Helpers")
         self.caller.msg(whotable)
         self.caller.msg("|w_|n" * 78 + "\n")
+
 
 class CheckCommand(default_cmds.MuxCommand):
     """
@@ -403,6 +407,7 @@ class CheckCommand(default_cmds.MuxCommand):
             else:
                 caller.location.msg_contents("|bDICE:|n Number of successes: {}".format(successes))
 
+
 class XPAwardCommand(default_cmds.MuxCommand):
     """
     Grants XP awards to a character.
@@ -436,6 +441,7 @@ class XPAwardCommand(default_cmds.MuxCommand):
             self.caller.msg("|bSYSTEM:|n {} XP points granted to {}".format(amount, char.key))
             char.msg("|bSYSTEM:|n You have been granted {} XP points by {}".format(amount, self.caller.key))
 
+
 class CatalogCommand(default_cmds.MuxCommand):
     """
     A menu system for spending earned XP points.
@@ -455,6 +461,7 @@ class CatalogCommand(default_cmds.MuxCommand):
                node_formatter=node_formatter,
                options_formatter=options_formatter,
                cmd_on_exit="look")
+
 
 class DieCommand(default_cmds.MuxCommand):
     """
@@ -490,6 +497,7 @@ class DieCommand(default_cmds.MuxCommand):
                 self.caller.db.max_clones = 6
                 self.caller.db.max_moxie = 6
 
+
 class PlayActionCommand(default_cmds.MuxCommand):
     """
     Menu to allow a player to select the action they want to take.  This includes Action Cards, Mutant Powers and Equipment.
@@ -511,6 +519,7 @@ class PlayActionCommand(default_cmds.MuxCommand):
                node_formatter=node_formatter,
                options_formatter=options_formatter,
                cmd_on_exit="look")
+
 
 class SpendMoxieCommand(default_cmds.MuxCommand):
     """
