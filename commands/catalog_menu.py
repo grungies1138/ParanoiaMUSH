@@ -5,8 +5,6 @@ from evennia.utils import evtable, utils, ansi
 from evennia.prototype import spawner
 from world.static_data import ACTIONS, CLEARANCE, CLEARANCE_UPGRADES
 
-# TODO: Add aliases to Back menu options
-
 
 def menu_start_node(caller):
     text = "Welcome to the Cerebral Coretech Alpha Complex XP point award catalog!  Long ago, in the year 214, " \
