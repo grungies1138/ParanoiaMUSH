@@ -290,7 +290,7 @@ class WhoCommand(default_cmds.MuxCommand):
     """
 
     key = "+who"
-    aliases = []
+    aliases = ["who"]
     locks = "cmd:all()"
     help_category = "General"
 
@@ -351,6 +351,7 @@ class CheckCommand(default_cmds.MuxCommand):
     """
 
     key = "+check"
+    aliases = ["+roll"]
     locks = "cmd:perm(Player)"
     help_category = "General"
 
