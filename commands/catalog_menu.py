@@ -24,6 +24,7 @@ def menu_start_node(caller):
                {"desc": "Action Cards", "goto": "buy_actions"})
     return text, options
 
+
 def buy_actions(caller):
     text = "Actions are used in combat to help determine what you do and in what order.  They are not required but " \
            "they are, mostly, helpful.  You can purchase one, at random, for 50xp.  Again, these are chosen at " \
@@ -33,12 +34,14 @@ def buy_actions(caller):
                {"key": ["back", "b"], "desc": "Go Back", "goto": "menu_start_node"})
     return text, options
 
+
 def exec_buy_action(caller):
     if caller.db.xp >= 50:
         caller.db.action_cards.append(choice(ACTIONS.keys()))
         caller.db.xp = caller.db.xp - 50
     else:
         caller.msg("|rERROR:|n You do not have enough XP to buy an action card.")
+
 
 def upgrade_clearance(caller):
     text = "The Peter Principle: People tend to be promoted to their own level of incompetence.\n\nWith enough time, " \
@@ -104,6 +107,7 @@ def upgrade_clearance(caller):
 
     return text, options
 
+
 def exec_clearance_upgrade(caller, caller_input):
     current = caller.db.clearance
     prospective = CLEARANCE.get(current + 1)
@@ -113,6 +117,7 @@ def exec_clearance_upgrade(caller, caller_input):
         caller.db.clearance += 1
     else:
         caller.msg("|rERROR:|n Not enough XP points to upgrade your clearance level.")
+
 
 def upgrade_skills(caller):
     if hasattr(caller.ndb._menutree, "selected_skill"):
@@ -135,6 +140,7 @@ def upgrade_skills(caller):
     options += ({"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"},)
     return text, options
 
+
 def exec_upgrade_skill(caller, caller_input):
     skill = caller.ndb._menutree.selected_skill
     if caller.db.xp >= 200:
@@ -142,6 +148,7 @@ def exec_upgrade_skill(caller, caller_input):
         caller.db.skills[skill] += 1
     else:
         caller.msg("|rERROR:|n You do not have enough XP to raise that skill.")
+
 
 def upgrade_stats(caller):
     if hasattr(caller.ndb._menutree, "selected_stat"):
@@ -159,6 +166,7 @@ def upgrade_stats(caller):
     options += ({"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"},)
     return text, options
 
+
 def exec_upgrade_stat(caller, caller_input):
     stat = caller_input
     if caller.db.xp >= 500:
@@ -166,6 +174,7 @@ def exec_upgrade_stat(caller, caller_input):
         caller.db.stats[stat] += 1
     else:
         caller.msg("|rERROR:|n You do not have enough XP to raise that stat.")
+
 
 def upgrade_moxie(caller):
     text = "Feeling stressed?  It's understandable, if mildly treasonous.  Your friend, the Computer has you covered!  " \
@@ -188,12 +197,14 @@ def upgrade_moxie(caller):
     options += ({"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"},)
     return text, options
 
+
 def exec_restore_moxie(caller, caller_input):
     if caller.db.xp >= 50:
         caller.db.xp = caller.db.xp - 50
         caller.db.moxie += 1
     else:
         caller.msg("|rERROR:|n You do not have enough XP to restore Moxie.")
+
 
 def exec_upgrade_moxie(caller, caller_input):
     if caller.db.xp >= 200:
@@ -202,6 +213,7 @@ def exec_upgrade_moxie(caller, caller_input):
         caller.db.moxie += 1
     else:
         caller.msg("|rERROR:|n You do not have enough XP to upgrade your Moxie.")
+
 
 def upgrade_equipment(caller):
     if hasattr(caller.ndb._menutree, "selected_equipment"):
@@ -219,6 +231,7 @@ def upgrade_equipment(caller):
     options += ({"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"},)
     return text, options
 
+
 def exec_purchase_equipment(caller, caller_input):
     if caller.db.xp >= caller_input.get("cost"):
         caller.db.xp = caller.db.xp - caller_input.get("cost")
@@ -227,6 +240,7 @@ def exec_purchase_equipment(caller, caller_input):
     else:
         caller.msg("|rERROR:|n You cannot afford that piece of equipment.")
 
+
 def purchase_clones(caller):
     text = "\"Reward is its own reward.\"  \nWait, that doesn't sound right.  \"Waiting comes to those who wait.\"  \nNo, that's " \
            "not right either.  One moment...\n\n|yLanguage Diagnostic...|n\n|y<Idiom not found.>|n\n\nHmm, well then let's " \
@@ -234,6 +248,7 @@ def purchase_clones(caller):
     options = ({"desc": "Purchase Clone", "exec": exec_purchase_clone, "goto": "purchase_clones"},
                {"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"})
     return text, options
+
 
 def exec_purchase_clone(caller, caller_input):
     if caller.db.xp >= 1000:

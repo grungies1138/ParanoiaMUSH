@@ -30,6 +30,7 @@ class Clone(Character):
         self.db.clone = 0
         self.db.max_clones = 6
         self.db.chargen_complete = 0
+        self.db.initial_setup = 0
         self.cmdset.add("commands.default_cmdsets.SheetCmdSet", permanent=True)
         self.cmdset.add("commands.default_cmdsets.ChargenCmdSet", permanent=True)
 
