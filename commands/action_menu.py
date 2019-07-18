@@ -15,9 +15,14 @@ def menu_start_node(caller):
 def equipment_actions(caller):
     if hasattr(caller.ndb._menutree, "selected_item"):
         eq = caller.ndb._menutree.selected_item
-        caller.location.msg_contents(eq)
+
         if eq.db.uses > 0:
             eq.db.uses = eq.db.uses - 1
+            caller.location.msg_contents(eq)
+        else:
+            caller.msg('That item is our of uses.  Please visit the +catalog to recharge/reload it.')
+        if eq.db.uses == 0 and eq.db.consumable:
+            eq.delete()
         return "", ()
     text = "You are only as effective as how well you maintain your equipment.  These items are reusable and " \
            "persistent, but have to be refilled or recharged from time to time.  Any items that are out of uses will " \
@@ -38,7 +43,7 @@ def action_card_actions(caller):
         action = ACTIONS.get(selected_action)
         caller.location.msg_contents(
             "|gSYSTEM:|n {}'s action: |w{}|n Order: |w{}|n {}".format(caller.key,
-                selected_action, action.get("action_order"), "(reaction)" if action.get("reaction") ==1 else ""))
+                selected_action, action.get("action_order"), "(reaction)" if action.get("reaction") == 1 else ""))
         caller.db.action_cards.remove(selected_action)
         return "", ()
     text = "The journey of a thousand miles begins with two in the bush.  Wise words.  Very wise words.  Actions are " \

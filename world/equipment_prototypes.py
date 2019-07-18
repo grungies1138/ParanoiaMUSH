@@ -9,7 +9,8 @@ EQUIPMENT = {
     "cost": 50,
     "typeclass": "typeclasses.equipment.Equipment",
     "level": 2,
-    "uses": 3
+    "uses": 3,
+    "consumable": True
 },
 "MINIGUN": {
     "key": "The Minigun",
@@ -20,7 +21,7 @@ EQUIPMENT = {
     "cost": 400,
     "typeclass": "typeclasses.equipment.Equipment",
     "level": 3,
-    "uses": lambda:randint(1, 6)
+    "uses": lambda: randint(1, 6)
 },
 "SNIPER": {
     "key": "Sniper Rifle",
@@ -87,7 +88,8 @@ EQUIPMENT = {
     "cost": 50,
     "typeclass": "typeclasses.equipment.Equipment",
     "level": 1,
-    "uses": 3
+    "uses": 3,
+    "consumable": True
 },
 "ELECTRO_KNUCLES": {
     "key": "Electro-Knuckles",
@@ -109,7 +111,8 @@ EQUIPMENT = {
     "cost": 100,
     "typeclass": "typeclasses.equipment.Equipment",
     "level": 1,
-    "uses": 3
+    "uses": 3,
+    "consumable": True
 },
 "DATA_BOMB": {
     "key": "Data Bomb",
@@ -121,7 +124,8 @@ EQUIPMENT = {
     "cost": 1250,
     "typeclass": "typeclasses.equipment.Equipment",
     "level": 3,
-    "uses": 1
+    "uses": 1,
+    "consumable": True
 },
 "TAXI_POD": {
     "key": "Taxi-Pod",
@@ -180,7 +184,8 @@ EQUIPMENT = {
     "cost": 200,
     "typeclass": "typeclasses.equipment.Equipment",
     "level": 3,
-    "uses": 1
+    "uses": 1,
+    "consumable": True
 },
 "FOAM_GRENADE": {
     "key": "Foam Grenades x3",
@@ -193,7 +198,8 @@ EQUIPMENT = {
     "cost": 75,
     "typeclass": "typeclasses.equipment.Equipment",
     "level": 2,
-    "uses": 3
+    "uses": 3,
+    "consumable": True
 },
 "KAT_COMPANION_BOT": {
     "key": "K@ Companion Bot",

@@ -6,6 +6,7 @@ HEAD_CHAR = "|015-|n"
 SUB_HEAD_CHAR = "-"
 MAX_WIDTH = 78
 
+
 def header(header_text=None, width=MAX_WIDTH, fill_char=HEAD_CHAR):
     header_string = ""
     if header_text and len(header_text) < width:
@@ -18,13 +19,16 @@ def header(header_text=None, width=MAX_WIDTH, fill_char=HEAD_CHAR):
         header_string = fill_char * width
     return header_string
 
+
 def titlecase(s):
     return re.sub(r"[A-Za-z]+('[A-Za-z]+)?",
                   lambda mo: mo.group(0)[0].upper() +
                              mo.group(0)[1:].lower(), s)
 
+
 def pad_right(main, right, width):
     return "{}$pad({}, {}, r)".format(main, right, width - len(str(main)))
+
 
 def clearance_color(clearance):
     if clearance == "Infrared":
@@ -46,8 +50,10 @@ def clearance_color(clearance):
     if clearance == "Ultraviolet":
         return "[W|X"
 
+
 def _wrapper(caller, attr, value):
     return lambda caller: setattr(caller.ndb._menutree, attr, value)
+
 
 def IsInt(n):
     try:
@@ -56,11 +62,13 @@ def IsInt(n):
     except ValueError:
         return False
 
+
 def node_formatter(nodetext, optionstext, caller=None):
     separator1 = "|002_|n" * 78 + "\n\n"
     separator2 = "\n" + "|002_|n" * 78 + "\n\nYou may type '|gq|n' or '|gquit|n' " \
                                          "at any time to quit this application.\n" + "|002_|n" * 78 + "\n\n"
     return "\n\n\n" + separator1 + nodetext + separator2 + optionstext
+
 
 def options_formatter(optionlist, caller=None):
     options = []
@@ -84,8 +92,6 @@ def options_formatter(optionlist, caller=None):
     else:
         return "\n".join(options)
 
-def titlecase(s):
-    return re.sub(r"[A-Za-z]+('[A-Za-z]+)?",
-                  lambda mo: mo.group(0)[0].upper() +
-                             mo.group(0)[1:].lower(), s)
 
+def text_error(text):
+    replacements = {'a': '4', 'o': '0'}

@@ -8,6 +8,7 @@ class Equipment(Object):
         self.db.size = ""
         self.db.level = 0
         self.db.uses = -1
+        self.db.consumable = False
 
     def return_appearance(self, looker):
         message = []
@@ -24,9 +25,9 @@ class Equipment(Object):
 
         message2 = []
         for line in message:
-            message2.append(unicode(line))
+            message2.append(line)
 
-        return "\n".join(message2)
+        return "\n".join(str(m) for m in message2)
 
     def __str__(self):
         return "Name: {} - Action Order: {}\nDesc: {}".format(self.key, self.db.action_order, self.db.desc)

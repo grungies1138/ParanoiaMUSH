@@ -220,7 +220,7 @@ def upgrade_equipment(caller):
     text = "What good is a Troubleshooter without equipment.  Well, usually still not very good, but necessary!  " \
            "Watching a bunch of clones trying to put out a trash fire with only lighter fluid canisters is " \
            "entertaining, but not very productive.  So I'm offering you some items for purchase along with the " \
-           "mission assigned equipment you weill receive to help you on your vital missions for the Computer and the " \
+           "mission assigned equipment you will receive to help you on your vital missions for the Computer and the " \
            "Alpha Complex.  The fate of our home is in your hands.  God, I wish I could upgrade my Moxie."
     options = ()
 

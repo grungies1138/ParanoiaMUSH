@@ -44,10 +44,10 @@ class Room(DefaultRoom):
 
         exits = []
         if self.exits:
-            for exit in self.exits:
-                if exit.access(looker, "view"):
-                    exits.append("|w<|n|{}{}|n|w>|n - {}".format(clearance_color(CLEARANCE.get(exit.destination.db.clearance)), exit.key, exit.destination))
-                    # exits.append("|w<|n|b%s|n|w>|n - %s" % (exit.key, exit.destination))
+            for ex in self.exits:
+                if ex.access(looker, "view"):
+                    exits.append("|w<|n|{}{}|n|w>|n - {}".format(clearance_color(
+                        CLEARANCE.get(ex.destination.db.clearance)), ex.key, ex.destination))
 
         table = evtable.EvTable("|wCharacters and Objects:|n", "|wExits:|n", table=[chars + colored_objects, exits],
                                 border=None)
@@ -63,7 +63,7 @@ class Room(DefaultRoom):
         return "\n".join(str(m) for m in message2)
 
     def list_characters(self):
-        return sorted([char for char in self.contents if char.is_typeclass(Clone, exact=False)],key=lambda x: x.name)
+        return sorted([char for char in self.contents if char.is_typeclass(Clone, exact=False)], key=lambda x: x.name)
 
     def list_non_characters(self):
         return list(Object.objects.filter_family(db_location=self))

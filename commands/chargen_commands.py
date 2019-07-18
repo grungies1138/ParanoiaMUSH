@@ -11,8 +11,6 @@ from world.equipment_prototypes import EQUIPMENT
 
 HELP = "Chargen"
 
-# TODO: Add aliases to Back menu options
-
 
 class ChargenCommand(default_cmds.MuxCommand):
     """
