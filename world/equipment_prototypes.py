@@ -240,7 +240,8 @@ EQUIPMENT = {
         "cost": 250,
         "typeclass": "typeclasses.equipment.Equipment",
         "level": 3,
-        "uses": -1
+        "uses": -1,
+        "max_uses": -1
     },
     "UBT_HYPERSENSE_DEVICE": {
         "key": "U.B.T. Hypersense Device",
@@ -274,7 +275,7 @@ EQUIPMENT = {
         "desc": "Working undercover? Worried that terrorists know your face?  Worry no more!  Fake Moustache lets you "
                 "reclaim your anonymity.  No one's looking for a clone with a moustache!  Place it under your nose, "
                 "let the pneumatic pinchers expand within your nostrils and feel like a new clone.  Fake Moustache "
-                "identifies the wearer as John-R-DOE-1 (default Setting) to Cerebral COretech users and bots.  Only "
+                "identifies the wearer as John-R-DOE-1 (default Setting) to Cerebral Coretech users and bots.  Only "
                 "the Computer knows your secret.",
         "action_order": ("chutzpah", 4),
         "size": "small",
