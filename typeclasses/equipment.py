@@ -8,6 +8,7 @@ class Equipment(Object):
         self.db.size = ""
         self.db.level = 0
         self.db.uses = -1
+        self.db.max_uses = -1
         self.db.consumable = False
 
     def return_appearance(self, looker):

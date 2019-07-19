@@ -11,6 +11,7 @@ EQUIPMENT = {
         "typeclass": "typeclasses.equipment.Equipment",
         "level": 2,
         "uses": 3,
+        "mnax_uses": 3,
         "consumable": True
     },
     "MINIGUN": {
@@ -32,7 +33,8 @@ EQUIPMENT = {
         "size": "medium",
         "cost": 300,
         "typeclass": "typeclasses.equipment.Equipment",
-        "level": 2
+        "level": 2,
+        "uses": -1
     },
     "MULTI_ADAPTER": {
         "key": "Multi-Adapter",
@@ -54,7 +56,8 @@ EQUIPMENT = {
         "cost": 650,
         "typeclass": "typeclasses.equipment.Equipment",
         "level": 3,
-        "uses": 3
+        "uses": 3,
+        "max_uses": 3
     },
     "GRAPPLE_GUN": {
         "key": "Grapple Gun",
@@ -90,6 +93,7 @@ EQUIPMENT = {
         "typeclass": "typeclasses.equipment.Equipment",
         "level": 1,
         "uses": 3,
+        "max_uses": 3,
         "consumable": True
     },
     "ELECTRO_KNUCLES": {
@@ -101,7 +105,8 @@ EQUIPMENT = {
         "cost": 250,
         "typeclass": "typeclasses.equipment.Equipment",
         "level": 1,
-        "uses": 4
+        "uses": 4,
+        "max_uses": 4
     },
     "SEDATIVES": {
         "key": "Sedatives x3",
@@ -113,6 +118,7 @@ EQUIPMENT = {
         "typeclass": "typeclasses.equipment.Equipment",
         "level": 1,
         "uses": 3,
+        "max_uses": 3,
         "consumable": True
     },
     "DATA_BOMB": {
@@ -126,6 +132,7 @@ EQUIPMENT = {
         "typeclass": "typeclasses.equipment.Equipment",
         "level": 3,
         "uses": 1,
+        "max_uses": 1,
         "consumable": True
     },
     "TAXI_POD": {
@@ -159,7 +166,8 @@ EQUIPMENT = {
         "cost": 125,
         "typeclass": "typeclasses.equipment.Equipment",
         "level": 1,
-        "uses": 5
+        "uses": 5,
+        "max_uses": 5
     },
     "FRICTION_ENHANCER": {
         "key": "Friction Enhancer",
@@ -187,6 +195,7 @@ EQUIPMENT = {
         "typeclass": "typeclasses.equipment.Equipment",
         "level": 3,
         "uses": 1,
+        "max_uses": 1,
         "consumable": True
     },
     "FOAM_GRENADE": {
@@ -202,6 +211,7 @@ EQUIPMENT = {
         "typeclass": "typeclasses.equipment.Equipment",
         "level": 2,
         "uses": 3,
+        "max_uses": 3,
         "consumable": True
     },
     "KAT_COMPANION_BOT": {
@@ -282,6 +292,7 @@ EQUIPMENT = {
         "cost": 0,
         "typeclass": "typeclasses.equipment.Equipment",
         "level": 1,
-        "uses": 20
+        "uses": 20,
+        "max_uses": 20
     }
 }
