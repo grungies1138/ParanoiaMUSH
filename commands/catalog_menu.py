@@ -251,8 +251,8 @@ def recharge_equipment(caller):
     options = ()
 
     for item in caller.contents:
-        if item.db.uses > -1 and not item.db.consumable:
-            options += ({"desc": "{} - |y{}|n".format(item.key, item.db.cost // 2), "goto": (_exec_recharge_equipment,
+        # if item.db.uses > -1 and not item.db.consumable:
+        options += ({"desc": "{} - |y{}|n".format(item.key, item.db.cost // 2), "goto": (_exec_recharge_equipment,
                                                                                              {"selected": item})},)
     options += ({"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"},)
     return text, options
