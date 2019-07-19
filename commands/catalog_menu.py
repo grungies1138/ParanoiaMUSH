@@ -251,7 +251,7 @@ def recharge_equipment(caller):
     options = ()
 
     for item in [eq for eq in caller.contents if utils.inherits_from(eq, "typclasses.equipment.Equipment")]:
-        if item.db.uses > -1 and item.db.uses < EQUIPMENT.get(item.key).get("uses"):
+        if item.db.uses > -1 and not item.db.consumable:
             options += ({"desc": "{} - |y{}|n".format(item.key, item.db.cost // 2), "goto": (_exec_recharge_equipment,
                                                                                              {"selected": item})},)
     options += ({"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"},)
