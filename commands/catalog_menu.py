@@ -260,6 +260,7 @@ def recharge_equipment(caller):
 
 def exec_recharge_equipment(caller, raw_string):
     item = caller.ndb._menutree.recharge_equipment_item
+    caller.msg(item.key)
     if caller.db.xp > item.db.cost // 2:
         item.db.uses = item.db.max_uses
         caller.db.xp = caller.db.xp - item.db.cost // 2
