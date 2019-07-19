@@ -227,7 +227,7 @@ def upgrade_equipment(caller):
 
     for name, dic in EQUIPMENT.items():
         options += (
-        {"desc": "{} - |y{}|n".format(name, dic.get("cost")), "exec": _wrapper(caller, "selected_equipment", dic),
+            {"desc": "{} - |y{}|n".format(name, dic.get("cost")), "exec": _wrapper(caller, "selected_equipment", dic),
          "goto": "upgrade_equipment"},)
 
     options += ({"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"},)
@@ -252,18 +252,20 @@ def recharge_equipment(caller):
 
     for item in caller.contents:
         if item.db.uses < item.db.max_uses:
-            options += ({"desc": "{} - |y{}|n".format(item.key, item.db.cost // 2), "goto": (_exec_recharge_equipment,
-                                                                                             {"selected": item.id})},)
+            options += ({"desc": "{} - |y{}|n".format(item.key, item.db.cost // 2), "goto": "recharge_equipment",
+                         "exec": _wrapper(caller, "recharge_equipment_item", item)},)
     options += ({"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"},)
     return text, options
 
 
-def _exec_recharge_equipment(caller, raw_string, **kwargs):
-    # item = kwargs.get("selected")
-    # if caller.db.xp > (item.db.cost // 2):
-    #     caller.msg("You can afford it.")
-
-    return recharge_equipment
+def exec_recharge_equipment(caller, raw_string):
+    item = caller.ndb._menutree.recharge_equipment_item
+    if caller.db.xp > item.db.cost // 2:
+        item.db.uses = item.db.max_uses
+        caller.db.xp = caller.db.xp - item.db.cost // 2
+        caller.msg("Item Recharged.")
+    else:
+        caller.msg("|rERROR:|n You do not have enough XP to raise that skill.")
 
 
 def purchase_clones(caller):
