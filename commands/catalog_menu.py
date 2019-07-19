@@ -259,7 +259,11 @@ def recharge_equipment(caller):
 
 
 def _exec_recharge_equipment(caller, raw_string, **kwargs):
-    pass
+    item = kwargs.get("selected")
+    if caller.db.xp > (item.db.cost // 2):
+        caller.msg("You can afford it.")
+
+    return recharge_equipment
 
 
 def purchase_clones(caller):
