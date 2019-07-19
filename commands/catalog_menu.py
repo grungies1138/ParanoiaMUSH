@@ -258,7 +258,8 @@ def recharge_equipment(caller):
     return text, options
 
 
-def exec_recharge_equipment(caller, raw_string):
+def exec_recharge_equipment(caller, caller_input):
+    caller.msg("Test")
     item = caller.ndb._menutree.recharge_equipment_item
     caller.msg(item.key)
     if caller.db.xp > item.db.cost // 2:
