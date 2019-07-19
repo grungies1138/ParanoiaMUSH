@@ -19,6 +19,7 @@ class Equipment(Object):
         message.append("|wLevel:|n {}".format(self.db.level))
         if self.db.uses > -1:
             message.append("|wUses Remaining:|n {}".format(self.db.uses))
+        message.append("|wConsumable:|n {}".format(self.db.consumable))
         message.append("|wAction Order:|n {} +{}".format(self.db.action_order[0], self.db.action_order[1]))
         message.append(self.db.desc)
         message.append("|w_|n" * 78)

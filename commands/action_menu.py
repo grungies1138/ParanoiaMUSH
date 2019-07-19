@@ -52,7 +52,6 @@ def action_card_actions(caller):
     options = ()
 
     for act in caller.db.action_cards:
-
         options += ({"desc": act, "exec": _wrapper(caller, "selected_action", act), "goto": "action_card_actions"},)
 
     options += ({"key": ["back", "b"], "desc": "Go Back", "goto": "menu_start_node"},)

@@ -19,6 +19,7 @@ def menu_start_node(caller):
                {"desc": "Stats", "goto": "upgrade_stats"},
                {"desc": "Moxie", "goto": "upgrade_moxie"},
                {"desc": "Equipment", "goto": "upgrade_equipment"},
+               {"desc": "Recharge Equipment", "goto": "recharge_equipment"},
                {"desc": "Purchase Clones", "goto": "purchase_clones"},
                {"desc": "Action Cards", "goto": "buy_actions"})
     return text, options
@@ -48,7 +49,7 @@ def upgrade_clearance(caller):
            "that TOM-92 (who doesn't exist) was once an Infrared.  See the list of security clearances below along " \
            "with the associated XP Point costs.  And remember those costs are cumulative.\n\nExample: To go from " \
            "Infrared to Red costs 500 XP Points.  Likewise to go from Red to Orange costs 1000 XP Points.  Therefore " \
-           "to go from Infrared to Orange costs a total of 1500 XP Points.\n\n|wCurrent Clearance:|n {}"\
+           "to go from Infrared to Orange costs a total of 1500 XP Points.\n\n|wCurrent Clearance:|n {}" \
         .format(CLEARANCE.get(caller.db.clearance))
 
     red = ansi.ANSIString("|rRed:|n")
@@ -225,7 +226,9 @@ def upgrade_equipment(caller):
     options = ()
 
     for name, dic in EQUIPMENT.items():
-        options += ({"desc": "{} - |y{}|n".format(name, dic.get("cost")), "exec": _wrapper(caller, "selected_equipment", dic), "goto": "upgrade_equipment"},)
+        options += (
+        {"desc": "{} - |y{}|n".format(name, dic.get("cost")), "exec": _wrapper(caller, "selected_equipment", dic),
+         "goto": "upgrade_equipment"},)
 
     options += ({"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"},)
     return text, options
@@ -240,10 +243,30 @@ def exec_purchase_equipment(caller, caller_input):
         caller.msg("|rERROR:|n You cannot afford that piece of equipment.")
 
 
+def recharge_equipment(caller):
+    text = "Without ammo a weapons is just a hunk of precision crafted and laser cut carbon nano-tube, printed junk.  " \
+           "But, as they say, nothing in life is free.  (Brought to you by Carbo-fizz™)\n\nBelow you will find a list " \
+           "of the equipment in your inventory.  Select the one that you want to reload."
+
+    options = ()
+
+    for item in [eq for eq in caller.contents if utils.inherits_from(eq, "typclasses.equipment.Equipment")]:
+        if item.db.uses > -1 and item.db.uses < EQUIPMENT.get(item.key).get("uses"):
+            options += ({"desc": "{} - |y{}|n".format(item.key, item.db.cost // 2), "goto": (_exec_recharge_equipment,
+                                                                                             {"selected": item})},)
+    options += ({"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"},)
+    return text, options
+
+
+def _exec_recharge_equipment(caller, raw_string, **kwargs):
+    pass
+
+
 def purchase_clones(caller):
-    text = "\"Reward is its own reward.\"  \nWait, that doesn't sound right.  \"Waiting comes to those who wait.\"  \nNo, that's " \
-           "not right either.  One moment...\n\n|yLanguage Diagnostic...|n\n|y<Idiom not found.>|n\n\nHmm, well then let's " \
-           "keep this simple.  You want to live longer?  Spend XP Points and buy more clones.  They cost 1000 XP Points."
+    text = "\"Reward is its own reward.\"  \nWait, that doesn't sound right.  \"Waiting comes to those who wait.\"  " \
+           "\nNo, that's not right either.  One moment...\n\n|yLanguage Diagnostic...|n\n|y<Idiom not found.>|n\n\n" \
+           "Hmm, well then let's keep this simple.  You want to live longer?  Spend XP Points and buy more clones.  " \
+           "They cost 1000 XP Points."
     options = ({"desc": "Purchase Clone", "exec": exec_purchase_clone, "goto": "purchase_clones"},
                {"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"})
     return text, options
