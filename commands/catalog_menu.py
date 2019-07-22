@@ -253,7 +253,7 @@ def recharge_equipment(caller):
     for item in caller.contents:
         if item.db.uses < item.db.max_uses:
             options += ({"desc": "{} - |y{}|n".format(item.key, item.db.cost // 2),
-                         "exec": _wrapper(caller, "recharge_equipment_item", item), "goto": "recharge_equipment"},)
+                         "exec": _wrapper(caller, "recharge_equipment_item", item), "goto": "exec_recharge_equipment"},)
     options += ({"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"},)
     return text, options
 
