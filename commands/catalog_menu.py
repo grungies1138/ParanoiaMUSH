@@ -244,6 +244,8 @@ def exec_purchase_equipment(caller, caller_input):
 
 
 def recharge_equipment(caller):
+    if hasattr(caller.ndb._menutree, "recharge_equipment_item"):
+        exec_recharge_equipment(caller, caller.ndb._menutree.recharge_equipment_item)
     text = "Without ammo a weapons is just a hunk of precision crafted and laser cut carbon nano-tube, printed junk.  " \
            "But, as they say, nothing in life is free.  (Brought to you by Carbo-fizz™)\n\nBelow you will find a list " \
            "of the equipment in your inventory.  Select the one that you want to reload."
@@ -253,15 +255,13 @@ def recharge_equipment(caller):
     for item in caller.contents:
         if item.db.uses < item.db.max_uses:
             options += ({"desc": "{} - |y{}|n".format(item.key, item.db.cost // 2),
-                         "exec": _wrapper(caller, "recharge_equipment_item", item), "goto": "exec_recharge_equipment"},)
+                         "exec": _wrapper(caller, "recharge_equipment_item", item), "goto": "recharge_equipment"},)
     options += ({"key": ("back", "b"), "desc": "Go Back", "goto": "menu_start_node"},)
     return text, options
 
 
 def exec_recharge_equipment(caller, caller_input):
-    caller.msg("Test")
     item = caller.ndb._menutree.recharge_equipment_item
-    caller.msg(item.key)
     if caller.db.xp > item.db.cost // 2:
         item.db.uses = item.db.max_uses
         caller.db.xp = caller.db.xp - item.db.cost // 2
