@@ -551,7 +551,7 @@ class SpendMoxieCommand(default_cmds.MuxCommand):
         moxie = self.caller.db.moxie
 
         if moxie == 1:
-            self.caller.msg('You squishy brain can\'t handle any more stress.  Sorry hoss,you can\'t do this right '
+            self.caller.msg('You squishy brain can\'t handle any more stress.  Sorry hoss, you can\'t do this right '
                             'now.  Try and relax.')
             return
         moxie = moxie - 1
@@ -561,3 +561,7 @@ class SpendMoxieCommand(default_cmds.MuxCommand):
         if moxie == 1:
             self.caller.location.msg_contents("|gSYSTEM:|n {} completely LOSES IT! Consult the GM to determine the "
                                               "results.".format(self.caller.key))
+
+
+class CmdPage(default_cmds.CmdPage):
+    aliases = ['p']
