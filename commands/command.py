@@ -536,3 +536,25 @@ class SpendMoxieCommand(default_cmds.MuxCommand):
     Usage:
         |w+spend Moxie|n
     """
+    key = "+spend"
+    locks = "cmd:perm(Player)"
+    help_category = "General"
+
+    def func(self):
+        if not self.args:
+            self.caller.msg("Spend what?  Friend Computer does not like having it's time wasted. Try |w+spend Moxie|n")
+        if not self.args.lower() == 'moxie':
+            self.caller.msg('|rError:|n Coretech implant malfunction.  Further errors will result in live replacement.'
+                            '  Try |w+spend Moxie|n')
+        moxie = self.caller.db.moxie
+
+        if moxie == 1:
+            self.caller.msg('You squishy brain can\'t handle any more stress.  Sorry hoss,you can\'t do this right '
+                            'now.  Try and relax.')
+        moxie = moxie - 1
+        self.caller.db.moxie = moxie
+        self.caller.location.msg_contents("|gSYSTEM:|n {} has spent a Moxie point.".format(self.caller.key))
+
+        if moxie == 1:
+            self.caller.location.msg_contents("|gSYSTEM:|n {} completely LOSES IT! Consult the GM to determine the "
+                                              "results.".format(self.caller.key))

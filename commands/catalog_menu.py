@@ -265,7 +265,7 @@ def exec_recharge_equipment(caller, caller_input):
     if caller.db.xp > item.db.cost // 2:
         item.db.uses = item.db.max_uses
         caller.db.xp = caller.db.xp - item.db.cost // 2
-        caller.msg("Item Recharged.")
+        caller.msg("{} Recharged.".format(item.key))
     else:
         caller.msg("|rERROR:|n You do not have enough XP to raise that skill.")
 
