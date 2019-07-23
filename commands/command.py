@@ -543,14 +543,17 @@ class SpendMoxieCommand(default_cmds.MuxCommand):
     def func(self):
         if not self.args:
             self.caller.msg("Spend what?  Friend Computer does not like having it's time wasted. Try |w+spend Moxie|n")
+            return
         if not self.args.lower() == 'moxie':
             self.caller.msg('|rError:|n Coretech implant malfunction.  Further errors will result in live replacement.'
                             '  Try |w+spend Moxie|n')
+            return
         moxie = self.caller.db.moxie
 
         if moxie == 1:
             self.caller.msg('You squishy brain can\'t handle any more stress.  Sorry hoss,you can\'t do this right '
                             'now.  Try and relax.')
+            return
         moxie = moxie - 1
         self.caller.db.moxie = moxie
         self.caller.location.msg_contents("|gSYSTEM:|n {} has spent a Moxie point.".format(self.caller.key))
