@@ -587,7 +587,7 @@ class AssignRolesCommand(default_cmds.MuxCommand):
                    not caller.locks.check_lockstring(p, "dummy:perm(Helper)")]
 
         #caller.msg(str(players))
-        roles = ROLES.keys()
+        roles = list(ROLES.keys())
         player_roles = {}
         for p in players:
             role = choice(roles.items())
