@@ -589,6 +589,7 @@ class AssignRolesCommand(default_cmds.MuxCommand):
         #caller.msg(str(players))
         roles = list(ROLES.keys())
         player_roles = {}
+        loc.msg_contents("|bTeam Role Assignments:|n\n")
         for p in players:
             role = choice(roles)
             roles.remove(role)

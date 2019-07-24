@@ -44,11 +44,14 @@ class Clone(Character):
         message.append("|w_|n" * 78)
         title = ansi.ANSIString("|[002|w|u{}-{}-{}|n".format(self.key, self.db.clone, self.db.sector))
         message.append(title.ljust(78, '^').replace('^', "|[002|w_|n"))
+        message.append("")
         message.append("\n{} has {} hair, {} eyes and {} skin.  They stand at {} tall and weighs {}.  "
                        "They wear a jumpsuit with a {} stripe.".format(self.key, HAIR.get(self.db.hair) or "no",
                         EYES.get(self.db.eyes) or "nondescript", SKIN.get(self.db.skin) or "pale", self.db.height
                         or "indeterminate", self.db.weight or "indeterminate", CLEARANCE.get(self.db.clearance)))
         message.append("|{}_|n".format(clearance_color(CLEARANCE.get(self.db.clearance))) * 78)
+        if self.db.role:
+            message.append("Assigned Role:")
         if equipment:
             message.append("|wEquipment:|n")
         for eq in equipment:
@@ -58,4 +61,4 @@ class Clone(Character):
         for line in message:
             message2.append(line)
 
-        return "\n".join(message2)
+        return "\n".join(str(m) for m in message2)
