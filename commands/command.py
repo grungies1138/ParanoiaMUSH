@@ -565,3 +565,23 @@ class SpendMoxieCommand(default_cmds.MuxCommand):
 
 class CmdPage(default_cmds.CmdPage):
     aliases = ['p']
+
+
+class AssignRolesCommand(default_cmds.MuxCommand):
+    """
+    Assigns roles to all the clones in the same room as the command caller.  Roles are assigned at random.
+
+    Usage:
+        |w+roles|n
+    """
+    key = "+roles"
+    locks = "cmd:perm(Helper)"
+    help_category = "Admin"
+
+    def func(self):
+        caller = self.caller
+        loc = caller.location
+        players = [p for p in loc.contents if p.is_typeclass("typeclasses.clones.Clone") and
+                   caller.locks.check_lockstring(p, "dummy:perm(Player)")]
+
+        caller.msg(str(players))
