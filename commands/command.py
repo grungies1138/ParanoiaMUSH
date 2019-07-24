@@ -582,6 +582,6 @@ class AssignRolesCommand(default_cmds.MuxCommand):
         caller = self.caller
         loc = caller.location
         players = [p for p in loc.contents if p.is_typeclass("typeclasses.clones.Clone") and
-                   caller.locks.check_lockstring(p, "dummy:perm(Player)")]
+                   not caller.locks.check_lockstring(p, "dummy:perm(Helper)")]
 
         caller.msg(str(players))
