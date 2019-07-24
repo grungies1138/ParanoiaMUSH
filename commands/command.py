@@ -590,7 +590,7 @@ class AssignRolesCommand(default_cmds.MuxCommand):
         roles = ROLES.keys()
         player_roles = {}
         for p in players:
-            role = choice(roles)
+            role = choice(roles.items())
             roles.remove(role)
             p.db.role = role
             loc.msg_contents("{}: {}".format(role, p.key))
