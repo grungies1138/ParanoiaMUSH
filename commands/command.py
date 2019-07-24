@@ -5,7 +5,7 @@ from evennia import default_cmds
 from evennia.utils.evmenu import EvMenu
 from evennia.utils import evtable, utils, ansi
 from commands.library import clearance_color, IsInt, node_formatter, options_formatter, titlecase
-from world.static_data import HEALTH, CLEARANCE, ACTIONS, MUTANT_POWERS, SECRET_SOCIETIES
+from world.static_data import HEALTH, CLEARANCE, ACTIONS, MUTANT_POWERS, SECRET_SOCIETIES, ROLES
 from django.conf import settings
 from evennia.server.sessionhandler import SESSIONS
 from typeclasses.clones import Clone
@@ -585,3 +585,5 @@ class AssignRolesCommand(default_cmds.MuxCommand):
                    not caller.locks.check_lockstring(p, "dummy:perm(Helper)")]
 
         caller.msg(str(players))
+        roles = ROLES.keys()
+        caller.msg(str(roles))

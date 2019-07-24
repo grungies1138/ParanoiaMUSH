@@ -487,3 +487,26 @@ ACTIONS = {
         "reaction": 1
     }
 }
+
+ROLES = {'Happiness Officer': '1. Ensuring that all happiness-related activities are carried out satisfactorily. \n\n'
+                              '2. Maintaining team morale at or above approved levels.\n\n3. Identifying and '
+                              'eliminating any lack of happiness and its underlying causes.\n\n4. Providing '
+                              'assistance, counseling and additional happiness for anyone failing to be happy.',
+         'Combat Officer': '1. Deciding and explaining tactics.\n\n2. Instructing and demonstrating best-practice in '
+                           'combat.\n\n3. Ensuring that all combats are carried out satisfactorily. \n\n4. '
+                           'Determining what went wrong.',
+         'Loyalty Officer': '1. Ensuring that loyalty is utilised and maintained at appropriate and approved levels.'
+                            '\n\n2. Detecting any lapses or breaches of loyalty.\n\n3. Reporting disloyalty to your '
+                            'superiors and/or the Computer.\n\n4. Identifying who was responsible.',
+         'Team Leader': '1. Ensuring that the mission objectives are carries out appropriately.\n\n2. Giving '
+                        'instructions that are clear, easy to understand and not wrong.\n\n3. Seeing that all team '
+                        'members are performing their assigned duties correctly.\n\n4. Not being or going wrong.',
+         'Equipment Officer': '1. Ensuring all equipment is used appropriately and at approved levels.\n\n2. '
+                              'Overseeing the maintenance and safekeeping of all equipment.\n\n3. Preventing wrong '
+                              'activities with the correct use of equipment and vice versa.\n\n4. Returning all '
+                              'mission-specific equipment to the issuing official.',
+         'Science Officer': '1. Ensuring that all science and hygiene proctices are carried out appropriately.\n\n2. '
+                            'Maintaining the clenliness, health and science of your team-members.\n\n3. Identifying '
+                            'and eliminating the uses and causes of nonscience and unhygiene.\n\n4. Using science '
+                            'and hygiene to assist your team members in their duties.'
+         }
