@@ -1,6 +1,6 @@
 import time
 import datetime
-from random import randint
+from random import randint, choice
 from evennia import default_cmds
 from evennia.utils.evmenu import EvMenu
 from evennia.utils import evtable, utils, ansi
@@ -572,7 +572,9 @@ class AssignRolesCommand(default_cmds.MuxCommand):
     Assigns roles to all the clones in the same room as the command caller.  Roles are assigned at random.
 
     Usage:
-        |w+roles|n
+        |w+roles|n - assigns rolls to all non-staff players in the current room.
+
+        |w+roles/
     """
     key = "+roles"
     locks = "cmd:perm(Helper)"
@@ -584,6 +586,11 @@ class AssignRolesCommand(default_cmds.MuxCommand):
         players = [p for p in loc.contents if p.is_typeclass("typeclasses.clones.Clone") and
                    not caller.locks.check_lockstring(p, "dummy:perm(Helper)")]
 
-        caller.msg(str(players))
+        #caller.msg(str(players))
         roles = ROLES.keys()
-        caller.msg(str(roles))
+        player_roles = {}
+        for p in players:
+            role = choice(roles)
+            roles.remove(role)
+            p.db.role = role
+            loc.msg_contents("{}: {}".format(role, p.key))
