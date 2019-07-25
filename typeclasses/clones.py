@@ -53,8 +53,8 @@ class Clone(Character):
         role = self.db.role
         role_str = "Assigned Role: |320{}|n".format(role)
         if role:
-            #message.append("Assigned Role: |320{}|n".format(role))
-        message.append(role_str)
+            # message.append("Assigned Role: |320{}|n".format(role))
+            message.append(role_str)
         if equipment:
             message.append("\n|wEquipment:|n")
         for eq in equipment:
