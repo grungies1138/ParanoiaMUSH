@@ -52,7 +52,7 @@ class Clone(Character):
         message.append("|{}_|n".format(clearance_color(CLEARANCE.get(self.db.clearance))) * 78)
         role = self.db.role
         if role:
-            message.append("|wAssigned Role:|n {}".format(role))
+            message.append("Assigned Role: |320{}|n".format(role))
         if equipment:
             message.append("\n|wEquipment:|n")
         for eq in equipment:

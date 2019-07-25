@@ -586,7 +586,6 @@ class AssignRolesCommand(default_cmds.MuxCommand):
         players = [p for p in loc.contents if p.is_typeclass("typeclasses.clones.Clone") and
                    not caller.locks.check_lockstring(p, "dummy:perm(Helper)")]
 
-        #caller.msg(str(players))
         roles = list(ROLES.keys())
         player_roles = {}
         loc.msg_contents("|bTeam Role Assignments:|n\n")
