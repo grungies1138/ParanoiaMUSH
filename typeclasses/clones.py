@@ -51,7 +51,7 @@ class Clone(Character):
                         or "indeterminate", self.db.weight or "indeterminate", CLEARANCE.get(self.db.clearance)))
         message.append("|{}_|n".format(clearance_color(CLEARANCE.get(self.db.clearance))) * 78)
         if self.db.role:
-            message.append("Assigned Role:")
+            message.append("Assigned Role: {}".format(self.db.role))
         if equipment:
             message.append("|wEquipment:|n")
         for eq in equipment:
