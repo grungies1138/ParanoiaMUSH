@@ -574,7 +574,7 @@ class AssignRolesCommand(default_cmds.MuxCommand):
     Usage:
         |w+roles|n - assigns rolls to all non-staff players in the current room.
 
-        |w+roles/
+        |w+roles/include|n - assigns roles to all
     """
     key = "+roles"
     locks = "cmd:perm(Helper)"
@@ -583,8 +583,12 @@ class AssignRolesCommand(default_cmds.MuxCommand):
     def func(self):
         caller = self.caller
         loc = caller.location
-        players = [p for p in loc.contents if p.is_typeclass("typeclasses.clones.Clone") and
-                   not caller.locks.check_lockstring(p, "dummy:perm(Helper)")]
+        if 'include' in self.switches:
+            players = [p for p in loc.contents if p.is_typeclass("typeclasses.clones.Clone") and
+                       not p == caller]
+        else:
+            players = [p for p in loc.contents if p.is_typeclass("typeclasses.clones.Clone") and
+                       not caller.locks.check_lockstring(p, "dummy:perm(Helper)")]
 
         roles = list(ROLES.keys())
         player_roles = {}
