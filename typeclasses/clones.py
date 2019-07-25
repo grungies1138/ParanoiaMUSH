@@ -50,8 +50,9 @@ class Clone(Character):
                         EYES.get(self.db.eyes) or "nondescript", SKIN.get(self.db.skin) or "pale", self.db.height
                         or "indeterminate", self.db.weight or "indeterminate", CLEARANCE.get(self.db.clearance)))
         message.append("|{}_|n".format(clearance_color(CLEARANCE.get(self.db.clearance))) * 78)
-        if self.db.role:
-            message.append("|wAssigned Role:|n {}".format(str(self.db.role)))
+        role = self.db.role
+        if role:
+            message.append("|wAssigned Role:|n {}".format(role))
         if equipment:
             message.append("\n|wEquipment:|n")
         for eq in equipment:
