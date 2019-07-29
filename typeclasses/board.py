@@ -65,6 +65,7 @@ class AddBoardCmd(default_cmds.MuxCommand):
 
     def func(self):
         if 'create' in self.switches:
+            self.caller.msg("Current Boards:\n")
             boards = Board.objects.all()
             self.caller.msg(", ".join(list(boards)))
         else:
