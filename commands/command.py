@@ -574,7 +574,7 @@ class AssignRolesCommand(default_cmds.MuxCommand):
     Usage:
         |w+roles|n - assigns rolls to all non-staff players in the current room.
 
-        |w+roles/include|n - assigns roles to all
+        |w+roles/include|n - assigns roles to all in the room except the person using the command.
     """
     key = "+roles"
     locks = "cmd:perm(Helper)"

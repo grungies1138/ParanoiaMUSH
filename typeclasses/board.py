@@ -1,7 +1,8 @@
-from typeclasses.objects import Object
-from evennia import DefaultScript
-from evennia.utils.utils import lazy_property
 import datetime
+from typeclasses.objects import Object
+from evennia import DefaultScript, create_message
+from evennia.utils.utils import lazy_property
+from evennia import default_cmds
 from evennia.comms.models import Msg
 
 
@@ -17,10 +18,13 @@ class Board(Object):
         return [s for s in self.scripts.get(key='posts') if s.is_valid()][0]
 
     def add_post(self, title, message, sender):
-        pass
+        post = create_message(sender, message, receivers=self, header=title)
+        post.tags.add("post")
+        post.tags.add(self.key, category="board")
+        self.posts.add(post)
 
     def delete_post(self, post):
-        pass
+        self.posts.delete(post)
 
 
 class PostHandler(DefaultScript):
@@ -39,3 +43,37 @@ class PostHandler(DefaultScript):
                 if delta.days > self.db.timeout:
                     self.db.posts.remove(post)
                     post.delete()
+
+    def add(self, post):
+        self.db.posts.append(post)
+
+    def delete(self, post):
+        self.db.posts.remove(post)
+
+
+class AddBoardCmd(default_cmds.MuxCommand):
+    """
+    Admin only command to create Bulletin Boards.
+
+    Usage:
+        |w+boards/create <name>|n
+    """
+
+    key = "+boards"
+    locks = "cmd:perm(Admin)"
+    help_category = "BBS"
+
+    def func(self):
+        if 'create' in self.switches:
+            boards = Board.objects.all()
+            self.caller.msg(", ".join(list(boards)))
+        else:
+            pass
+
+
+class BBSCmdSet(default_cmds.CharacterCmdSet):
+    key = "BBSCommands"
+    priority = 2
+
+    def at_cmdset_creation(self):
+        self.add(AddBoardCmd())
