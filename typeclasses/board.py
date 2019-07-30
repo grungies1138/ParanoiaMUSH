@@ -37,7 +37,7 @@ class PostHandler(DefaultScript):
     def at_script_creation(self):
         self.db.posts = []
         self.interval = 60 * 60 * 24
-        self.start_delay = 60 * 60 * 24
+        self.start_delay = True
         self.persistent = True
         self.key = "{}_script".format(self.obj.key)
 
