@@ -97,7 +97,7 @@ class BBReadCmd(default_cmds.MuxCommand):
             table.reformat_column(1, width=20)
             table.reformat_column(2, width=25)
             table.reformat_column(3, width=4)
-            table.reformat_column(4, width=2)
+            table.reformat_column(4, width=12)
 
             self.caller.msg(table)
 
