@@ -188,7 +188,7 @@ class BBCreateCmd(default_cmds.MuxCommand):
     help_category = HELP_CATEGORY
 
     def func(self):
-        name = self.args[0]
+        name = self.args
         ex_board = Board.objects.filter(db_key=name)
         if ex_board:
             self.caller.msg("|gSYSTEM:|n A board with that name already exists.  Please try another.")
