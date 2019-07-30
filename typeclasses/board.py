@@ -88,8 +88,8 @@ class BBReadCmd(default_cmds.MuxCommand):
                                     header_line_char=_SUB_HEAD_CHAR, width=_WIDTH)
             index = 1
             for board in boards:
-                table.add_row(index, board.key, board.posts.db.posts[-1].date_sent,
-                              len(board.posts.db.posts), 1)
+                last = board.posts.db.posts[-1].date_sent or None
+                table.add_row(index, board.key, last, len(board.posts.db.posts), 1)
 
             table.reformat_column(0, width=3)
             table.reformat_column(1, width=20)
