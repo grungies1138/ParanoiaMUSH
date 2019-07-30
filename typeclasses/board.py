@@ -6,12 +6,16 @@ from evennia import default_cmds
 from evennia.comms.models import Msg
 
 
+HELP_CATEGORY = "BBS"
+
+
 class Board(Object):
     def at_object_creation(self):
         self.scripts.add('typeclasses.board.PostHandler', key='posts')
 
         # Messages are deleted in this number of days.  Or 0 for no timeout.
         self.db.timeout = 0
+        self.db.subscribers = []
 
     @lazy_property
     def posts(self):
@@ -51,25 +55,190 @@ class PostHandler(DefaultScript):
         self.db.posts.remove(post)
 
 
-class AddBoardCmd(default_cmds.MuxCommand):
+class BBReadCmd(default_cmds.MuxCommand):
     """
-    Admin only command to create Bulletin Boards.
+    This command enables the user to read boards as a whole as well as browsing its Posts and viewing posts
+    individually.
 
     Usage:
-        |w+boards/create <name>|n
+        |w+bbread|n - lists all available boards that you are authorized to view.
+        |w+bbread <#>|n - displays all the posts in the selected board.
+        |w+bbread <#>/<#>|n - displays a specific post on the selected board.
+
     """
 
-    key = "+boards"
-    locks = "cmd:perm(Admin)"
-    help_category = "BBS"
+    key = "+bbread"
+    locks = "cmd:perm(Player)"
+    help_category = HELP_CATEGORY
 
     def func(self):
-        if 'create' in self.switches:
-            self.caller.msg("Current Boards:\n")
-            boards = Board.objects.all()
-            self.caller.msg(", ".join(list(boards)))
-        else:
-            pass
+        pass
+
+
+class BBPostCmd(default_cmds.MuxCommand):
+    """
+    This command begins writing a post to the specified board.
+
+    Usage:
+        |w+bbpost <#>/<title>|n - Start a post on board <#> with the title of <title>.
+
+    """
+    key = "+bbpost"
+    locks = "cmd:perm(Player)"
+    help_category = HELP_CATEGORY
+
+    def func(self):
+        pass
+
+
+class BBCmd(default_cmds.MuxCommand):
+    """
+    Once a post is started, this command allows the user to add content to the post.
+
+    Usage:
+        |w+bb <text>|n - Add content to a currently started post.
+    """
+
+    key = "+bb"
+    locks = "cmd:perm(Player)"
+    help_category = HELP_CATEGORY
+
+    def func(self):
+        pass
+
+
+class BBProofCmd(default_cmds.MuxCommand):
+    """
+    Command to review a post being actively composed.
+
+    Usage:
+        |w+bbproof|n - review active post
+    """
+
+    key = "+bbproof"
+    locks = "cmd:perm(Player)"
+    help_category = HELP_CATEGORY
+
+    def func(self):
+        pass
+
+
+class BBRemoveCmd(default_cmds.MuxCommand):
+    """
+    Removes a post written by you.  Admins are allowed to remove any post.
+
+    Usage:
+        |w+bbremove <#>/<#>|n - removes a post
+    """
+
+    key = "+bbremove"
+    locks = "cmd:perm(Player)"
+    help_category = HELP_CATEGORY
+
+    def func(self):
+        pass
+
+
+class BBTimeoutCmd(default_cmds.MuxCommand):
+    """
+    Sets the timeout for a board.  Each post is deleted after the timeout has expired for that specific post.
+    Default timeout is 0 which means no posts are deleted.
+
+    Usage:
+        |w+bbtimeout <#>=<timeout in days>|n - sets the timeout for the specified board.
+    """
+
+    key = "+bbtimeout"
+    cmd = "cmd:perm(Admin)"
+    help_category = HELP_CATEGORY
+
+    def func(self):
+        pass
+
+
+class BBJoinCmd(default_cmds.MuxCommand):
+    """
+    Join the specified board, is allowed.
+
+    Usage:
+        |w+bbjoin <#>|n - joins board <#>
+
+    See: |whelp +bbread|n to see a list of available boards.
+    """
+
+    key = "+bbjoin"
+    locks = "cmd:perm(Player)"
+    help_category = HELP_CATEGORY
+
+    def func(self):
+        pass
+
+
+class BBLeaveCmd(default_cmds.MuxCommand):
+    """
+    This command allows the user to leave a board that they are currently subscribed to.
+
+    Usage:
+        |w+bbleave <#>|n - leaves board <#>
+    """
+
+    key = "+bbleave"
+    locks = "cmd:perm(Player)"
+    help_category = HELP_CATEGORY
+
+    def func(self):
+        pass
+
+
+class BBCreateCmd(default_cmds.MuxCommand):
+    """
+    Admin only command that creates a new bulletin board
+
+    Usage:
+        |w+bbcreate <name>|n - create a new board named <name>
+    """
+
+    key = "+bbcreate"
+    locks = "cmd(perm(Admin"
+    help_category = HELP_CATEGORY
+
+    def func(self):
+        pass
+
+
+class BBDeleteCmd(default_cmds.MuxCommand):
+    """
+    Deletes a board and all of its posts.
+
+    Usage:
+        |w+bbdelete <#>|n - deletes board <#>
+    """
+
+    key = "+bbdelete"
+    locks = "cmd:perm(Admin)"
+    help_category = HELP_CATEGORY
+
+    def func(self):
+        pass
+
+
+class BBLockCmd(default_cmds.MuxCommand):
+    """
+    Defines the locks for a specific board.
+
+    |rBE ADVISED|n this will remove existing locks as replace them with what is defined in the command.  Adjust
+    accordingly.
+
+    Usage:
+        |w+bblock <#>=<lockstring>|n - redefines the locks for board <#>
+    """
+
+    key = "+bblock"
+    locks = "cmd:perm(Admin)"
+    help_category = HELP_CATEGORY
+
+    def func(self):
+        pass
 
 
 class BBSCmdSet(default_cmds.CharacterCmdSet):
@@ -77,4 +246,14 @@ class BBSCmdSet(default_cmds.CharacterCmdSet):
     priority = 2
 
     def at_cmdset_creation(self):
-        self.add(AddBoardCmd())
+        self.add(BBReadCmd())
+        self.add(BBPostCmd())
+        self.add(BBCmd())
+        self.add(BBProofCmd())
+        self.add(BBRemoveCmd())
+        self.add(BBTimeoutCmd())
+        self.add(BBJoinCmd())
+        self.add(BBLeaveCmd())
+        self.add(BBCreateCmd())
+        self.add(BBDeleteCmd())
+        self.add(BBLockCmd())
