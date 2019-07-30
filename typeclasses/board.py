@@ -1,6 +1,6 @@
 import datetime
 from typeclasses.objects import Object
-from evennia import DefaultScript, create_message, create_objects
+from evennia import DefaultScript, create_message, create_object
 from evennia.utils.utils import lazy_property
 from evennia import default_cmds
 from evennia.comms.models import Msg
@@ -193,7 +193,7 @@ class BBCreateCmd(default_cmds.MuxCommand):
         if ex_board:
             self.caller.msg("|gSYSTEM:|n A board with that name already exists.  Please try another.")
             return
-        new_board = create_objects("typeclasses.board.Board", key=name)
+        new_board = create_object("typeclasses.board.Board", key=name)
 
         storage = self.caller.search(STORAGE_OBJECT)
         new_board.move_to(storage)
