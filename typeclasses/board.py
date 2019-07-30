@@ -4,10 +4,14 @@ from evennia import DefaultScript, create_message, create_object
 from evennia.utils.utils import lazy_property
 from evennia import default_cmds
 from evennia.comms.models import Msg
+from evennia.utils import evtable
 
 
 HELP_CATEGORY = "BBS"
 STORAGE_OBJECT = "BBStorage"
+_HEAD_CHAR = "|015-|n"
+_SUB_HEAD_CHAR = "-"
+_WIDTH = 78
 
 
 class Board(Object):
@@ -74,7 +78,25 @@ class BBReadCmd(default_cmds.MuxCommand):
     help_category = HELP_CATEGORY
 
     def func(self):
-        pass
+        if not self.args:
+            boards = list(Board.objects.all())
+            for b in boards:
+                if not b.access(self.caller, 'read'):
+                    boards.remove(b)
+            self.caller.msg("Available Bulletin Boards:")
+            table = evtable.EvTable("#", "Name", "Last Post", "Posts", "U", border="header", table=None,
+                                    header_line_char=_SUB_HEAD_CHAR, width=_WIDTH)
+            index = 1
+            for board in boards:
+                table.add_row(index, board.key, board.posts[-1].date_sent.strftime("%m/%d/%Y"), len(board.posts), 1)
+
+            table.reformat_column(0, width=3)
+            table.reformat_column(1, width=20)
+            table.reformat_column(2, width=12)
+            table.reformat_column(3, width=4)
+            table.reformat_column(4, width=2)
+
+            self.caller.msg(table)
 
 
 class BBPostCmd(default_cmds.MuxCommand):
