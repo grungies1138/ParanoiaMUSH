@@ -99,7 +99,10 @@ class BBReadCmd(default_cmds.MuxCommand):
             table.reformat_column(3, width=4)
             table.reformat_column(4, width=12)
 
-            self.caller.msg(table)
+            message2 = []
+            message2.append(table)
+
+            self.caller.msg("\n".join(str(m) for m in message2))
 
 
 class BBPostCmd(default_cmds.MuxCommand):
