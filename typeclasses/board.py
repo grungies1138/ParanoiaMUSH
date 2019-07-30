@@ -139,23 +139,6 @@ class BBRemoveCmd(default_cmds.MuxCommand):
         pass
 
 
-class BBTimeoutCmd(default_cmds.MuxCommand):
-    """
-    Sets the timeout for a board.  Each post is deleted after the timeout has expired for that specific post.
-    Default timeout is 0 which means no posts are deleted.
-
-    Usage:
-        |w+bbtimeout <#>=<timeout in days>|n - sets the timeout for the specified board.
-    """
-
-    key = "+bbtimeout"
-    cmd = "cmd:perm(Admin)"
-    help_category = HELP_CATEGORY
-
-    def func(self):
-        pass
-
-
 class BBJoinCmd(default_cmds.MuxCommand):
     """
     Join the specified board, is allowed.
@@ -199,7 +182,7 @@ class BBCreateCmd(default_cmds.MuxCommand):
     """
 
     key = "+bbcreate"
-    locks = "cmd(perm(Admin"
+    locks = "cmd:perm(Admin)"
     help_category = HELP_CATEGORY
 
     def func(self):
@@ -235,6 +218,23 @@ class BBLockCmd(default_cmds.MuxCommand):
 
     key = "+bblock"
     locks = "cmd:perm(Admin)"
+    help_category = HELP_CATEGORY
+
+    def func(self):
+        pass
+
+
+class BBTimeoutCmd(default_cmds.MuxCommand):
+    """
+    Sets the timeout for a board.  Each post is deleted after the timeout has expired for that specific post.
+    Default timeout is 0 which means no posts are deleted.
+
+    Usage:
+        |w+bbtimeout <#>=<timeout in days>|n - sets the timeout for the specified board.
+    """
+
+    key = "+bbtimeout"
+    cmd = "cmd:perm(Admin)"
     help_category = HELP_CATEGORY
 
     def func(self):
