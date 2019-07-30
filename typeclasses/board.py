@@ -91,8 +91,8 @@ class BBReadCmd(default_cmds.MuxCommand):
                     last = board.posts.db.posts[-1].date_sent
                 table.add_row(board.id, board.key, last, len(board.posts.db.posts), 1)
 
-            table.reformat_column(0, width=3)
-            table.reformat_column(1, width=32)
+            table.reformat_column(0, width=5)
+            table.reformat_column(1, width=30)
             table.reformat_column(2, width=25)
             table.reformat_column(3, width=8)
             table.reformat_column(4, width=10, align="r")
