@@ -94,7 +94,7 @@ class BBReadCmd(default_cmds.MuxCommand):
                 table.add_row(index, board.key, last, len(board.posts.db.posts), 1)
 
             table.reformat_column(0, width=3)
-            table.reformat_column(1, width=20)
+            table.reformat_column(1, width=34)
             table.reformat_column(2, width=25)
             table.reformat_column(3, width=4)
             table.reformat_column(4, width=12)
