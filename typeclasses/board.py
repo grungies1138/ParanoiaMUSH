@@ -94,10 +94,10 @@ class BBReadCmd(default_cmds.MuxCommand):
                 table.add_row(index, board.key, last, len(board.posts.db.posts), 1)
 
             table.reformat_column(0, width=3)
-            table.reformat_column(1, width=34)
+            table.reformat_column(1, width=32)
             table.reformat_column(2, width=25)
-            table.reformat_column(3, width=4)
-            table.reformat_column(4, width=12)
+            table.reformat_column(3, width=8)
+            table.reformat_column(4, width=10, align="r")
 
             message2 = []
             message2.append(table)
