@@ -188,7 +188,7 @@ class BBCreateCmd(default_cmds.MuxCommand):
     help_category = HELP_CATEGORY
 
     def func(self):
-        name = self.args()[0]
+        name = self.args[0]
         ex_board = Board.objects.filter(db_key=name)
         if ex_board:
             self.caller.msg("|gSYSTEM:|n A board with that name already exists.  Please try another.")
@@ -197,7 +197,7 @@ class BBCreateCmd(default_cmds.MuxCommand):
 
         storage = self.caller.search(STORAGE_OBJECT)
         new_board.move_to(storage)
-        self.caller.msg("|gSYSTEM:|n Bulletin Board {} created.".format(self.args()[0]))
+        self.caller.msg("|gSYSTEM:|n Bulletin Board {} created.".format(name))
 
 
 class BBDeleteCmd(default_cmds.MuxCommand):
