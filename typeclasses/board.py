@@ -83,15 +83,13 @@ class BBReadCmd(default_cmds.MuxCommand):
             for b in boards:
                 if not b.access(self.caller, 'read'):
                     boards.remove(b)
-            self.caller.msg("Available Bulletin Boards:")
             table = evtable.EvTable("#", "Name", "Last Post", "Posts", "U", border="header", table=None,
                                     header_line_char=_SUB_HEAD_CHAR, width=_WIDTH)
-            index = 1
             for board in boards:
                 last = None
                 if len(board.posts.db.posts) > 0:
                     last = board.posts.db.posts[-1].date_sent
-                table.add_row(index, board.key, last, len(board.posts.db.posts), 1)
+                table.add_row(board.id, board.key, last, len(board.posts.db.posts), 1)
 
             table.reformat_column(0, width=3)
             table.reformat_column(1, width=32)
@@ -101,8 +99,16 @@ class BBReadCmd(default_cmds.MuxCommand):
 
             message2 = []
             message2.append(table)
+            message2.append("\n")
 
             self.caller.msg("\n".join(str(m) for m in message2))
+        elif "/" in self.args:
+            pass
+        #else:
+            # board = list(Board.objects.all())[self.args]
+            # self.caller.msg("{} Posts".format(board.key))
+            # message = []
+            # table = evtable.EvTable("")
 
 
 class BBPostCmd(default_cmds.MuxCommand):
