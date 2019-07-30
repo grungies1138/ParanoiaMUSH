@@ -1,12 +1,13 @@
 import datetime
 from typeclasses.objects import Object
-from evennia import DefaultScript, create_message
+from evennia import DefaultScript, create_message, create_objects
 from evennia.utils.utils import lazy_property
 from evennia import default_cmds
 from evennia.comms.models import Msg
 
 
 HELP_CATEGORY = "BBS"
+STORAGE_OBJECT = "BBStorage"
 
 
 class Board(Object):
@@ -16,6 +17,7 @@ class Board(Object):
         # Messages are deleted in this number of days.  Or 0 for no timeout.
         self.db.timeout = 0
         self.db.subscribers = []
+        self.locks.add("read:perm(Player);post:perm(Player)")
 
     @lazy_property
     def posts(self):
@@ -186,7 +188,16 @@ class BBCreateCmd(default_cmds.MuxCommand):
     help_category = HELP_CATEGORY
 
     def func(self):
-        pass
+        name = self.args()[0]
+        ex_board = Board.objects.filter(db_key=name)
+        if ex_board:
+            self.caller.msg("|gSYSTEM:|n A board with that name already exists.  Please try another.")
+            return
+        new_board = create_objects("typeclasses.board.Board", key=name)
+
+        storage = self.caller.search(STORAGE_OBJECT)
+        new_board.move_to(storage)
+        self.caller.msg("|gSYSTEM:|n Bulletin Board {} created.".format(self.args()[0]))
 
 
 class BBDeleteCmd(default_cmds.MuxCommand):
@@ -209,8 +220,8 @@ class BBLockCmd(default_cmds.MuxCommand):
     """
     Defines the locks for a specific board.
 
-    |rBE ADVISED|n this will remove existing locks as replace them with what is defined in the command.  Adjust
-    accordingly.
+    |rBE ADVISED|n this will remove existing locks as replace them with what is defined in the command.
+    Adjust accordingly.
 
     Usage:
         |w+bblock <#>=<lockstring>|n - redefines the locks for board <#>
