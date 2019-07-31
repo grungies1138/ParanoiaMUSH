@@ -125,12 +125,12 @@ class BBReadCmd(default_cmds.MuxCommand):
                                     header_line_char=_SUB_HEAD_CHAR, width=_WIDTH)
             for post in board.get_posts():
                 read = "U" if post not in self.caller.db.read.get(board.key) else ""
-                table.add_row(post.id, read, post.header[30:], post.date_created.strftime("%m/%d/%Y"),
-                              post.senders[0].key[10:])
+                table.add_row(post.id, read, post.header, post.date_created.strftime("%m/%d/%Y"),
+                              post.senders[0].key)
 
             table.reformat_column(0, width=5)
-            table.reformat_column(1, width=5)
-            table.reformat_column(2, width=32)
+            table.reformat_column(1, width=6)
+            table.reformat_column(2, width=31)
             table.reformat_column(3, width=25)
             table.reformat_column(4, width=11)
 
