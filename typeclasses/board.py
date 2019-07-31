@@ -161,7 +161,7 @@ class BBPostCmd(default_cmds.MuxCommand):
                                 "see a list of available boards.")
                 return
 
-            self.caller.db.post = {"title": args[1], "board": board}
+            self.caller.db.post = {"title": args[1][60:], "board": board}
             self.caller.msg("|gSYSTEM:|n Post started.  type |w+bb <text>|n to add the post content.")
 
 
@@ -183,7 +183,7 @@ class BBCmd(default_cmds.MuxCommand):
 
     def func(self):
         post = self.caller.db.post
-        message = post.get("message")
+        message = post.get("message") or ""
         if not post:
             self.caller.msg("|gSYSTEM:|n No BBS Post started.  See |whelp +bbpost|n for more info.")
             return
