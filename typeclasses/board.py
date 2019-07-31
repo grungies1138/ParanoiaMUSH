@@ -36,6 +36,12 @@ class Board(Object):
     def delete_post(self, post):
         self.posts.delete(post)
 
+    def get_posts(self):
+        return self.posts.db.posts
+
+    def get_unread(self, caller):
+        pass
+
 
 class PostHandler(DefaultScript):
     def at_script_creation(self):
@@ -92,26 +98,46 @@ class BBReadCmd(default_cmds.MuxCommand):
                 if len(board.posts.db.posts) > 0:
                     last = board.posts.db.posts[-1].date_created
                     last = last.strftime("%m/%d/%Y")
-                table.add_row(board.id, board.key, last, len(board.posts.db.posts), 1)
+                table.add_row(board.id, board.key, last, len(board.get_posts()), 1)
 
             table.reformat_column(0, width=5)
             table.reformat_column(1, width=30)
             table.reformat_column(2, width=25)
-            table.reformat_column(3, width=8)
+            table.reformat_column(3, width=6, align="r")
             table.reformat_column(4, width=10, align="r")
 
             message2 = []
             message2.append(table)
+            message2.append("-" * _WIDTH)
             message2.append("\n")
 
             self.caller.msg("\n".join(str(m) for m in message2))
         elif "/" in self.args:
             pass
-        # else:
-        #     board = list(Board.objects.all())[self.args]
-        #     self.caller.msg("{} Posts".format(board.key))
-        #     message = []
-        #     table = evtable.EvTable("")
+        else:
+            board = Board.objects.filter(id=int(self.args))[0]
+            if not board:
+                self.caller.msg("|gSYSTEM:|n That board does not exist.  See |w+bbread|n to see the list of "
+                                "available boards.")
+            self.caller.msg("{} Posts".format(board.key))
+            message = []
+            table = evtable.EvTable("#", "Read", "Title", "Date Posted", "Posted By", border="header", table=None,
+                                    header_line_char=_SUB_HEAD_CHAR, width=_WIDTH)
+            for post in board.get_posts():
+                read = "U" if post not in self.caller.db.read.get(board.key) else ""
+                table.add_row(post.id, read, post.header[30:], post.date_created.strftime("%m/%d/%Y"),
+                              post.senders[0].key[10:])
+
+            table.reformat_column(0, width=5)
+            table.reformat_column(1, width=5)
+            table.reformat_column(2, width=32)
+            table.reformat_column(3, width=25)
+            table.reformat_column(4, width=11)
+
+            message.append(table)
+            message.append("-" * _WIDTH)
+            message.append("\n")
+            self.caller.msg("\n".join(str(m) for m in message))
 
 
 class BBPostCmd(default_cmds.MuxCommand):
