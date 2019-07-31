@@ -160,8 +160,10 @@ class BBPostCmd(default_cmds.MuxCommand):
                 self.caller.msg("|gSYSTEM:|n You do not have permission to post to that board.  See |w+bbread|n to "
                                 "see a list of available boards.")
                 return
-
-            self.caller.db.post = {"title": args[1][60:], "board": board}
+            title = args[1]
+            if len(args[1]) > 60:
+                title = title[60:]
+            self.caller.db.post = {"title": title, "board": board}
             self.caller.msg("|gSYSTEM:|n Post started.  type |w+bb <text>|n to add the post content.")
 
 
