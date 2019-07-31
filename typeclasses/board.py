@@ -90,7 +90,7 @@ class BBReadCmd(default_cmds.MuxCommand):
             for board in boards:
                 last = None
                 if len(board.posts.db.posts) > 0:
-                    last = board.posts.db.posts[-1].date_sent
+                    # last = board.posts.db.posts[-1].date_sent
                 table.add_row(board.id, board.key, last, len(board.posts.db.posts), 1)
 
             table.reformat_column(0, width=5)
