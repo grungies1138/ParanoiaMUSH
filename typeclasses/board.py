@@ -161,7 +161,7 @@ class BBPostCmd(default_cmds.MuxCommand):
                                 "see a list of available boards.")
                 return
 
-            self.caller.db.post = {"title": self.args[1], "board": board}
+            self.caller.db.post = {"title": args[1], "board": board}
             self.caller.msg("|gSYSTEM:|n Post started.  type |w+bb <text>|n to add the post content.")
 
 
