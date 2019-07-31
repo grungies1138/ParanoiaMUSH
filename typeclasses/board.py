@@ -155,7 +155,7 @@ class BBPostCmd(default_cmds.MuxCommand):
                                 "for a list of the boards.")
                 return
 
-            board = Board.objects.filter(id=int(args[0]))
+            board = Board.objects.filter(id=int(args[0]))[0]
             if not board.access(self.caller, 'post'):
                 self.caller.msg("|gSYSTEM:|n You do not have permission to post to that board.  See |w+bbread|n to "
                                 "see a list of available boards.")
