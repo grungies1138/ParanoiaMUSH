@@ -183,11 +183,14 @@ class BBCmd(default_cmds.MuxCommand):
 
     def func(self):
         post = self.caller.db.post
-        message = post.get("message") or ""
+        message = post.get("message")
         if not post:
             self.caller.msg("|gSYSTEM:|n No BBS Post started.  See |whelp +bbpost|n for more info.")
             return
-        post["message"] = "{}\n{}".format(message, self.args)
+        if message:
+            post["message"] = "{}\n{}".format(message, self.args)
+        else:
+            post["message"] = "{}".format(self.args)
         self.caller.msg("|gSYSTEM:|n Post updated.  |w+bbproof|n to proof read your post.")
 
 
