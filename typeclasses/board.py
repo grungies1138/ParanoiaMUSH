@@ -104,7 +104,7 @@ class BBReadCmd(default_cmds.MuxCommand):
             table.reformat_column(1, width=30)
             table.reformat_column(2, width=25)
             table.reformat_column(3, width=6, align="r")
-            table.reformat_column(4, width=10, align="r")
+            table.reformat_column(4, width=12, align="r")
 
             message2 = []
             message2.append(table)
