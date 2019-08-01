@@ -46,10 +46,10 @@ class Board(Object):
         pass
 
 
-class Post(Msg):
-    @lazy_property
-    def attributes(self):
-        return AttributeHandler(self)
+# class Post(Msg):
+#     @lazy_property
+#     def attributes(self):
+#         return AttributeHandler(self)
 
 
 class PostHandler(DefaultScript):
