@@ -9,9 +9,11 @@ from evennia.utils import evtable
 
 HELP_CATEGORY = "BBS"
 STORAGE_OBJECT = "BBStorage"
+PREFIX = "|[002|wBBS:|n"
 _HEAD_CHAR = "|015-|n"
 _SUB_HEAD_CHAR = "-"
 _WIDTH = 78
+
 
 
 class Board(Object):
@@ -63,7 +65,7 @@ class PostHandler(DefaultScript):
     def add(self, post):
         self.db.posts.append(post)
         for sub in self.obj.db.subscribers:
-            sub.msg("|gSYSTEM:|n {} added to the {} board.".format(post.header, self.obj.key))
+            sub.msg("{} {} added to the {} board.".format(PREFIX, post.header, self.obj.key))
 
     def delete(self, post):
         self.db.posts.remove(post)
@@ -98,7 +100,7 @@ class BBReadCmd(default_cmds.MuxCommand):
                 if len(board.posts.db.posts) > 0:
                     last = board.posts.db.posts[-1].date_created
                     last = last.strftime("%m/%d/%Y")
-                table.add_row(board.id, board.key, last, len(board.get_posts()), 1)
+                table.add_row(board.board_id, board.key, last, len(board.get_posts()), 1)
 
             table.reformat_column(0, width=5)
             table.reformat_column(1, width=30)
@@ -115,10 +117,10 @@ class BBReadCmd(default_cmds.MuxCommand):
         elif "/" in self.args:
             pass
         else:
-            board = Board.objects.filter(id=int(self.args))[0]
+            board = Board.objects.filter(db_board_id=int(self.args))[0]
             if not board:
-                self.caller.msg("|gSYSTEM:|n That board does not exist.  See |w+bbread|n to see the list of "
-                                "available boards.")
+                self.caller.msg("{} That board does not exist.  See |w+bbread|n to see the list of "
+                                "available boards.".format(PREFIX))
             self.caller.msg("{} Posts".format(board.key))
             message = []
             table = evtable.EvTable("#", "Read", "Title", "Date Posted", "Posted By", border="header", table=None,
@@ -159,7 +161,7 @@ class BBPostCmd(default_cmds.MuxCommand):
     def func(self):
         if not self.args:
             if not self.caller.db.post:
-                self.caller.msg("|gSYSTEM:|n You have not started a post yet.  See |whelp +bbpost|n for more info.")
+                self.caller.msg("{} You have not started a post yet.  See |whelp +bbpost|n for more info.".format(PREFIX))
                 return
             temp_post = self.caller.db.post
             message = temp_post.get("message")
@@ -167,10 +169,12 @@ class BBPostCmd(default_cmds.MuxCommand):
             header = temp_post.get("title")
             post = create_message(self.caller, message, receivers=board, header=header)
             board.posts.add(post)
+            del self.caller.db.post
+            self.caller.msg("{} {} posted to the {} board.".format(PREFIX, header, board.key))
 
         else:
             if "/" not in self.args:
-                self.caller.msg("|gSYSTEM:|n Invalid syntax.  Please try again.  See: |whelp +bbpost|n for help")
+                self.caller.msg("|[002|wBBS:|n Invalid syntax.  Please try again.  See: |whelp +bbpost|n for help")
                 return
 
             args = self.args.split("/")
@@ -178,20 +182,20 @@ class BBPostCmd(default_cmds.MuxCommand):
             board_ids = [b.id for b in list(Board.objects.all())]
 
             if not int(args[0]) in board_ids:
-                self.caller.msg("|gSYSTEM:|n That is not a valid board ID.  Please try again.  See |whelp +bbread|n "
-                                "for a list of the boards.")
+                self.caller.msg("{} That is not a valid board ID.  Please try again.  See |whelp +bbread|n "
+                                "for a list of the boards.".format(PREFIX))
                 return
 
             board = Board.objects.filter(id=int(args[0]))[0]
             if not board.access(self.caller, 'post'):
-                self.caller.msg("|gSYSTEM:|n You do not have permission to post to that board.  See |w+bbread|n to "
-                                "see a list of available boards.")
+                self.caller.msg("{} You do not have permission to post to that board.  See |w+bbread|n to "
+                                "see a list of available boards.".format(PREFIX))
                 return
             title = args[1]
             if len(args[1]) > 60:
                 title = title[60:]
             self.caller.db.post = {"title": title, "board": board}
-            self.caller.msg("|gSYSTEM:|n Post started.  type |w+bb <text>|n to add the post content.")
+            self.caller.msg("{} Post started.  type |w+bb <text>|n to add the post content.".format(PREFIX))
 
 
 class BBCmd(default_cmds.MuxCommand):
@@ -214,13 +218,13 @@ class BBCmd(default_cmds.MuxCommand):
         post = self.caller.db.post
         message = post.get("message")
         if not post:
-            self.caller.msg("|gSYSTEM:|n No BBS Post started.  See |whelp +bbpost|n for more info.")
+            self.caller.msg("{} No BBS Post started.  See |whelp +bbpost|n for more info.".format(PREFIX))
             return
         if message:
             post["message"] = "{}\n{}".format(message, self.args)
         else:
             post["message"] = "{}".format(self.args)
-        self.caller.msg("|gSYSTEM:|n Post updated.  |w+bbproof|n to proof read your post.")
+        self.caller.msg("{} Post updated.  |w+bbproof|n to proof read your post.".format(PREFIX))
 
 
 class BBProofCmd(default_cmds.MuxCommand):
@@ -232,6 +236,31 @@ class BBProofCmd(default_cmds.MuxCommand):
     """
 
     key = "+bbproof"
+    locks = "cmd:perm(Player)"
+    help_category = HELP_CATEGORY
+
+    def func(self):
+        post = self.caller.db.post
+        if not post:
+            self.caller.msg("{} There is no post started.  See |whelp +bbpost|n for more info.".format(PREFIX))
+            return
+
+        self.caller.msg("Proofing: {}\n".format(post.header))
+        self.caller.msg("-" * _WIDTH)
+        self.caller.msg("\n{}\n".format(post.message))
+        self.caller.msg("-" * _WIDTH)
+        self.caller.msg("If you are done, type |w+bbpost|n to post this message to the board.")
+
+
+class BBTossCmd(default_cmds.MuxCommand):
+    """
+    Clears out a post that is in the progress of being written but not yet posted.
+
+    Usage:
+        |w+bbtoss|n
+    """
+
+    key = "+bbtoss"
     locks = "cmd:perm(Player)"
     help_category = HELP_CATEGORY
 
@@ -305,13 +334,16 @@ class BBCreateCmd(default_cmds.MuxCommand):
         name = self.args
         ex_board = Board.objects.filter(db_key=name)
         if ex_board:
-            self.caller.msg("|gSYSTEM:|n A board with that name already exists.  Please try another.")
+            self.caller.msg("{} A board with that name already exists.  Please try another.".format(PREFIX))
             return
         new_board = create_object("typeclasses.board.Board", key=name)
 
         storage = self.caller.search(STORAGE_OBJECT)
         new_board.move_to(storage)
-        self.caller.msg("|gSYSTEM:|n Bulletin Board {} created.".format(name))
+        board_id = storage.db.last_board + 1
+        new_board.db.board_id = board_id
+        storage.db.last_board = board_id
+        self.caller.msg("{} Bulletin Board {} created.".format(PREFIX, name))
 
 
 class BBDeleteCmd(default_cmds.MuxCommand):
