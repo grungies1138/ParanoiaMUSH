@@ -3,9 +3,9 @@ from typeclasses.objects import Object
 from evennia import DefaultScript, create_message, create_object
 from evennia.utils.utils import lazy_property
 from evennia import default_cmds
-from evennia.comms.models import Msg
 from evennia.utils import evtable
-from django.db import models
+from evennia.comms.models import Msg
+from evennia.typeclasses.attributes import AttributeHandler
 
 
 HELP_CATEGORY = "BBS"
@@ -47,7 +47,9 @@ class Board(Object):
 
 
 class Post(Msg):
-    db_post_id = models.IntegerField(null=True)
+    @lazy_property
+    def attributes(self):
+        return AttributeHandler(self)
 
 
 class PostHandler(DefaultScript):
