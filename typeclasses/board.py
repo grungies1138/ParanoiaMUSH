@@ -15,7 +15,6 @@ _SUB_HEAD_CHAR = "-"
 _WIDTH = 78
 
 
-
 class Board(Object):
     def at_object_creation(self):
         self.scripts.add('typeclasses.board.PostHandler', key='posts')
@@ -174,7 +173,7 @@ class BBPostCmd(default_cmds.MuxCommand):
 
         else:
             if "/" not in self.args:
-                self.caller.msg("|[002|wBBS:|n Invalid syntax.  Please try again.  See: |whelp +bbpost|n for help")
+                self.caller.msg("{} Invalid syntax.  Please try again.  See: |whelp +bbpost|n for help".format(PREFIX))
                 return
 
             args = self.args.split("/")
@@ -195,22 +194,22 @@ class BBPostCmd(default_cmds.MuxCommand):
             if len(args[1]) > 60:
                 title = title[60:]
             self.caller.db.post = {"title": title, "board": board}
-            self.caller.msg("{} Post started.  type |w+bb <text>|n to add the post content.".format(PREFIX))
+            self.caller.msg("{} Post started.  type |w+bbwrite <text>|n to add the post content.".format(PREFIX))
 
 
-class BBCmd(default_cmds.MuxCommand):
+class BBWriteCmd(default_cmds.MuxCommand):
     """
     Once a post is started, this command allows the user to add content to the post.  To append an new
     paragraph, just use this command a second time.  Each use will add a new line between each addition.
 
     Usage:
-        |w+bb <text>|n - Add content to a currently started post.
+        |w+bbwrite <text>|n - Add content to a currently started post.
 
 
     See |wcolor ansi|n for carriage returns, tabs and other special characters.
     """
 
-    key = "+bb"
+    key = "+bbwrite"
     locks = "cmd:perm(Player)"
     help_category = HELP_CATEGORY
 
@@ -410,7 +409,7 @@ class BBSCmdSet(default_cmds.CharacterCmdSet):
     def at_cmdset_creation(self):
         self.add(BBReadCmd())
         self.add(BBPostCmd())
-        self.add(BBCmd())
+        self.add(BBWriteCmd())
         self.add(BBProofCmd())
         self.add(BBRemoveCmd())
         self.add(BBTimeoutCmd())
