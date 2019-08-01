@@ -46,12 +46,6 @@ class Board(Object):
         pass
 
 
-# class Post(Msg):
-#     @lazy_property
-#     def attributes(self):
-#         return AttributeHandler(self)
-
-
 class PostHandler(DefaultScript):
     def at_script_creation(self):
         self.db.posts = []
@@ -136,7 +130,7 @@ class BBReadCmd(default_cmds.MuxCommand):
                                     header_line_char=_SUB_HEAD_CHAR, width=_WIDTH)
             for post in board.get_posts():
                 read = "U" if post not in self.caller.db.read.get(board.key) else ""
-                table.add_row(post.id, read, post.header, post.date_created.strftime("%m/%d/%Y"),
+                table.add_row(post.tags.all()[0], read, post.header, post.date_created.strftime("%m/%d/%Y"),
                               post.senders[0].key)
 
             table.reformat_column(0, width=5)
@@ -176,11 +170,9 @@ class BBPostCmd(default_cmds.MuxCommand):
             message = temp_post.get("message")
             board = temp_post.get("board")
             header = temp_post.get("title")
-            # post = create_message(self.caller, message, receivers=board, header=header)
-            post = create_object("typeclasses.board.Post", message=message, senders=self.caller, receivers=board,
-                                 header=header)
+            post = create_message(self.caller, message, receivers=board, header=header)
             post_id = board.db.last_post + 1
-            post.db.post_id = post_id
+            post.tags.add(str(post_id), category=board.key)
             board.db.last_post = post_id
             board.posts.add(post)
             del self.caller.db.post
