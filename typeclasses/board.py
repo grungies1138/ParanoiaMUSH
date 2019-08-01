@@ -418,3 +418,4 @@ class BBSCmdSet(default_cmds.CharacterCmdSet):
         self.add(BBCreateCmd())
         self.add(BBDeleteCmd())
         self.add(BBLockCmd())
+        self.add(BBTossCmd())
