@@ -116,7 +116,7 @@ class BBReadCmd(default_cmds.MuxCommand):
         elif "/" in self.args:
             pass
         else:
-            temp_board = [b for b in Board.objects.all() if b.db.board_id == self.args]
+            temp_board = [b for b in Board.objects.all() if b.db.board_id == int(self.args)]
             if not temp_board:
                 self.caller.msg("{} That board does not exist.  See |w+bbread|n to see the list of "
                                 "available boards.".format(PREFIX))
