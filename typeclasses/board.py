@@ -5,6 +5,7 @@ from evennia.utils.utils import lazy_property
 from evennia import default_cmds
 from evennia.comms.models import Msg
 from evennia.utils import evtable
+from django.db import models
 
 
 HELP_CATEGORY = "BBS"
@@ -23,6 +24,7 @@ class Board(Object):
         self.db.timeout = 0
         self.db.subscribers = []
         self.locks.add("read:perm(Player);post:perm(Player)")
+        self.db.last_post = 0
 
     @lazy_property
     def posts(self):
@@ -42,6 +44,10 @@ class Board(Object):
 
     def get_unread(self, caller):
         pass
+
+
+class Post(Msg):
+    db_post_id = models.IntegerField(null=True)
 
 
 class PostHandler(DefaultScript):
@@ -139,7 +145,6 @@ class BBReadCmd(default_cmds.MuxCommand):
 
             message.append(table)
             message.append("-" * _WIDTH)
-            message.append("\n")
             self.caller.msg("\n".join(str(m) for m in message))
 
 
@@ -162,13 +167,19 @@ class BBPostCmd(default_cmds.MuxCommand):
     def func(self):
         if not self.args:
             if not self.caller.db.post:
-                self.caller.msg("{} You have not started a post yet.  See |whelp +bbpost|n for more info.".format(PREFIX))
+                self.caller.msg("{} You have not started a post yet.  See |whelp +bbpost|n for more info."
+                                .format(PREFIX))
                 return
             temp_post = self.caller.db.post
             message = temp_post.get("message")
             board = temp_post.get("board")
             header = temp_post.get("title")
-            post = create_message(self.caller, message, receivers=board, header=header)
+            # post = create_message(self.caller, message, receivers=board, header=header)
+            post = create_object("typeclasses.board.Post", message=message, senders=self.caller, receivers=board,
+                                 header=header)
+            post_id = board.db.last_post + 1
+            post.db.post_id = post_id
+            board.db.last_post = post_id
             board.posts.add(post)
             del self.caller.db.post
             self.caller.msg("{} {} posted to the {} board.".format(PREFIX, header, board.key))
