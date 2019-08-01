@@ -245,11 +245,11 @@ class BBProofCmd(default_cmds.MuxCommand):
             self.caller.msg("{} There is no post started.  See |whelp +bbpost|n for more info.".format(PREFIX))
             return
 
-        self.caller.msg("Proofing: {}\n".format(post.get("title")))
+        self.caller.msg("Proofing: {}".format(post.get("title")))
         self.caller.msg("-" * _WIDTH)
         self.caller.msg("\n{}\n".format(post.get("message")))
         self.caller.msg("-" * _WIDTH)
-        self.caller.msg("If you are done, type |w+bbpost|n to post this message to the board.")
+        self.caller.msg("If you are done, type |w+bbpost|n to post this message to the board.\n")
 
 
 class BBTossCmd(default_cmds.MuxCommand):
@@ -265,7 +265,12 @@ class BBTossCmd(default_cmds.MuxCommand):
     help_category = HELP_CATEGORY
 
     def func(self):
-        pass
+        post = self.caller.db.post
+        if not post:
+            self.caller.msg("{} There is no post to toss.  See |whelp +bbpost|n for more info.".format(PREFIX))
+            return
+        del self.caller.db.post
+        self.caller.msg("{} Post terminated.".format(PREFIX))
 
 
 class BBRemoveCmd(default_cmds.MuxCommand):
