@@ -245,9 +245,9 @@ class BBProofCmd(default_cmds.MuxCommand):
             self.caller.msg("{} There is no post started.  See |whelp +bbpost|n for more info.".format(PREFIX))
             return
 
-        self.caller.msg("Proofing: {}\n".format(post.header))
+        self.caller.msg("Proofing: {}\n".format(post.get("title")))
         self.caller.msg("-" * _WIDTH)
-        self.caller.msg("\n{}\n".format(post.message))
+        self.caller.msg("\n{}\n".format(post.get("message")))
         self.caller.msg("-" * _WIDTH)
         self.caller.msg("If you are done, type |w+bbpost|n to post this message to the board.")
 
