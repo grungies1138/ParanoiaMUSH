@@ -116,10 +116,11 @@ class BBReadCmd(default_cmds.MuxCommand):
         elif "/" in self.args:
             pass
         else:
-            board = Board.objects.filter(db_board_id=int(self.args))[0]
+            board = [b for b in Board.objects.all() if b.db.board_id == self.args[0]]
             if not board:
                 self.caller.msg("{} That board does not exist.  See |w+bbread|n to see the list of "
                                 "available boards.".format(PREFIX))
+            board = board[0]
             self.caller.msg("{} Posts".format(board.key))
             message = []
             table = evtable.EvTable("#", "Read", "Title", "Date Posted", "Posted By", border="header", table=None,
