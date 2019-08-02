@@ -131,7 +131,7 @@ class BBReadCmd(default_cmds.MuxCommand):
             post = temp_post[0]
             self.caller.msg("-" * _WIDTH)
             self.caller.msg(post.header)
-            self.caller.msg("Posted on: {}".format(post.date_created.strftime("%m/%d/%Y %h:%M:S%r")))
+            self.caller.msg("Posted on: {}".format(post.date_created.strftime("%m/%d/%Y %I:%M:S%r")))
             self.caller.msg("Posted By: {}".format(post.senders[0].key))
             self.caller.msg("-" * _WIDTH)
             self.caller.msg(post.message)
