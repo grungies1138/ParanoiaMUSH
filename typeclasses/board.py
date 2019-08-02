@@ -124,7 +124,7 @@ class BBReadCmd(default_cmds.MuxCommand):
                 return
             board = temp_board[0]
             temp_post = Msg.objects.get_by_tag(args[1], category=board.key)
-            if not post:
+            if not temp_post:
                 self.caller.msg("{} that post does not exist.  See |w+bbread {}|n to find a valid post."
                                 .format(PREFIX, board.db.board_id))
                 return
