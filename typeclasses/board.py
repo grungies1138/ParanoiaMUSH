@@ -1,7 +1,7 @@
 import datetime
 from typeclasses.objects import Object
 from evennia import DefaultScript, create_message, create_object
-from evennia.utils.utils import lazy_property
+from evennia.utils.utils import lazy_property, crop
 from evennia import default_cmds
 from evennia.utils import evtable
 from evennia.comms.models import Msg
@@ -116,7 +116,25 @@ class BBReadCmd(default_cmds.MuxCommand):
 
             self.caller.msg("\n".join(str(m) for m in message2))
         elif "/" in self.args:
-            pass
+            args = self.args.split("/")
+            temp_board = [b for b in Board.objects.all() if b.db.board_id == int(args[0])]
+            if not temp_board:
+                self.caller.msg("{} That board does not exist.  See |w+bbread|n to see the list of "
+                                "available boards.".format(PREFIX))
+                return
+            board = temp_board
+            post = Msg.objects.get_by_tag(args[1], category=board.key)
+            if not post:
+                self.caller.msg("{} that post does not exist.  See |w+bbread {}|n to find a valid post."
+                                .format(PREFIX, board.db.board_id))
+                return
+            self.caller.msg("-" * _WIDTH)
+            self.caller.msg(post.header)
+            self.caller.msg("Posted on: {}".format(post.date_created.strftime("%m/%d/%Y %h:%M:S%r")))
+            self.caller.msg("Posted By: {}".format(post.senders[0].key))
+            self.caller.msg("-" * _WIDTH)
+            self.caller.msg(post.message)
+            self.caller.msg("-" * _WIDTH)
         else:
             temp_board = [b for b in Board.objects.all() if b.db.board_id == int(self.args)]
             if not temp_board:
@@ -199,7 +217,7 @@ class BBPostCmd(default_cmds.MuxCommand):
                 return
             title = args[1]
             if len(args[1]) > 60:
-                title = title[60:]
+                title = crop(title, width=60)
             self.caller.db.post = {"title": title, "board": board}
             self.caller.msg("{} Post started.  type |w+bbwrite <text>|n to add the post content.".format(PREFIX))
 
