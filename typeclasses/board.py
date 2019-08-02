@@ -204,14 +204,21 @@ class BBPostCmd(default_cmds.MuxCommand):
 
             args = self.args.split("/")
 
-            board_ids = [b.id for b in list(Board.objects.all())]
+            # board_ids = [b.id for b in list(Board.objects.all())]
+            #
+            # if not int(args[0]) in board_ids:
+            #     self.caller.msg("{} That is not a valid board ID.  Please try again.  See |whelp +bbread|n "
+            #                     "for a list of the boards.".format(PREFIX))
+            #     return
 
-            if not int(args[0]) in board_ids:
-                self.caller.msg("{} That is not a valid board ID.  Please try again.  See |whelp +bbread|n "
-                                "for a list of the boards.".format(PREFIX))
+            temp_board = [b for b in Board.objects.all() if b.db.board_id == int(self.args)]
+            if not temp_board:
+                self.caller.msg("{} That board does not exist.  See |w+bbread|n to see the list of "
+                                "available boards.".format(PREFIX))
                 return
+            board = temp_board[0]
 
-            board = Board.objects.filter(id=int(args[0]))[0]
+            # board = Board.objects.filter(id=int(args[0]))[0]
             if not board.access(self.caller, 'post'):
                 self.caller.msg("{} You do not have permission to post to that board.  See |w+bbread|n to "
                                 "see a list of available boards.".format(PREFIX))
