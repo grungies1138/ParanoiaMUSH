@@ -33,6 +33,7 @@ class Clone(Character):
         self.db.initial_setup = 0
         self.cmdset.add("commands.default_cmdsets.SheetCmdSet", permanent=True)
         self.cmdset.add("commands.default_cmdsets.ChargenCmdSet", permanent=True)
+        self.cmdset.add("typeclasses.board.BBSCmdSet", permanent=True)
 
     def return_appearance(self, looker):
         if not looker:

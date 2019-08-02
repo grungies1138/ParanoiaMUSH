@@ -18,6 +18,7 @@ from evennia import default_cmds
 from commands.command import SheetCommand, TimeCommand, OOCCommand, WhoCommand, CheckCommand, CatalogCommand,\
     XPAwardCommand, DieCommand, PlayActionCommand, SpendMoxieCommand, CmdPage, AssignRolesCommand
 from commands.chargen_commands import ChargenCommand
+from typeclasses.board import BBSCmdSet
 
 class SheetCmdSet(default_cmds.CharacterCmdSet):
     key = "SheetCmdSet"
