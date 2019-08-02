@@ -123,11 +123,12 @@ class BBReadCmd(default_cmds.MuxCommand):
                                 "available boards.".format(PREFIX))
                 return
             board = temp_board[0]
-            post = Msg.objects.get_by_tag(args[1], category=board.key)
+            temp_post = Msg.objects.get_by_tag(args[1], category=board.key)
             if not post:
                 self.caller.msg("{} that post does not exist.  See |w+bbread {}|n to find a valid post."
                                 .format(PREFIX, board.db.board_id))
                 return
+            post = temp_post[0]
             self.caller.msg("-" * _WIDTH)
             self.caller.msg(post.header)
             self.caller.msg("Posted on: {}".format(post.date_created.strftime("%m/%d/%Y %h:%M:S%r")))
