@@ -122,7 +122,7 @@ class BBReadCmd(default_cmds.MuxCommand):
                 self.caller.msg("{} That board does not exist.  See |w+bbread|n to see the list of "
                                 "available boards.".format(PREFIX))
                 return
-            board = temp_board
+            board = temp_board[0]
             post = Msg.objects.get_by_tag(args[1], category=board.key)
             if not post:
                 self.caller.msg("{} that post does not exist.  See |w+bbread {}|n to find a valid post."
