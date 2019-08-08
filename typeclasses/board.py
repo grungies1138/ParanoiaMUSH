@@ -68,8 +68,8 @@ class PostHandler(DefaultScript):
         for sub in self.obj.db.subscribers:
             sub.msg("{} {} added to the {} board.".format(PREFIX, post.header, self.obj.key))
 
-    def delete(self, post):
-        self.db.posts.remove(post)
+    # def delete(self, post):
+    #     self.db.posts.remove(post)
 
 
 class BBReadCmd(default_cmds.MuxCommand):
@@ -90,12 +90,8 @@ class BBReadCmd(default_cmds.MuxCommand):
 
     def func(self):
         if not self.args:
-            subs = self.caller.db.read.keys()
-            boards = []
-            for s in subs:
-                b = Board.objects.filter(db_key=s)
-                if b:
-                    boards.append(b[0])
+            boards = self.get_subscribed_boards(self.caller)
+
             for b in boards:
                 if not b.access(self.caller, 'read'):
                     boards.remove(b)
@@ -122,7 +118,8 @@ class BBReadCmd(default_cmds.MuxCommand):
             self.caller.msg("\n".join(str(m) for m in message2))
         elif "/" in self.args:
             args = self.args.split("/")
-            temp_board = [b for b in Board.objects.all() if b.db.board_id == int(args[0])]
+            boards = self.get_subscribed_boards(self.caller)
+            temp_board = [b for b in boards if b.db.board_id == int(args[0])]
             if not temp_board:
                 self.caller.msg("{} That board does not exist.  See |w+bbread|n to see the list of "
                                 "available boards.".format(PREFIX))
@@ -142,7 +139,8 @@ class BBReadCmd(default_cmds.MuxCommand):
             self.caller.msg(post.message)
             self.caller.msg("-" * _WIDTH)
         else:
-            temp_board = [b for b in Board.objects.all() if b.db.board_id == int(self.args)]
+            boards = self.get_subscribed_boards(self.caller)
+            temp_board = [b for b in boards if b.db.board_id == int(self.args)]
             if not temp_board:
                 self.caller.msg("{} That board does not exist.  See |w+bbread|n to see the list of "
                                 "available boards.".format(PREFIX))
@@ -166,6 +164,15 @@ class BBReadCmd(default_cmds.MuxCommand):
             message.append(table)
             message.append("-" * _WIDTH)
             self.caller.msg("\n".join(str(m) for m in message))
+
+    def get_subscribed_boards(self, target):
+        subs = self.caller.db.read.keys()
+        boards = []
+        for s in subs:
+            b = Board.objects.filter(db_key=s)
+            if b:
+                boards.append(b[0])
+        return boards
 
 
 class BBPostCmd(default_cmds.MuxCommand):
