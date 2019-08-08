@@ -90,7 +90,11 @@ class BBReadCmd(default_cmds.MuxCommand):
 
     def func(self):
         if not self.args:
-            boards = list(Board.objects.all())
+            subs = self.caller.db.read.keys()
+            boards = []
+            for s in subs:
+                b = Board.objects.filter(db_key=s)
+                boards.append(b)
             for b in boards:
                 if not b.access(self.caller, 'read'):
                     boards.remove(b)
@@ -203,13 +207,6 @@ class BBPostCmd(default_cmds.MuxCommand):
                 return
 
             args = self.args.split("/")
-
-            # board_ids = [b.id for b in list(Board.objects.all())]
-            #
-            # if not int(args[0]) in board_ids:
-            #     self.caller.msg("{} That is not a valid board ID.  Please try again.  See |whelp +bbread|n "
-            #                     "for a list of the boards.".format(PREFIX))
-            #     return
 
             temp_board = [b for b in Board.objects.all() if b.db.board_id == int(args[0])]
             if not temp_board:
@@ -336,7 +333,22 @@ class BBJoinCmd(default_cmds.MuxCommand):
     help_category = HELP_CATEGORY
 
     def func(self):
-        pass
+        if not self.args:
+            self.caller.msg("{} No board listed.  See |whelp +bbjoin| and |whelp +bblist|n for more info."
+                            .format(PREFIX))
+            return
+        boards = list(Board.objects.all())
+        for b in boards:
+            if not b.access(self.caller, 'read'):
+                boards.remove(b)
+
+        board = [b for b in boards if b.db.board_id == int(self.args)]
+        if not board:
+            self.caller.msg("{} Either that board does not exist or you are not authorized to see it.  See |whelp "
+                            "+bblist|n for more info.".format(PREFIX))
+            return
+        self.caller.db.read[board[0].key] = []
+        self.caller.msg("{} {} joined.".format(PREFIX, board[0].key))
 
 
 class BBLeaveCmd(default_cmds.MuxCommand):
@@ -353,6 +365,25 @@ class BBLeaveCmd(default_cmds.MuxCommand):
 
     def func(self):
         pass
+
+
+class BBListCmd(default_cmds.MuxCommand):
+    """
+    Shows the list of available Board to join.
+
+    Usage:
+        |w+bblist|n
+    """
+
+    key = "+bblist"
+    locks = "cmd:perm(Player)"
+    help_category = HELP_CATEGORY
+
+    def func(self):
+        boards = list(Board.objects.all())
+        for b in boards:
+            if not b.access(self.caller, 'read'):
+                boards.remove(b)
 
 
 class BBCreateCmd(default_cmds.MuxCommand):
