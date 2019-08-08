@@ -94,7 +94,8 @@ class BBReadCmd(default_cmds.MuxCommand):
             boards = []
             for s in subs:
                 b = Board.objects.filter(db_key=s)
-                boards.append(b)
+                if b:
+                    boards.append(b[0])
             for b in boards:
                 if not b.access(self.caller, 'read'):
                     boards.remove(b)
