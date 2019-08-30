@@ -5,19 +5,32 @@ from evennia.utils.utils import lazy_property, crop
 from evennia import default_cmds
 from evennia.utils import evtable
 from evennia.comms.models import Msg
-from evennia.typeclasses.attributes import AttributeHandler
+from evennia import GLOBAL_SCRIPTS
 
 
 HELP_CATEGORY = "BBS"
-STORAGE_OBJECT = "BBStorage"
 PREFIX = "|[002|wBBS:|n"
 _HEAD_CHAR = "|015-|n"
 _SUB_HEAD_CHAR = "-"
 _WIDTH = 78
 
+# To initialize the BBS system, enter the following command:
+# @py from evennia import GLOBAL_SCRIPTS; GLOBAL_SCRIPTS.update("boardHandler": {"typeclass": "typeclasses.board.BoardHandler"})
 
-class Board(Object):
-    def at_object_creation(self):
+
+class BoardHandler(DefaultScript):
+    def at_script_creation(self):
+        self.db.last_board = 0
+        self.key = "BoardHandler"
+        self.persistent = True
+
+    @lazy_property
+    def boards(self):
+        return [b for b in self.scripts.get(key='boards') if b.is_valid()][0]
+
+
+class Board(DefaultScript):
+    def at_script_creation(self):
         self.scripts.add('typeclasses.board.PostHandler', key='posts')
 
         # Messages are deleted in this number of days.  Or 0 for no timeout.
@@ -25,6 +38,7 @@ class Board(Object):
         self.db.subscribers = []
         self.locks.add("read:perm(Player);post:perm(Player)")
         self.db.last_post = 0
+        self.db.board_id = 0
 
     @lazy_property
     def posts(self):
@@ -68,8 +82,8 @@ class PostHandler(DefaultScript):
         for sub in self.obj.db.subscribers:
             sub.msg("{} {} added to the {} board.".format(PREFIX, post.header, self.obj.key))
 
-    # def delete(self, post):
-    #     self.db.posts.remove(post)
+    def remove(self, post):
+        self.db.posts.remove(post)
 
 
 class BBReadCmd(default_cmds.MuxCommand):
@@ -388,10 +402,12 @@ class BBListCmd(default_cmds.MuxCommand):
     help_category = HELP_CATEGORY
 
     def func(self):
-        boards = list(Board.objects.all())
+        # boards = list(Board.objects.all())
+        boards = GLOBAL_SCRIPTS.boardHandler.boards
+        self.caller.msg("Available Boards:")
         for b in boards:
-            if not b.access(self.caller, 'read'):
-                boards.remove(b)
+            if b.access(self.caller, 'read'):
+                self.caller.msg(f"{b.db.board_id:<5}{b.key}")
 
 
 class BBCreateCmd(default_cmds.MuxCommand):
@@ -414,8 +430,8 @@ class BBCreateCmd(default_cmds.MuxCommand):
             return
         new_board = create_object("typeclasses.board.Board", key=name)
 
-        storage = self.caller.search(STORAGE_OBJECT)
-        new_board.move_to(storage)
+        # storage = self.caller.search(STORAGE_OBJECT)
+        # new_board.move_to(storage)
         board_id = storage.db.last_board + 1
         new_board.db.board_id = board_id
         storage.db.last_board = board_id
@@ -491,3 +507,4 @@ class BBSCmdSet(default_cmds.CharacterCmdSet):
         self.add(BBDeleteCmd())
         self.add(BBLockCmd())
         self.add(BBTossCmd())
+        self.add(BBListCmd())
