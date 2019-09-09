@@ -23,10 +23,11 @@ class BoardHandler(DefaultScript):
         self.db.last_board = 0
         self.key = "BoardHandler"
         self.persistent = True
+        self.db.boards = []
 
     @lazy_property
     def boards(self):
-        return [b for b in self.scripts.get(key='boards') if b.is_valid()][0]
+        return self.db.boards
 
 
 class Board(DefaultScript):
