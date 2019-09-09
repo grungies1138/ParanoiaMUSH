@@ -403,7 +403,7 @@ class BBListCmd(default_cmds.MuxCommand):
 
     def func(self):
         # boards = list(Board.objects.all())
-        boards = GLOBAL_SCRIPTS.boardHandler.boards
+        boards = GLOBAL_SCRIPTS.boardHandler.db.boards
         self.caller.msg("Available Boards:")
         for b in boards:
             if b.access(self.caller, 'read'):
