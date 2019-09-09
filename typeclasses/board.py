@@ -1,6 +1,6 @@
 import datetime
 from typeclasses.objects import Object
-from evennia import DefaultScript, create_message, create_object
+from evennia import DefaultScript, create_message, create_script
 from evennia.utils.utils import lazy_property, crop
 from evennia import default_cmds
 from evennia.utils import evtable
@@ -404,6 +404,8 @@ class BBListCmd(default_cmds.MuxCommand):
     def func(self):
         # boards = list(Board.objects.all())
         boards = GLOBAL_SCRIPTS.boardHandler.db.boards
+        if not boards:
+            self.caller.msg("{} There are no boards to display.  Please see |w+help +bbcreate|n.".format(PREFIX))
         self.caller.msg("Available Boards:")
         for b in boards:
             if b.access(self.caller, 'read'):
@@ -424,17 +426,22 @@ class BBCreateCmd(default_cmds.MuxCommand):
 
     def func(self):
         name = self.args
-        ex_board = Board.objects.filter(db_key=name)
+        # ex_board = Board.objects.filter(db_key=name)
+        ex_board = None
+        for board in GLOBAL_SCRIPTS.boardHandler.boards:
+            if board.key == name:
+                ex_board = True
+
         if ex_board:
             self.caller.msg("{} A board with that name already exists.  Please try another.".format(PREFIX))
             return
-        new_board = create_object("typeclasses.board.Board", key=name)
+        new_board = create_script("typeclasses.board.Board", key=name)
 
         # storage = self.caller.search(STORAGE_OBJECT)
-        # new_board.move_to(storage)
-        board_id = storage.db.last_board + 1
+        board_id = GLOBAL_SCRIPTS.boardHandler.db.last_board + 1
         new_board.db.board_id = board_id
-        storage.db.last_board = board_id
+        GLOBAL_SCRIPTS.boardHandler.db.last_board = board_id
+        GLOBAL_SCRIPTS.boardHandler.scripts.add(new_board)
         self.caller.msg("{} Bulletin Board {} created.".format(PREFIX, name))
 
 
