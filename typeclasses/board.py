@@ -110,10 +110,12 @@ class BBReadCmd(default_cmds.MuxCommand):
                                     header_line_char=_SUB_HEAD_CHAR, width=_WIDTH)
             for board in boards:
                 last = None
+                unread = [p for p in board.db.posts.db.posts]
                 if len(board.db.posts.db.posts) > 0:
                     last = board.db.posts.db.posts[-1].date_created
                     last = last.strftime("%m/%d/%Y")
-                table.add_row(board.db.board_id, board.key, last, len(board.db.posts.db.posts), 1)
+                    unread = [unread.remove(p) for p in unread if p in self.caller.db.read.get(board.key)]
+                table.add_row(board.db.board_id, board.key, last, len(board.db.posts.db.posts), len(unread))
 
             table.reformat_column(0, width=5)
             table.reformat_column(1, width=30)
@@ -159,7 +161,7 @@ class BBReadCmd(default_cmds.MuxCommand):
             board = temp_board[0]
             self.caller.msg("{} Posts".format(board.key))
             message = []
-            table = evtable.EvTable("#", "Read", "Title", "Date Posted", "Posted By", border="header", table=None,
+            table = evtable.EvTable("#", "", "Title", "Date Posted", "Posted By", border="header", table=None,
                                     header_line_char=_SUB_HEAD_CHAR, width=_WIDTH)
             for post in board.db.posts.db.posts:
                 read = "U" if post not in self.caller.db.read.get(board.key) else ""
