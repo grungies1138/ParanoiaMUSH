@@ -219,7 +219,7 @@ class BBPostCmd(default_cmds.MuxCommand):
             post_id = board.db.last_post + 1
             post.tags.add(str(post_id), category=board.key)
             board.db.last_post = post_id
-            board.posts.add(post)
+            board.db.posts.db.posts.append(post)
             del self.caller.db.post
             self.caller.msg("{} {} posted to the {} board.".format(PREFIX, header, board.key))
 
