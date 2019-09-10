@@ -230,7 +230,7 @@ class BBPostCmd(default_cmds.MuxCommand):
 
             args = self.args.split("/")
 
-            temp_board = [b for b in Board.objects.all() if b.db.board_id == int(args[0])]
+            temp_board = [b for b in GLOBAL_SCRIPTS.boardHandler.db.boards if b.db.board_id == int(args[0])]
             if not temp_board:
                 self.caller.msg("{} That board does not exist.  See |w+bbread|n to see the list of "
                                 "available boards.".format(PREFIX))
