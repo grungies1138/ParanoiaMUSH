@@ -427,7 +427,7 @@ class BBCreateCmd(default_cmds.MuxCommand):
         name = self.args
         # ex_board = Board.objects.filter(db_key=name)
         ex_board = None
-        for board in GLOBAL_SCRIPTS.boardHandler.boards:
+        for board in GLOBAL_SCRIPTS.boardHandler.db.boards:
             if board.key == name:
                 ex_board = True
 
