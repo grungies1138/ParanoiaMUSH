@@ -113,7 +113,7 @@ class BBReadCmd(default_cmds.MuxCommand):
                 if len(board.db.posts.db.posts) > 0:
                     last = board.db.posts.db.posts[-1].date_created
                     last = last.strftime("%m/%d/%Y")
-                table.add_row(board.db.board_id, board.key, last, len(board.get_posts()), 1)
+                table.add_row(board.db.board_id, board.key, last, len(board.db.posts), 1)
 
             table.reformat_column(0, width=5)
             table.reformat_column(1, width=30)
