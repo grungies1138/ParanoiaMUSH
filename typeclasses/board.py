@@ -170,7 +170,7 @@ class BBReadCmd(default_cmds.MuxCommand):
             table.reformat_column(1, width=6)
             table.reformat_column(2, width=31)
             table.reformat_column(3, width=25)
-            table.reformat_column(4, width=11)
+            table.reformat_column(4, width=13)
 
             message.append(table)
             message.append("-" * _WIDTH)
