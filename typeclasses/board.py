@@ -161,7 +161,7 @@ class BBReadCmd(default_cmds.MuxCommand):
             message = []
             table = evtable.EvTable("#", "Read", "Title", "Date Posted", "Posted By", border="header", table=None,
                                     header_line_char=_SUB_HEAD_CHAR, width=_WIDTH)
-            for post in board.get_posts():
+            for post in board.db.posts.db.posts:
                 read = "U" if post not in self.caller.db.read.get(board.key) else ""
                 table.add_row(post.tags.all()[0], read, post.header, post.date_created.strftime("%m/%d/%Y"),
                               post.senders[0].key)
