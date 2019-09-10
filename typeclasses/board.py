@@ -457,7 +457,7 @@ class BBDeleteCmd(default_cmds.MuxCommand):
 
     def func(self):
         if not isinstance(self.args, int):
-            self.caller.msg("{} Invalid Board ID #.  Please enter a valid board ID.".format(PREFIX))
+            self.caller.msg("{} Not a valid number.  Please enter a valid board ID.".format(PREFIX))
             return
         board = [b for b in GLOBAL_SCRIPTS.boardHandler.db.boards if b.db.board_id == self.args]
         if not board:
