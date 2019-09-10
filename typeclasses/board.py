@@ -103,9 +103,9 @@ class BBReadCmd(default_cmds.MuxCommand):
         if not self.args:
             boards = self.get_subscribed_boards(self.caller)
 
-            for b in boards:
-                if not b.access(self.caller, 'read'):
-                    boards.remove(b)
+            # for b in boards:
+            #     if not b.access(self.caller, 'read'):
+            #         boards.remove(b)
             table = evtable.EvTable("#", "Name", "Last Post", "Posts", "U", border="header", table=None,
                                     header_line_char=_SUB_HEAD_CHAR, width=_WIDTH)
             for board in boards:
@@ -180,7 +180,8 @@ class BBReadCmd(default_cmds.MuxCommand):
         subs = self.caller.db.read.keys()
         boards = []
         for s in subs:
-            b = Board.objects.filter(db_key=s)
+            # b = Board.objects.filter(db_key=s)
+            b = [b for b in GLOBAL_SCRIPTS.boardHandler.db.boards if b.key == s]
             if b:
                 boards.append(b[0])
         return boards
