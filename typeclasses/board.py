@@ -1,11 +1,9 @@
 import datetime
 from typeclasses.objects import Object
-from evennia import DefaultScript, create_message, create_script
+from evennia import DefaultScript, create_message, create_script, default_cmds, GLOBAL_SCRIPTS, search_tag
 from evennia.utils.utils import lazy_property, crop
-from evennia import default_cmds
 from evennia.utils import evtable
 from evennia.comms.models import Msg
-from evennia import GLOBAL_SCRIPTS
 
 
 HELP_CATEGORY = "BBS"
@@ -337,7 +335,19 @@ class BBRemoveCmd(default_cmds.MuxCommand):
     help_category = HELP_CATEGORY
 
     def func(self):
-        pass
+        b_id, p_id = self.args.split("/")
+        board = [b for b in GLOBAL_SCRIPTS.boardHandler.db.boards if b.db.board_id == b_id]
+        if not board:
+            self.caller.msg("{} That is not a valid board.  Please see |whelp +bblist|n to find a valid board."
+                            .format(PREFIX))
+            return
+        post = search_tag(p_id, category=b_id)
+        if not post:
+            self.caller.msg("{} Not a valid post number.  Please see |w+bbread <board#>|n to find the post you are "
+                            "looking for.".format(PREFIX))
+            return
+        board[0].db.posts.db.posts.remove(post)
+        self.caller.msg("{} Post removed.".format(PREFIX))
 
 
 class BBJoinCmd(default_cmds.MuxCommand):
@@ -359,7 +369,6 @@ class BBJoinCmd(default_cmds.MuxCommand):
             self.caller.msg("{} No board listed.  See |whelp +bbjoin| and |whelp +bblist|n for more info."
                             .format(PREFIX))
             return
-        # boards = list(Board.objects.all())
         boards = GLOBAL_SCRIPTS.boardHandler.db.boards
         for b in boards:
             if not b.access(self.caller, 'read'):
@@ -370,8 +379,10 @@ class BBJoinCmd(default_cmds.MuxCommand):
             self.caller.msg("{} Either that board does not exist or you are not authorized to see it.  See |whelp "
                             "+bblist|n for more info.".format(PREFIX))
             return
-        self.caller.db.read[board[0].key] = []
-        self.caller.msg("{} {} joined.".format(PREFIX, board[0].key))
+        board = board[0]
+        self.caller.db.read[board.key] = []
+        board.db.subscribers.append(self.caller)
+        self.caller.msg("{} {} joined.".format(PREFIX, board.key))
 
 
 class BBLeaveCmd(default_cmds.MuxCommand):
