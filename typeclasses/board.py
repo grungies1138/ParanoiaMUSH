@@ -25,25 +25,22 @@ class BoardHandler(DefaultScript):
         self.persistent = True
         self.db.boards = []
 
-    @lazy_property
     def boards(self):
         return self.db.boards
 
 
 class Board(DefaultScript):
     def at_script_creation(self):
-        self.scripts.add('typeclasses.board.PostHandler', key='posts')
-
         # Messages are deleted in this number of days.  Or 0 for no timeout.
         self.db.timeout = 0
         self.db.subscribers = []
         self.locks.add("read:perm(Player);post:perm(Player)")
         self.db.last_post = 0
         self.db.board_id = 0
+        self.db.posts = create_script("typeclasses.board.PostHandler", key="{}_posts".format(self.key))
 
-    @lazy_property
     def posts(self):
-        return [s for s in self.scripts.get(key='posts') if s.is_valid()][0]
+        return self.db.posts
 
     def add_post(self, title, message, sender):
         post = create_message(sender, message, receivers=self, header=title)
@@ -407,6 +404,7 @@ class BBListCmd(default_cmds.MuxCommand):
         boards = GLOBAL_SCRIPTS.boardHandler.db.boards
         if not boards:
             self.caller.msg("{} There are no boards to display.  Please see |w+help +bbcreate|n.".format(PREFIX))
+            return
         self.caller.msg("Available Boards:")
         for b in boards:
             if b.access(self.caller, 'read'):
