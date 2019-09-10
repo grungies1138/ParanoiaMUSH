@@ -110,8 +110,8 @@ class BBReadCmd(default_cmds.MuxCommand):
                                     header_line_char=_SUB_HEAD_CHAR, width=_WIDTH)
             for board in boards:
                 last = None
-                if len(board.posts.db.posts) > 0:
-                    last = board.posts.db.posts[-1].date_created
+                if len(board.db.posts.db.posts) > 0:
+                    last = board.db.posts.db.posts[-1].date_created
                     last = last.strftime("%m/%d/%Y")
                 table.add_row(board.db.board_id, board.key, last, len(board.get_posts()), 1)
 
