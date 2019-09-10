@@ -12,7 +12,7 @@ HELP_CATEGORY = "BBS"
 PREFIX = "|[002|wBBS:|n"
 _HEAD_CHAR = "|015-|n"
 _SUB_HEAD_CHAR = "-"
-_WIDTH = 78
+_WIDTH = 80
 
 # To initialize the BBS system, enter the following command:
 # @py from evennia import GLOBAL_SCRIPTS; GLOBAL_SCRIPTS.update("boardHandler": {"typeclass": "typeclasses.board.BoardHandler"})
