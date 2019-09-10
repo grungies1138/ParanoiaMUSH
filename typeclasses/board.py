@@ -456,7 +456,17 @@ class BBDeleteCmd(default_cmds.MuxCommand):
     help_category = HELP_CATEGORY
 
     def func(self):
-        pass
+        if not isinstance(self.args, int):
+            self.caller.msg("{} Invalid Board ID #.  Please enter a valid board ID.".format(PREFIX))
+            return
+        board = [b for b in GLOBAL_SCRIPTS.boardHandler.db.boards if b.db.board_id == self.args]
+        if not board:
+            self.caller.msg("{} Invalid Board ID #.  Please enter a valid board ID.".format(PREFIX))
+            return
+        for post in board.db.posts:
+            post.delete()
+        GLOBAL_SCRIPTS.boardHandler.db.boards.remove(board)
+        self.caller.msg("{} Board removed.".format(PREFIX))
 
 
 class BBLockCmd(default_cmds.MuxCommand):
