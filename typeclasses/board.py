@@ -356,7 +356,8 @@ class BBJoinCmd(default_cmds.MuxCommand):
             self.caller.msg("{} No board listed.  See |whelp +bbjoin| and |whelp +bblist|n for more info."
                             .format(PREFIX))
             return
-        boards = list(Board.objects.all())
+        # boards = list(Board.objects.all())
+        boards = GLOBAL_SCRIPTS.boardHandler.db.boards
         for b in boards:
             if not b.access(self.caller, 'read'):
                 boards.remove(b)
@@ -402,7 +403,7 @@ class BBListCmd(default_cmds.MuxCommand):
         # boards = list(Board.objects.all())
         boards = GLOBAL_SCRIPTS.boardHandler.db.boards
         if not boards:
-            self.caller.msg("{} There are no boards to display.  Please see |w+help +bbcreate|n.".format(PREFIX))
+            self.caller.msg("{} There are no boards to display.  Please see |whelp +bbcreate|n.".format(PREFIX))
             return
         self.caller.msg("Available Boards:")
         for b in boards:
