@@ -456,10 +456,10 @@ class BBDeleteCmd(default_cmds.MuxCommand):
     help_category = HELP_CATEGORY
 
     def func(self):
-        if not isinstance(self.args, int):
+        if not isinstance(int(self.args), int):
             self.caller.msg("{} Not a valid number.  Please enter a valid board ID.".format(PREFIX))
             return
-        board = [b for b in GLOBAL_SCRIPTS.boardHandler.db.boards if b.db.board_id == self.args]
+        board = [b for b in GLOBAL_SCRIPTS.boardHandler.db.boards if b.db.board_id == int(self.args)]
         if not board:
             self.caller.msg("{} Invalid Board ID #.  Please enter a valid board ID.".format(PREFIX))
             return
