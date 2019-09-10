@@ -64,7 +64,6 @@ class PostHandler(DefaultScript):
         self.interval = 60 * 60 * 24
         self.start_delay = True
         self.persistent = True
-        self.key = "{}_script".format(self.obj.key)
 
     def at_repeat(self):
         today = datetime.datetime.now()
