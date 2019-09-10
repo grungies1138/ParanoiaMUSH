@@ -439,7 +439,7 @@ class BBCreateCmd(default_cmds.MuxCommand):
         board_id = GLOBAL_SCRIPTS.boardHandler.db.last_board + 1
         new_board.db.board_id = board_id
         GLOBAL_SCRIPTS.boardHandler.db.last_board = board_id
-        GLOBAL_SCRIPTS.boardHandler.scripts.add(new_board)
+        GLOBAL_SCRIPTS.boardHandler.db.boards.append(new_board)
         self.caller.msg("{} Bulletin Board {} created.".format(PREFIX, name))
 
 
