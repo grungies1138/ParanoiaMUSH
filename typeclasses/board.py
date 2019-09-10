@@ -465,7 +465,7 @@ class BBDeleteCmd(default_cmds.MuxCommand):
             return
         for post in board[0].db.posts.db.posts:
             post.delete()
-        GLOBAL_SCRIPTS.boardHandler.db.boards.remove(board)
+        GLOBAL_SCRIPTS.boardHandler.db.boards.remove(board[0])
         self.caller.msg("{} Board removed.".format(PREFIX))
 
 
