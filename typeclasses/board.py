@@ -463,7 +463,7 @@ class BBDeleteCmd(default_cmds.MuxCommand):
         if not board:
             self.caller.msg("{} Invalid Board ID #.  Please enter a valid board ID.".format(PREFIX))
             return
-        for post in board[0].db.posts:
+        for post in board[0].db.posts.db.posts:
             post.delete()
         GLOBAL_SCRIPTS.boardHandler.db.boards.remove(board)
         self.caller.msg("{} Board removed.".format(PREFIX))
