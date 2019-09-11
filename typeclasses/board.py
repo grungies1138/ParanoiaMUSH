@@ -212,10 +212,14 @@ class BBPostCmd(default_cmds.MuxCommand):
                 return
             board = temp_board[0]
 
-            # board = Board.objects.filter(id=int(args[0]))[0]
             if not board.access(self.caller, 'post'):
                 self.caller.msg("{} You do not have permission to post to that board.  See |w+bbread|n to "
                                 "see a list of available boards.".format(PREFIX))
+                return
+            my_board = [b for b in self.caller.db.read.keys() if board.key == b]
+            if not my_board:
+                self.caller.msg("{} You cannot post to a board you do not subscribe to.  Please see |whelp +bbjoin|n"
+                                .format(PREFIX))
                 return
             title = args[1]
             if len(args[1]) > 60:
