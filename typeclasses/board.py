@@ -34,50 +34,27 @@ class Board(DefaultScript):
         self.locks.add("read:perm(Player);post:perm(Player)")
         self.db.last_post = 0
         self.db.board_id = 0
-        self.db.posts = create_script("typeclasses.board.PostHandler", key="{}_posts".format(self.key))
-
-    def posts(self):
-        return self.db.posts
-
-    def add_post(self, title, message, sender):
-        post = create_message(sender, message, receivers=self, header=title)
-        post.tags.add("post")
-        post.tags.add(self.key, category="board")
-        self.posts.add(post)
-
-    def delete_post(self, post):
-        self.posts.delete(post)
-
-    def get_posts(self):
-        return self.posts.db.posts
-
-    def get_unread(self, caller):
-        pass
-
-
-class PostHandler(DefaultScript):
-    def at_script_creation(self):
-        self.db.posts = []
         self.interval = 60 * 60 * 24
-        self.start_delay = True
         self.persistent = True
+        self.start_delay = True
 
     def at_repeat(self):
         today = datetime.datetime.now()
         if self.db.timeout > 0:
-            for post in self.db.posts:
-                delta = today - post.date_sent
+            for post in self.get_all_posts():
+                delta = today - post.date_created
                 if delta.days > self.db.timeout:
-                    self.db.posts.remove(post)
                     post.delete()
 
-    def add(self, post):
-        self.db.posts.append(post)
-        for sub in self.obj.db.subscribers:
-            sub.msg("{} {} added to the {} board.".format(PREFIX, post.header, self.obj.key))
+    def get_all_posts(self):
+        return list(Msg.objects.get_by_tag(category=self.board_id))
 
-    def remove(self, post):
-        self.db.posts.remove(post)
+    def get_post(self, post_id):
+        post = Msg.objects.get_by_tag(post_id, category=self.board_id)
+        if post:
+            return post[0]
+        else:
+            return None
 
 
 class BBReadCmd(default_cmds.MuxCommand):
@@ -100,19 +77,16 @@ class BBReadCmd(default_cmds.MuxCommand):
         if not self.args:
             boards = self.get_subscribed_boards(self.caller)
 
-            # for b in boards:
-            #     if not b.access(self.caller, 'read'):
-            #         boards.remove(b)
             table = evtable.EvTable("#", "Name", "Last Post", "Posts", "U", border="header", table=None,
                                     header_line_char=_SUB_HEAD_CHAR, width=_WIDTH)
             for board in boards:
                 last = None
-                unread = [p for p in board.db.posts.db.posts]
-                if len(board.db.posts.db.posts) > 0:
-                    last = board.db.posts.db.posts[-1].date_created
+                unread = board.get_all_posts()
+                if len(board.get_all_posts()) > 0:
+                    last = board.get_all_posts()[-1].date_created
                     last = last.strftime("%m/%d/%Y")
-                    unread = [unread.remove(p) for p in unread if p in self.caller.db.read.get(board.key)]
-                table.add_row(board.db.board_id, board.key, last, len(board.db.posts.db.posts), len(unread))
+                    unread = [unread.remove(p) for p in unread if p.id in self.caller.db.read.get(board.key)]
+                table.add_row(board.db.board_id, board.key, last, len(board.get_all_posts()), len(unread))
 
             table.reformat_column(0, width=5)
             table.reformat_column(1, width=30)
@@ -148,7 +122,9 @@ class BBReadCmd(default_cmds.MuxCommand):
             self.caller.msg("-" * _WIDTH)
             self.caller.msg(post.message)
             self.caller.msg("-" * _WIDTH)
-            self.caller.db.read.get(board.key).append(post)
+            board_read = self.caller.db.read.get(board.key)
+            if post.id not in board_read:
+                self.caller.db.read.get(board.key).append(post.id)
         else:
             boards = self.get_subscribed_boards(self.caller)
             temp_board = [b for b in boards if b.db.board_id == int(self.args)]
@@ -157,12 +133,13 @@ class BBReadCmd(default_cmds.MuxCommand):
                                 "available boards.".format(PREFIX))
                 return
             board = temp_board[0]
-            self.caller.msg("{} Posts".format(board.key))
+            self.caller.msg("{}".format(board.key))
+            self.caller.msg("=" * _WIDTH)
             message = []
             table = evtable.EvTable("#", "", "Title", "Date Posted", "Posted By", border="header", table=None,
                                     header_line_char=_SUB_HEAD_CHAR, width=_WIDTH)
             for post in board.db.posts.db.posts:
-                read = "U" if post not in self.caller.db.read.get(board.key) else ""
+                read = "U" if post.id not in self.caller.db.read.get(board.key) else ""
                 table.add_row(post.tags.all()[0], read, post.header, post.date_created.strftime("%m/%d/%Y"),
                               post.senders[0].key)
 
@@ -181,7 +158,7 @@ class BBReadCmd(default_cmds.MuxCommand):
         boards = []
         for s in subs:
             # b = Board.objects.filter(db_key=s)
-            b = [b for b in GLOBAL_SCRIPTS.boardHandler.db.boards if b.key == s]
+            b = [b for b in GLOBAL_SCRIPTS.boardHandler.boards() if b.key == s]
             if b:
                 boards.append(b[0])
         return boards
@@ -218,6 +195,7 @@ class BBPostCmd(default_cmds.MuxCommand):
             post.tags.add(str(post_id), category=board.key)
             board.db.last_post = post_id
             board.db.posts.db.posts.append(post)
+            self.caller.db.read.get(board.key).append(post)
             del self.caller.db.post
             self.caller.msg("{} {} posted to the {} board.".format(PREFIX, header, board.key))
 
