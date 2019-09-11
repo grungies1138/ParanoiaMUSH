@@ -194,8 +194,7 @@ class BBPostCmd(default_cmds.MuxCommand):
             post_id = board.db.last_post + 1
             post.tags.add(str(post_id), category=board.key)
             board.db.last_post = post_id
-            board.db.posts.db.posts.append(post)
-            self.caller.db.read.get(board.key).append(post)
+            self.caller.db.read.get(board.key).append(post.id)
             del self.caller.db.post
             self.caller.msg("{} {} posted to the {} board.".format(PREFIX, header, board.key))
 
@@ -206,7 +205,7 @@ class BBPostCmd(default_cmds.MuxCommand):
 
             args = self.args.split("/")
 
-            temp_board = [b for b in GLOBAL_SCRIPTS.boardHandler.db.boards if b.db.board_id == int(args[0])]
+            temp_board = [b for b in GLOBAL_SCRIPTS.boardHandler.boards() if b.db.board_id == int(args[0])]
             if not temp_board:
                 self.caller.msg("{} That board does not exist.  See |w+bbread|n to see the list of "
                                 "available boards.".format(PREFIX))
@@ -314,17 +313,18 @@ class BBRemoveCmd(default_cmds.MuxCommand):
 
     def func(self):
         b_id, p_id = self.args.split("/")
-        board = [b for b in GLOBAL_SCRIPTS.boardHandler.db.boards if b.db.board_id == b_id]
+        board = [b for b in GLOBAL_SCRIPTS.boardHandler.boards() if b.db.board_id == b_id]
         if not board:
             self.caller.msg("{} That is not a valid board.  Please see |whelp +bblist|n to find a valid board."
                             .format(PREFIX))
             return
-        post = search_tag(p_id, category=b_id)
+        post = Msg.objects.get_by_tag(p_id, category=b_id)
         if not post:
             self.caller.msg("{} Not a valid post number.  Please see |w+bbread <board#>|n to find the post you are "
                             "looking for.".format(PREFIX))
             return
-        board[0].db.posts.db.posts.remove(post)
+        # board[0].db.posts.db.posts.remove(post)
+        post.delete()
         self.caller.msg("{} Post removed.".format(PREFIX))
 
 
@@ -347,7 +347,7 @@ class BBJoinCmd(default_cmds.MuxCommand):
             self.caller.msg("{} No board listed.  See |whelp +bbjoin| and |whelp +bblist|n for more info."
                             .format(PREFIX))
             return
-        boards = GLOBAL_SCRIPTS.boardHandler.db.boards
+        boards = GLOBAL_SCRIPTS.boardHandler.boards()
         for b in boards:
             if not b.access(self.caller, 'read'):
                 boards.remove(b)
@@ -376,7 +376,18 @@ class BBLeaveCmd(default_cmds.MuxCommand):
     help_category = HELP_CATEGORY
 
     def func(self):
-        pass
+        board = [b for b in GLOBAL_SCRIPTS.boardHandler.boards() if b.db.board_id == int(self.args)]
+        if not board:
+            self.caller.msg("{} Not a valid board.".format(PREFIX))
+            return
+        my_board = [b for b in self.caller.db.read.keys() if b == board[0].key]
+        if not my_board:
+            self.caller.msg("{} You are not a subscriber of that board.  Please see |w+bbread|n to see your "
+                            "subscribed boards.".format(PREFIX))
+            return
+        del self.caller.db.read[board[0].key]
+        board[0].db.subscribers.remove(self.caller)
+        self.caller.msg("{} Unsubscribed from {}".format(PREFIX, board[0].key))
 
 
 class BBListCmd(default_cmds.MuxCommand):
@@ -393,7 +404,7 @@ class BBListCmd(default_cmds.MuxCommand):
 
     def func(self):
         # boards = list(Board.objects.all())
-        boards = GLOBAL_SCRIPTS.boardHandler.db.boards
+        boards = GLOBAL_SCRIPTS.boardHandler.boards()
         if not boards:
             self.caller.msg("{} There are no boards to display.  Please see |whelp +bbcreate|n.".format(PREFIX))
             return
@@ -419,7 +430,7 @@ class BBCreateCmd(default_cmds.MuxCommand):
         name = self.args
         # ex_board = Board.objects.filter(db_key=name)
         ex_board = None
-        for board in GLOBAL_SCRIPTS.boardHandler.db.boards:
+        for board in GLOBAL_SCRIPTS.boardHandler.boards():
             if board.key == name:
                 ex_board = True
 
@@ -478,7 +489,15 @@ class BBLockCmd(default_cmds.MuxCommand):
     help_category = HELP_CATEGORY
 
     def func(self):
-        pass
+        board = [b for b in GLOBAL_SCRIPTS.boardHandler.boards() if b.db.board_id == int(self.lhs)]
+        if not board:
+            self.caller.msg("{} Board not found.  Please see |w+bblist|n to find the correct board number."
+                            .format(PREFIX))
+            return
+        board = board[0]
+        board.locks.clear()
+        board.locks.add(self.rhs)
+        self.caller.msg("{} Locks set on {}".format(PREFIX, board.key))
 
 
 class BBTimeoutCmd(default_cmds.MuxCommand):
@@ -495,7 +514,16 @@ class BBTimeoutCmd(default_cmds.MuxCommand):
     help_category = HELP_CATEGORY
 
     def func(self):
-        pass
+        board = [b for b in GLOBAL_SCRIPTS.boardHandler.boards() if b.db.board_id == int(self.lhs)]
+        if not board:
+            self.caller.msg("{} Not a valid board.  Please see |w+bblist|n for the complete board list.".format(PREFIX))
+            return
+        board = board[0]
+        if not isinstance(int(self.rhs), int):
+            self.caller.msg("{} Invalid timeout value.  Please use numbers only.".format(PREFIX))
+            return
+        board.db.timeout = int(self.rhs)
+        self.caller.msg("{} Timeout for board {} set to {}.".format(PREFIX, board.key, self.rhs))
 
 
 class BBSCmdSet(default_cmds.CharacterCmdSet):
