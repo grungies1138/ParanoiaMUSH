@@ -1,5 +1,4 @@
 import datetime
-from typeclasses.objects import Object
 from evennia import DefaultScript, create_message, create_script, default_cmds, GLOBAL_SCRIPTS, search_tag
 from evennia.utils.utils import lazy_property, crop
 from evennia.utils import evtable
@@ -149,7 +148,7 @@ class BBReadCmd(default_cmds.MuxCommand):
             self.caller.msg("-" * _WIDTH)
             self.caller.msg(post.message)
             self.caller.msg("-" * _WIDTH)
-            self.caller.db.read.get(board.key).update(args[1])
+            self.caller.db.read.get(board.key).update(post)
         else:
             boards = self.get_subscribed_boards(self.caller)
             temp_board = [b for b in boards if b.db.board_id == int(self.args)]
