@@ -1,4 +1,5 @@
 import datetime
+import evennia
 from evennia import DefaultScript, create_message, create_script, default_cmds, GLOBAL_SCRIPTS, search_tag
 from evennia.utils.utils import lazy_property, crop
 from evennia.utils import evtable
@@ -47,10 +48,10 @@ class Board(DefaultScript):
                     post.delete()
 
     def get_all_posts(self):
-        return list(Msg.objects.get_by_tag(category=self.db.board_id))
+        return list(evennia.Msg.objects.get_by_tag(category=self.db.board_id))
 
     def get_post(self, post_id):
-        post = Msg.objects.get_by_tag(post_id, category=self.db.board_id)
+        post = evennia.Msg.objects.get_by_tag(post_id, category=self.db.board_id)
         if post:
             return post[0]
         else:
