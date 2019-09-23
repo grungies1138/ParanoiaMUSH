@@ -48,10 +48,10 @@ class Board(DefaultScript):
                     post.delete()
 
     def get_all_posts(self):
-        return list(evennia.Msg.objects.get_by_tag(category=self.db.board_id))
+        return list(evennia.Msg.objects.get_by_tag(category=self.key))
 
     def get_post(self, post_id):
-        post = evennia.Msg.objects.get_by_tag(post_id, category=self.db.board_id)
+        post = evennia.Msg.objects.get_by_tag(post_id, category=self.key)
         if post:
             return post[0]
         else:
