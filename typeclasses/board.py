@@ -237,7 +237,6 @@ class BBWriteCmd(default_cmds.MuxCommand):
     Usage:
         |w+bbwrite <text>|n - Add content to a currently started post.
 
-
     See |wcolor ansi|n for carriage returns, tabs and other special characters.
     """
 
@@ -363,6 +362,8 @@ class BBJoinCmd(default_cmds.MuxCommand):
                             "+bblist|n for more info.".format(PREFIX))
             return
         board = board[0]
+        if not self.caller.db.read:
+            self.caller.db.read = {}
         self.caller.db.read[board.key] = []
         board.db.subscribers.append(self.caller)
         self.caller.msg("{} {} joined.".format(PREFIX, board.key))
